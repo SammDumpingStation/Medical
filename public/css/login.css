@@ -1,0 +1,79 @@
+body {
+    font: 14px sans-serif; /* This will be overridden */
+    font-family: 'Arial', sans-serif; /* Highest priority */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0; /* Highest priority */
+    background-color: #003366;
+}
+
+.container {
+    width: 500px; /* This will be overridden */
+    width: 400px; /* Highest priority */
+    padding: 20px; /* This will be overridden */
+    padding: 30px; /* Highest priority */
+    background-color: #fff; /* Highest priority */
+    border-radius: 10px; /* This will be overridden */
+    border-radius: 15px; /* Highest priority */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* This will be overridden */
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2); /* Highest priority */
+    text-align: center;
+}
+
+.btn-primary {
+    background-color: #003366; /* This will be overridden */
+    background-color: #1535ee; /* Highest priority */
+    border-color: #003366; /* This will be overridden */
+    border-color: #1535ee; /* Highest priority */
+    transition: background-color 0.3s ease, box-shadow 0.3s ease; /* Highest priority */
+}
+
+.btn-primary:hover {
+    background-color: #0026a3; /* Highest priority */
+    box-shadow: 0 0 15px rgba(0, 38, 163, 0.5); /* Highest priority */
+}
+
+.logo {
+    width: 100px; /* This will be overridden */
+    width: 80px; /* Highest priority */
+    margin-bottom: 20px; /* This will be overridden */
+    margin-bottom: 15px; /* Highest priority */
+}
+
+.header-text {
+    margin-bottom: 20px; /* This will be overridden */
+    margin-bottom: 25px; /* Highest priority */
+    color: #003366; /* Highest priority */
+    font-weight: bold; /* Highest priority */
+    font-size: 24px; /* Highest priority */
+}
+
+.form-group {
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+.form-control {
+    padding: 10px;
+    font-size: 16px;
+}
+
+.form-control:focus {
+    border-color: #1535ee; /* Highest priority */
+    box-shadow: 0 0 5px rgba(21, 53, 238, 0.4); /* Highest priority */
+}
+
+p {
+    margin-top: 20px;
+    color: #666;
+}
+
+a {
+    color: #1535ee; /* Highest priority */
+}
+
+a:hover {
+    color: #0026a3; /* Highest priority */
+}
