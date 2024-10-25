@@ -1,0 +1,50 @@
+.navbar-custom {
+    background-color: #003366; /* Dark blue */
+    padding: 5px;
+}
+
+.navbar-custom .navbar-brand {
+    color: white;
+    font-weight: bold;
+    font-size: 1.2rem;
+}
+
+.navbar-custom .navbar-nav .nav-link {
+    color: #fff;
+}
+
+.navbar-custom .navbar-toggler {
+    border-color: #fff;
+}
+
+.navbar-custom .navbar-nav .dropdown-menu {
+    background-color: #003366;
+}
+
+.navbar-custom .dropdown-menu .dropdown-item {
+    color: white;
+}
+
+.navbar-custom .dropdown-menu .dropdown-item:hover {
+    background-color: #004080; /* Lighter shade of dark blue */
+}
+
+.navbar-brand img {
+    max-height: 40px;
+    width: auto;
+}
+
+.dropdown-menu {
+    background-color: #003366;
+    border: none;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.dropdown-item {
+    color: white !important;
+}
+
+.dropdown-item:hover {
+    background-color: #1535ee !important; /* DodgerBlue hover */
+    color: #fff !important;
+}

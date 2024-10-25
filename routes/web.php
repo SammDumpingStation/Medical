@@ -4,7 +4,7 @@ use App\Http\Controllers\SessionController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [SessionController::class, 'index']);
-Route::post('/nurse/dashboard', [SessionController::class, 'create']);
+Route::get('/nurse/dashboard', [SessionController::class, 'create']);
 
 Route::get('/nurse/dashboard/medical-records', function() {
     return view('nurse.medical-records');
