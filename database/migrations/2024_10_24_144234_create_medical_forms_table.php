@@ -15,21 +15,6 @@ return new class extends Migration
             $table->id(); // form_id (primary key)
             $table->date('form_date'); // Date the form was filled
             $table->string('college_clinic_file_number');
-            $table->string('college_course');
-            $table->string('year');
-            $table->string('name');
-            $table->string('age_sex');
-            $table->date('birthday');
-            $table->string('home_address');
-            $table->string('religion')->nullable();
-            $table->string('municipal_address');
-            $table->string('occupation');
-            $table->string('contact_number');
-            $table->string('civil_status');
-            $table->string('emergency_contact_name');
-            $table->string('emergency_contact_number');
-            $table->string('emergency_contact_address');
-            $table->string('emergency_contact_relationship');
             $table->boolean('smoking')->nullable();
             $table->boolean('alcohol_drinking')->nullable();
             $table->boolean('illegal_drug_use')->nullable();

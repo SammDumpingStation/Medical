@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StoreDentalRecordsRequest;
-use App\Http\Requests\UpdateDentalRecordsRequest;
-use App\Models\DentalRecords;
+use App\Http\Requests\StorepatientRequest;
+use App\Http\Requests\UpdatepatientRequest;
+use App\Models\patient;
 
-class DentalRecordsController extends Controller
+class PatientController
 {
     /**
      * Display a listing of the resource.
@@ -27,7 +27,7 @@ class DentalRecordsController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreDentalRecordsRequest $request)
+    public function store(StorepatientRequest $request)
     {
         //
     }
@@ -35,7 +35,7 @@ class DentalRecordsController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(DentalRecords $dentalRecords)
+    public function show(patient $patient)
     {
         //
     }
@@ -43,7 +43,7 @@ class DentalRecordsController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(DentalRecords $dentalRecords)
+    public function edit(patient $patient)
     {
         //
     }
@@ -51,7 +51,7 @@ class DentalRecordsController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateDentalRecordsRequest $request, DentalRecords $dentalRecords)
+    public function update(UpdatepatientRequest $request, patient $patient)
     {
         //
     }
@@ -59,7 +59,7 @@ class DentalRecordsController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(DentalRecords $dentalRecords)
+    public function destroy(patient $patient)
     {
         //
     }

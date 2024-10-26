@@ -23,10 +23,7 @@
         }
     </style>
     <livewire:nav />
-    <div class="flex-1 flex flex-col">
-        <livewire:horizontal-nav />
-        {{ $slot }}
-    </div>
+    {{ $slot }}
 </body>
 
 </html>

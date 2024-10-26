@@ -36,8 +36,6 @@ body {
 }
 
 .header-text {
-    margin-bottom: 20px; /* This will be overridden */
-    margin-bottom: 25px; /* Highest priority */
     color: #003366; /* Highest priority */
     font-weight: bold; /* Highest priority */
     font-size: 24px; /* Highest priority */

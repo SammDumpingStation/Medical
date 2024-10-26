@@ -1,8 +1,9 @@
 <?php
 
+use App\Livewire\DoctorDashboard;
 use App\Livewire\Login;
 use App\Livewire\NurseDashboard;
-use App\Livewire\Welcome;
+use App\Livewire\PatientDashboard;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -18,3 +19,5 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', Login::class);
 Route::get('/nurse', NurseDashboard::class);
+Route::get('/doctor', DoctorDashboard::class);
+Route::get('/patient', PatientDashboard::class);

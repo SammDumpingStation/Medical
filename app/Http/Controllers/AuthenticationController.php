@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StoreDentalRequest;
-use App\Http\Requests\UpdateDentalRequest;
-use App\Models\Dental;
+use App\Http\Requests\StoreAuthenticationRequest;
+use App\Http\Requests\UpdateAuthenticationRequest;
+use App\Models\Authentication;
 
-class DentalController extends Controller
+class AuthenticationController
 {
     /**
      * Display a listing of the resource.
@@ -27,7 +27,7 @@ class DentalController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreDentalRequest $request)
+    public function store(StoreAuthenticationRequest $request)
     {
         //
     }
@@ -35,7 +35,7 @@ class DentalController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Dental $dental)
+    public function show(Authentication $authentication)
     {
         //
     }
@@ -43,7 +43,7 @@ class DentalController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Dental $dental)
+    public function edit(Authentication $authentication)
     {
         //
     }
@@ -51,7 +51,7 @@ class DentalController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateDentalRequest $request, Dental $dental)
+    public function update(UpdateAuthenticationRequest $request, Authentication $authentication)
     {
         //
     }
@@ -59,7 +59,7 @@ class DentalController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Dental $dental)
+    public function destroy(Authentication $authentication)
     {
         //
     }
