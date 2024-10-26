@@ -1,26 +1,20 @@
 <?php
 
-use App\Http\Controllers\SessionController;
+use App\Livewire\Login;
+use App\Livewire\NurseDashboard;
+use App\Livewire\Welcome;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', [SessionController::class, 'index']);
-Route::get('/nurse/dashboard', [SessionController::class, 'create']);
+/*
+|--------------------------------------------------------------------------
+| Web Routes
+|--------------------------------------------------------------------------
+|
+| Here is where you can register web routes for your application. These
+| routes are loaded by the RouteServiceProvider and all of them will
+| be assigned to the "web" middleware group. Make something great!
+|
+*/
 
-Route::get('/nurse/dashboard/medical-records', function() {
-    return view('nurse.medical-records');
-});
-
-Route::get('/nurse/dashboard/dental-records', function () {
-    return view('nurse.dental-records');
-});
-
-Route::get('/nurse/dashboard/medicine-records', function () {
-    return view('nurse.medicine-records');
-});
-
-Route::get('/nurse/dashboard/follow-up-checkup', function () {
-    return view('nurse.follow-up-checkup');
-});
-
-
-
+Route::get('/', Login::class);
+Route::get('/nurse', NurseDashboard::class);

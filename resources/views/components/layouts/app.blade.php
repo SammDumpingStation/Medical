@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 
 <head>
     <meta charset="UTF-8">
@@ -13,15 +13,18 @@
     <link rel="stylesheet" href="{{ asset('css/navbar.css') }}">
     {{ $styles ?? '' }}
     @vite('resources/css/app.css')
-    <title>{{ $heading ?? 'NBSC HOS' }}</title>
+    <title>{{ $title ?? 'NBSC HOS' }}</title>
 </head>
 
-<body class="bg-[#F6F8FA] flex">
-    <x-nav />
-    <div class="flex-1 flex flex-col gap-4">
-        <nav class="bg-white h-16 border-b border-[#E9EAEE] flex items-center px-6">
-            <h1 class="font-bold text-2xl">Nurse</h1>
-        </nav>
+<body class="bg-[#F6F8FA] flex h-screen">
+    <style>
+        [x-cloak] {
+            display: none !important;
+        }
+    </style>
+    <livewire:nav />
+    <div class="flex-1 flex flex-col">
+        <livewire:horizontal-nav />
         {{ $slot }}
     </div>
 </body>
