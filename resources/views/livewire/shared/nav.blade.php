@@ -16,10 +16,12 @@
     </div>
     <h1 class="text-[#9b9b9b] mt-6">MAIN MENU</h1>
     <div class="">
-        <livewire:main-menu title="Dashboard" icon="fa-home" href="/nurse"/>
-        <livewire:main-menu title="Medical Records" icon="fa-medkit" href="/nurse/medical-records" />
+        <livewire:main-menu title="Dashboard" icon="fa-home" href="/nurse" />
+        <livewire:main-menu title="Student Health Profile" icon="fa-medkit" href="/nurse/medical-records" />
         <livewire:main-menu title="Dental Records" icon="fa-tooth" href="/nurse/dental-records" />
         <livewire:main-menu title="Medicine Records" icon="fa-capsules" href="/nurse/medicine-records" />
-        <livewire:main-menu title="Checkup" icon="fa-stethoscope" href="/nurse/checkup" />
+        <livewire:main-menu title="Inventory" icon="fa-boxes" href="/nurse" />
+        <livewire:main-menu title="Statistics" icon="fa-chart-bar" href="/nurse" />
+        <livewire:main-menu title="Checkup" icon="fa-stethoscope" href="/nurse/check-up" />
     </div>
 </nav>

@@ -1,8 +1,10 @@
 <?php
 
+use App\Livewire\CheckUp;
 use App\Livewire\DoctorDashboard;
 use App\Livewire\Login;
 use App\Livewire\MedicalRecord;
+use App\Livewire\MedicineRecord;
 use App\Livewire\NurseDashboard;
 use App\Livewire\PatientDashboard;
 use Illuminate\Support\Facades\Route;
@@ -21,6 +23,11 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', Login::class);
 Route::get('/nurse', NurseDashboard::class);
 Route::get('/nurse/medical-records', MedicalRecord::class);
+Route::get('/nurse/medicine-records', MedicineRecord::class);
+Route::get('/nurse/statistics', MedicalRecord::class);
+Route::get('/nurse/inventory', MedicalRecord::class);
+Route::get('/nurse/check-up', CheckUp::class);
+
 
 Route::get('/doctor', DoctorDashboard::class);
 Route::get('/patient', PatientDashboard::class);

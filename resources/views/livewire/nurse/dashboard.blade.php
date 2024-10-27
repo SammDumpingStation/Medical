@@ -6,11 +6,6 @@
                     <i class="fas fa-plus text-white text-lg"></i>
                     <button @click="$dispatch('open-modal')" class="text-white">Record Vital Signs</button>
                 </div>
-                <div class="bg-[#003366] px-4 py-2 rounded-full flex flex-row items-center gap-2">
-                    <i class="fas fa-plus text-white text-lg"></i>
-                    <button @click="$dispatch('open-modal')" class="text-white">Record Pregnancy</button>
-                </div>
-
             </section>
             <div class="flex flex-row flex-wrap gap-4">
                 <livewire:card-component title="Medical Records" />
@@ -22,7 +17,7 @@
             <livewire:vital-form />
 
         </main>
-    </div> 
+    </div>
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>

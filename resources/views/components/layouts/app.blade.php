@@ -12,6 +12,10 @@
     <link rel="stylesheet" href="{{ asset('css/layout.css') }}">
     <link rel="stylesheet" href="{{ asset('css/navbar.css') }}">
     <link rel="stylesheet" href="{{ asset('css/medicalrecs.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/followup.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/medicine.css') }}">
+
+
 
     {{ $styles ?? '' }}
     @vite('resources/css/app.css')
@@ -27,4 +31,5 @@
     <livewire:nav />
     {{ $slot }}
 </body>
+
 </html>

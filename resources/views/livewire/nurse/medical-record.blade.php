@@ -1,4 +1,9 @@
-<main class="flex-1">
+<div class="flex-1">
+    <livewire:horizontal-nav />
+    <livewire:health-profile-form />
+</div>
+
+{{-- <main class="flex-1">
     <livewire:horizontal-nav />
     <div class="container-fluid">
         <div class="row">
@@ -145,4 +150,4 @@
             </section>
 
             <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-</main>
+</main> --}}

@@ -11,8 +11,13 @@ class Horizontalnav extends Component
     public $role;
     public function mount()
     {
-        $this->user = Auth::user();
-        $this->role = Auth::user()->role;
+        if (Auth::user()) {
+            $this->user = Auth::user();
+            $this->role = Auth::user()->role;
+        } else {
+            redirect()->intended('/');
+        }
+
     }
 
     public function logout()
