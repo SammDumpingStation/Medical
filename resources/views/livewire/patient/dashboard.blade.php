@@ -10,13 +10,7 @@
                 </div>
 
             </section>
-            <div class="flex flex-row flex-wrap gap-4">
-                <livewire:card-component title="Medical Records" />
-                <livewire:card-component title="Dental Records" />
-                <livewire:card-component title="Medicine Records" />
-                <livewire:card-component title="Follow-up Checkup" />
-            </div>
-            <livewire:nurse-table />
+            <livewire:patient-table />
             <livewire:vital-form />
 
         </main>

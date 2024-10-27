@@ -1,66 +1,10 @@
-<?php
-$sidebar_patients = '';
-?>
-
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Health Profile</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="{{ asset('css/medicalrecs.css') }}">
-</head>
-
-<body>
-    <nav class="navbar navbar-expand-lg navbar-dark navbar-custom">
-        <a class="navbar-brand" href="#">
-            <img src="{{ asset("images/Nbsc_logo-removebg-preview.png") }}" alt="NBSC HOS" width="50" height="50"> NBSC HOS
-        </a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#main_nav"
-            aria-controls="main_nav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="main_nav">
-            <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
-                        data-bs-toggle="dropdown" aria-expanded="false">Panel</a>
-                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                        <li><a class="dropdown-item" href="../logout.php">Logout</a></li>
-                        <li><a class="dropdown-item" href="welcome2.php">Home</a></li>
-                    </ul>
-                </li>
-            </ul>
-        </div>
-    </nav>
+<main class="flex-1">
+    <livewire:horizontal-nav />
     <div class="container-fluid">
         <div class="row">
-            <nav class="col-md-3 sidebar">
-                <h5>Patient List</h5>
-                <div class="input-group mb-3">
-                    <form method="GET" action="" class="d-flex align-items-center">
-                        <input type="text" class="form-control custom-search-bar" placeholder="Search patient"
-                            aria-label="Search patient" value="<?php echo isset($_GET['search_term']) ? htmlspecialchars($_GET['search_term']) : ''; ?>">
-                        <button class="btn btn-primary custom-search-btn" type="submit">Search</button>
-                    </form>
-                </div>
-                <ul class="list-group">
-                    @if ($sidebar_patients)
-                        @foreach ($sidebar_patients as $patient)
-                            <li class="list-group-item <?php echo $patient_id == $patient['form_id'] ? 'active' : ''; ?>">
-                                <a href="?form_id=<?php echo $patient['form_id']; ?>">
-                                    <?php echo htmlspecialchars($patient['name'] ?? 'Loram'); ?>
-                                </a>
-                            </li>
-                        @endforeach
-                    @endif
-                </ul>
-            </nav>
-            <main class="col-md-9 content">
-                <div class="profile-header">
-                    <img src={{ asset("images/Nbsc_logo-removebg-preview.png") }} alt="Profile Logo">
+            <section class="col-md-9 content flex-1">
+                <div class="profile-header flex flex-col items-center justify-center">
+                    <img src={{ asset('images/Nbsc_logo-removebg-preview.png') }} alt="Profile Logo">
                     <h5>
                         Republic of the Philippines
                         <br />
@@ -73,7 +17,7 @@ $sidebar_patients = '';
                         HEALTH PROFILE
                     </h5>
                 </div>
-                <div class="profile" id="printableProfile">
+                <div class="profile bg-white" id="printableProfile">
                     <h4>PERSONAL PROFILE</h4>
                     <div class="row">
                         <div class="col-md-6">
@@ -197,8 +141,8 @@ $sidebar_patients = '';
                             window.print(); // Directly trigger the print dialog
                         });
                     </script>
+                </div>
+            </section>
 
-                    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-</body>
-
-</html>
+            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</main>

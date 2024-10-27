@@ -9,7 +9,7 @@ use Livewire\Component;
 
 class Login extends Component
 {
-    public $id_number = "ID2945";
+    public $id_number = "ID5945";
     public $password = "admin123";
 
     protected $rules = [

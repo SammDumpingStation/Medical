@@ -11,12 +11,14 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
     <link rel="stylesheet" href="{{ asset('css/layout.css') }}">
     <link rel="stylesheet" href="{{ asset('css/navbar.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/medicalrecs.css') }}">
+
     {{ $styles ?? '' }}
     @vite('resources/css/app.css')
     <title>{{ $title ?? 'NBSC HOS' }}</title>
 </head>
 
-<body class="bg-[#F6F8FA] flex h-screen">
+<body class="bg-[#F6F8FA] flex min-h-screen">
     <style>
         [x-cloak] {
             display: none !important;
@@ -25,5 +27,4 @@
     <livewire:nav />
     {{ $slot }}
 </body>
-
 </html>

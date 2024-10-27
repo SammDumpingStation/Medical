@@ -30,9 +30,6 @@
                 <th scope="col" class="px-6 py-3">
                     Status
                 </th>
-                <th scope="col" class="px-3 py-3">
-                    <i class="fas fa-dot"></i>
-                </th>
             </tr>
         </thead>
         <tbody>

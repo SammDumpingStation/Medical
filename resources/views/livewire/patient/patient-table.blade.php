@@ -1,6 +1,6 @@
 <div class="relative rounded-2xl p-4 overflow-x-auto shadow-md flex-1 bg-white flex flex-col gap-4">
     <div class="flex justify-between">
-        <h1 class="text-xl font-bold">Patient List</h1>
+        <h1 class="text-xl font-bold">Check-Up List</h1>
         <di class="border pl-3 gap-2 py-1 flex items-center rounded-md w-64">
             <i class="fas fa-search text-[#9b9b9b]"></i>
             <input type="text" class="bg-white flex-1 border-none" placeholder="Search Patients">
@@ -29,9 +29,6 @@
                 </th>
                 <th scope="col" class="px-6 py-3">
                     Status
-                </th>
-                <th scope="col" class="px-3 py-3">
-                    <i class="fas fa-dot"></i>
                 </th>
             </tr>
         </thead>

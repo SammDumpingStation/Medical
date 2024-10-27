@@ -16,7 +16,7 @@
                 <livewire:card-component title="Medicine Records" />
                 <livewire:card-component title="Follow-up Checkup" />
             </div>
-            <livewire:nurse-table />
+            <livewire:doctor-table />
             <livewire:prescription-form />
 
         </main>
