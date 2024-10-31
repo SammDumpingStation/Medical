@@ -13,13 +13,6 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
         rel="stylesheet">
-    <link rel="stylesheet" href="http://localhost:1313//app.css">
-    <link rel="apple-touch-icon" sizes="180x180" href="http://localhost:1313/apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="http://localhost:1313/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="http://localhost:1313/favicon-16x16.png">
-    <link rel="icon" type="image/png" href="http://localhost:1313/favicon.ico">
-    <link rel="manifest" href="http://localhost:1313/site.webmanifest">
-    <link rel="mask-icon" href="http://localhost:1313/safari-pinned-tab.svg" color="#5bbad5">
     <meta name="msapplication-TileColor" content="#ffffff">
     <meta name="theme-color" content="#ffffff">
 
@@ -33,12 +26,13 @@
     }
 </script>
 
-<body class="bg-gray-50 dark:bg-gray-800 ">
+<body class="bg-gray-50 dark:bg-gray-800 h-screen ">
     <livewire:navbar />
-    <div class="flex flex-col pt-[85px] overflow-hidden lg:ml-64 px-4 bg-gray-50 dark:bg-gray-900">
+    <div class="flex flex-col min-h-full pt-[90px] overflow-hidden lg:ml-64 px-4 bg-gray-50 dark:bg-gray-900">
         <livewire:sidebar />
         {{ $slot }}
     </div>
+    <script src="../path/to/flowbite/dist/flowbite.min.js"></script>
 </body>
 
 </html>

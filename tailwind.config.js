@@ -3,6 +3,7 @@ import defaultTheme from "tailwindcss/defaultTheme";
 /** @type {import('tailwindcss').Config} */
 export default {
     content: [
+        "./node_modules/flowbite/**/*.js",
         "./vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php",
         "./storage/framework/views/*.php",
         "./resources/**/*.blade.php",
@@ -97,5 +98,10 @@ export default {
             },
         },
     },
-    plugins: [require("flowbite/plugin")],
+    plugins: [
+        require("flowbite/plugin")({
+            charts: true,
+        }),
+        // ... other plugins
+    ],
 };
