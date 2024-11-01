@@ -8,9 +8,17 @@ Route::get('/', function () {
 Route::get('/consultations', function () {
     return view('staff.consultations');
 });
-Route::get('/student-records', function () {
-    return view('staff.student-records');
+Route::get('/health-profile', function () {
+    return view('staff.health-profile');
 });
+Route::get('/prescriptions', function () {
+    return view('staff.prescriptions');
+});
+
+Route::get('/dental-records', function () {
+    return view('staff.dental-records');
+});
+
 Route::get('/pharmacy', function () {
     return view('staff.pharmacy');
 });
@@ -20,4 +28,3 @@ Route::get('/statistics', function () {
 Route::get('/inventory', function () {
     return view('staff.inventory');
 });
-

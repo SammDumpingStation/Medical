@@ -14,9 +14,7 @@
         </h3>
         <p class="text-gray-500 dark:text-gray-400">{{ $subtitle }}</p>
     </div>
-    <div class="flex justify-center mx-auto items-center w-full min-h-[200px]">
-        <div id="{{ $id }}"></div>
-    </div>
+    <div ></div>
     <div class="flex items-center justify-end pt-3 mt-4 border-t border-gray-200 dark:border-gray-700">
         <div class="flex-shrink-0">
             <a href="#"
