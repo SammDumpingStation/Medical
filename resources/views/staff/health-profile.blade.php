@@ -21,22 +21,22 @@
                     <li class="me-2" role="presentation">
                         <button
                             class="inline-block p-4 border-b-2 rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300"
-                            id="social_history-tab" data-tabs-target="#social_history" type="button" role="tab"
-                            aria-controls="social_history" aria-selected="false">Social History</button>
+                            id="social-history-tab" data-tabs-target="#social-history" type="button" role="tab"
+                            aria-controls="social-history" aria-selected="false">Social History</button>
                     </li>
                     <li class="me-2" role="presentation">
                         <button
                             class="inline-block p-4 border-b-2 rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300"
-                            id="medical_history-tab" data-tabs-target="#medical_history" type="button" role="tab"
-                            aria-controls="medical_history" aria-selected="false">Past Medical History</button>
+                            id="medical-history-tab" data-tabs-target="#medical-history" type="button" role="tab"
+                            aria-controls="medical-history" aria-selected="false">Medical History</button>
                     </li>
-                    <li class="me-2" role="presentation">
+                    <li role="presentation">
                         <button
                             class="inline-block p-4 border-b-2 rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300"
-                            id="surgical_history-tab" data-tabs-target="#surgical_history" type="button" role="tab"
-                            aria-controls="surgical_history" aria-selected="false">Past Surgical History</button>
+                            id="surgical-history-tab" data-tabs-target="#surgical-history" type="button" role="tab"
+                            aria-controls="surgical-history" aria-selected="false">Surgical History</button>
                     </li>
-                    <li class="" role="presentation">
+                    <li role="presentation">
                         <button
                             class="inline-block p-4 border-b-2 rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300"
                             id="immunizations-tab" data-tabs-target="#immunizations" type="button" role="tab"
@@ -44,41 +44,29 @@
                     </li>
                 </ul>
             </div>
-            <div>
-                <div id="default-tab-content">
-                    <div class="hidden p-4 rounded-lg bg-white dark:bg-gray-800" id="profile" role="tabpanel"
-                        aria-labelledby="profile-tab">
-                        <livewire:first-form-hp />
-                    </div>
-                    <div class="hidden p-4 rounded-lg bg-white dark:bg-gray-800" id="social_history" role="tabpanel"
-                        aria-labelledby="social_history-tab">
-                        <livewire:second-form-hp />
-                    </div>
-                    <div class="hidden p-4 rounded-lg bg-white dark:bg-gray-800" id="medical_history" role="tabpanel"
-                        aria-labelledby="medical_history-tab">
-                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Laudantium accusamus quod sed
-                            laborum iste consequatur harum in commodi sunt aut animi, nobis fuga dolore at numquam error
-                            eos eius. Vero.</p>
-                        {{-- <livewire:third-form-hp /> --}}
-                    </div>
-                    <div class="hidden p-4 rounded-lg bg-white dark:bg-gray-800" id="surgical_history" role="tabpanel"
-                        aria-labelledby="surgical_history-tab">
-                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Laudantium accusamus quod sed
-                            laborum iste consequatur harum in commodi sunt aut animi, nobis fuga dolore at numquam error
-                            eos eius. Vero.</p>
-
-                        <livewire:fourth-form-hp />
-                    </div>
-                    <div class="hidden p-4 rounded-lg bg-white dark:bg-gray-800" id="immunizations" role="tabpanel"
-                        aria-labelledby="immunizations-tab">
-                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Laudantium accusamus quod sed
-                            laborum iste consequatur harum in commodi sunt aut animi, nobis fuga dolore at numquam error
-                            eos eius. Vero.</p>
-
-                        <livewire:fifth-form-hp />
-                    </div>
+            <div id="default-tab-content">
+                <div class="hidden p-4 rounded-lg bg-white dark:bg-gray-800" id="profile" role="tabpanel"
+                    aria-labelledby="profile-tab">
+                    <livewire:first-form-hp />
+                </div>
+                <div class="hidden p-4 rounded-lg bg-white dark:bg-gray-800" id="social-history" role="tabpanel"
+                    aria-labelledby="social-history-tab">
+                    <livewire:second-form-hp />
+                </div>
+                <div class="hidden p-4 rounded-lg bg-white dark:bg-gray-800" id="medical-history" role="tabpanel"
+                    aria-labelledby="medical-history-tab">
+                    <livewire:third-form-hp />
+                </div>
+                <div class="hidden p-4 rounded-lg bg-white dark:bg-gray-800" id="surgical-history" role="tabpanel"
+                    aria-labelledby="surgical-history-tab">
+                    <livewire:fourth-form-hp />
+                </div>
+                <div class="hidden p-4 rounded-lg bg-white dark:bg-gray-800" id="immunizations" role="tabpanel"
+                    aria-labelledby="immunizations-tab">
+                    <livewire:fifth-form-hp />
                 </div>
             </div>
+
         </div>
     </section>
 </x-layout>

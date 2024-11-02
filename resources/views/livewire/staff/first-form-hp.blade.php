@@ -1,8 +1,8 @@
-<form class="space-y-14">
+<div class="space-y-14">
     <div>
         <h2 class="text-lg font-bold leading-none tracking-tight text-gray-900 md:text-2xl dark:text-white mb-6">
             Personal Information</h2>
-        <div class="grid gap-6 mb-6 md:grid-cols-2">
+        <div class="grid ml-6 gap-6 mb-6 md:grid-cols-2">
             <div class="">
                 <label for="full_name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Full
                     name</label>
@@ -34,7 +34,7 @@
                 <div>
                     <label for="birthday" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
                         Birthday</label>
-                    <livewire:datepicker />
+                    <livewire:datepicker id="birthday-datepicker" />
                 </div>
             </div>
             <div>
@@ -92,7 +92,7 @@
     <div>
         <h2 class="text-lg font-bold leading-none tracking-tight text-gray-900 md:text-2xl dark:text-white mb-6">
             Emergency Contact Information</h2>
-        <div class="grid gap-6 mb-6 md:grid-cols-2">
+        <div class="grid ml-6 gap-6 mb-6 md:grid-cols-2">
             <div class="">
                 <label for="full_name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Contact
                     Person
@@ -133,6 +133,14 @@
             </div>
         </div>
     </div>
+    <div class="">
+        <h2 class="text-lg font-bold leading-none tracking-tight text-gray-900 md:text-2xl dark:text-white mb-6">
+            Additional Questions</h2>
+        <div class="grid grid-cols-2 ml-6 gap-6">
+            <livewire:toggle title="Willing to donate blood?" />
+            <livewire:toggle title="Person with disability" />
+        </div>
+    </div>
 
     <div class="flex items-end justify-end w-full">
         <button data-tabs-target="#dashboard" type="button" role="tab" aria-controls="dashboard"
@@ -140,4 +148,4 @@
             class="mt-5 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Next</button>
     </div>
 
-</form>
+</div>

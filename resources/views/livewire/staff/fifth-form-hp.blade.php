@@ -1,140 +1,65 @@
 <form class="space-y-14">
     <div>
-        <h2 class="text-lg font-bold leading-none tracking-tight text-gray-900 md:text-2xl dark:text-white mb-4">
-            Personal Information</h2>
+        <h2 class="text-lg font-bold leading-none tracking-tight text-gray-900 md:text-2xl dark:text-white mb-6">
+            Immunization</h2>
         <div class="grid gap-6 mb-6 md:grid-cols-2">
-            <div class="">
-                <label for="full_name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Full
-                    name</label>
-                <input type="text" id="full_name"
-                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                    placeholder="John Doe" required />
-            </div>
-            <div class=" grid gap-3 grid-cols-2">
-                <div class="max-w-sm flex gap-3">
-                    <div class="w-20">
-                        <label for="age"
-                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Age</label>
-                        <input type="number" id="age" aria-describedby="helper-text-explanation"
-                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                            placeholder="21" required />
-                    </div>
-                    <div class="flex-1">
-                        <label for="gender"
-                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Gender</label>
-                        <select id="gender"
-                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                            <option selected>Choose a gender</option>
-                            <option value="Male">Male</option>
-                            <option value="Female">Female</option>
-                            <option value="Others">Others</option>
-                        </select>
-                    </div>
-                </div>
-                <div>
-                    <label for="birthday" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                        Birthday</label>
-                    <livewire:datepicker />
+            <div>
+                <label for="newborn-immunizations"
+                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Civil
+                    Completed Newborn Immunizations during childhood?
+                </label>
+                <div class="flex ml-4 gap-6">
+                    <livewire:radio title="Yes" id="newborn-immunization-yes" value="yes"
+                        name="newborn-immunization" />
+                    <livewire:radio :default="true" title="No" id="newborn-immunization-no" value="no"
+                        name="newborn-immunization" />
+                    <livewire:radio title="Unknown" id="newborn-immunization-unknown" value="unknown"
+                        name="newborn-immunization" />
                 </div>
             </div>
             <div>
-                <label for="Address"
-                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Address</label>
-                <input type="text" id="Address"
-                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                    placeholder="ex. Tankulan, Manolo Fortich, Bukidnon" required />
-            </div>
-            <div>
-                <label for="municipal"
-                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Municipal</label>
-                <input type="text" id="mucicipal"
-                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                    placeholder="Manolo Fortich" required />
-            </div>
-            <div>
-                <label for="religion" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Religion
+                <label for="newborn-immunizations"
+                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Civil
+                    For Women
                 </label>
-                <input type="text" id="religion"
-                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                    placeholder="Catholic" required />
+                <livewire:toggle title="HPV" />
             </div>
-            <div>
-                <label for="occupation" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Occupation
-                </label>
-                <input type="text" id="occupation"
-                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                    placeholder="Student" required />
-            </div>
-            <div>
-                <label for="phone" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Phone
-                    number</label>
-                <input type="tel" id="phone"
-                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                    placeholder="123-45-678" pattern="[0-9]{3}-[0-9]{2}-[0-9]{3}" required />
-            </div>
-
-            <div>
-                <label for="civil_status" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Civil
-                    Status
-                </label>
-                <select id="gender"
-                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                    <option selected>Choose a status</option>
-                    <option value="Single">Single</option>
-                    <option value="Married">Married</option>
-                    <option value="Divorced">Divorced</option>
-                    <option value="Widowed">Widowed</option>
-                    <option value="Divorced">Divorced</option>
-                </select>
-            </div>
+            <livewire:toggle title="Tetanus Toxoid" />
+            <livewire:toggle title="Influenza/Flu" />
+            <livewire:toggle title="Pneumococcal Vaccine" />
+            <livewire:toggle title="Others" />
         </div>
     </div>
     <div>
-        <h2 class="text-lg font-bold leading-none tracking-tight text-gray-900 md:text-2xl dark:text-white mb-4">
-            Emergency Contact Information</h2>
+        <h2 class="text-lg font-bold leading-none tracking-tight text-gray-900 md:text-2xl dark:text-white mb-6">
+            Covid 19 Specifics</h2>
         <div class="grid gap-6 mb-6 md:grid-cols-2">
-            <div class="">
-                <label for="full_name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Contact
-                    Person
-                    (Full name)</label>
-                <input type="text" id="full_name"
-                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                    placeholder="John Doe" required />
-            </div>
-
             <div>
-                <label for="Address"
-                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Address</label>
-                <input type="text" id="Address"
-                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                    placeholder="ex. Tankulan, Manolo Fortich, Bukidnon" required />
+                <livewire:toggle :default="true" title=" COVID-19 Vaccinated" />
+                <livewire:toggle title="1st Dose" />
+                <livewire:toggle title="2nd Dose" />
             </div>
-
             <div>
-                <label for="phone" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Phone
-                    number</label>
-                <input type="tel" id="phone"
-                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                    placeholder="123-45-678" pattern="[0-9]{3}-[0-9]{2}-[0-9]{3}" required />
+                <livewire:toggle title=" COVID-19 Booster" />
+                <livewire:toggle title="1st Booster" />
+                <livewire:toggle title="2nd Booster" />
             </div>
-
             <div>
-                <label for="relationship" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                    Relationship
+                <label for="unvaccinated" class="block mb-3 font-medium text-gray-900 dark:text-white">Are you
+                    Unvaccinated w/ Covid-19 Reason
                 </label>
-                <select id="relationship"
-                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                    <option selected>Choose a relationship</option>
-                    <option value="Parent">Parent</option>
-                    <option value="Guardian">Guardian</option>
-                    <option value="Sibling">Sibling</option>
-                    <option value="Other">Other</option>
-                </select>
+                <input type="text" id="unvaccinated"
+                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    placeholder="Zombie Virus" required />
             </div>
         </div>
     </div>
 
-    <div class="flex items-end justify-end w-full">
+
+    <div class="flex items-center justify-between w-full">
+        <button data-tabs-target="#dashboard" type="button" role="tab" aria-controls="dashboard"
+            aria-selected="false"
+            class="mt-5 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Previous</button>
         <button data-tabs-target="#dashboard" type="button" role="tab" aria-controls="dashboard"
             aria-selected="false"
             class="mt-5 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Next</button>

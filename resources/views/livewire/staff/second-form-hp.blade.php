@@ -1,8 +1,8 @@
-<form>
+<div>
     <div>
         <h2 class="text-lg font-bold leading-none tracking-tight text-gray-900 md:text-2xl dark:text-white mb-6">
             Social History</h2>
-        <div class="grid gap-6 mb-6 md:grid-cols-2">
+        <div class="grid ml-6 gap-6 mb-6 md:grid-cols-2">
             <div>
                 <label for="smoking" class="block mb-3 font-medium text-gray-900 dark:text-white">Are you
                     Smoking (Cigarrates, Vape, E-Cigar)?
@@ -54,5 +54,5 @@
                 aria-selected="false"
                 class="mt-5 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Next</button>
         </div>
-
-</form>
+    </div>
+</div>
