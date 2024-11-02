@@ -3,8 +3,14 @@
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
+    return view('auth.login');
+});
+
+Route::get('/dashboard', function () {
     return view('staff.dashboard');
 });
+
+
 Route::get('/consultations', function () {
     return view('staff.consultations');
 });

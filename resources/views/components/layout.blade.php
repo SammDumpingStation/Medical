@@ -31,10 +31,13 @@
     <div class="flex flex-col min-h-full pt-[90px] overflow-hidden lg:ml-64 px-4 bg-gray-50 dark:bg-gray-900">
         <livewire:sidebar />
         <div class="fixed inset-0 z-10 hidden bg-gray-900/50 dark:bg-gray-900/90" id="sidebarBackdrop"></div>
-        {{ $slot }}
+        <div class="min-h-[70vh]">
+            {{ $slot }}
+        </div>
         <livewire:footer />
         <p class="my-10 text-sm text-center text-gray-500">
-            &copy; 2024 <a href="https://nbsc.edu.ph/" class="hover:underline" target="_blank">Northern Bukidnon State College</a>.
+            &copy; 2024 <a href="https://nbsc.edu.ph/" class="hover:underline" target="_blank">Northern Bukidnon
+                State College</a>.
             All rights reserved.
         </p>
     </div>
