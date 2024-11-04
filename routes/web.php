@@ -14,6 +14,11 @@ Route::get('/dashboard', function () {
 Route::get('/consultations', function () {
     return view('staff.consultations');
 });
+
+Route::get('/consultations/vital-form', function () {
+    return view('staff.vital-form');
+});
+
 Route::get('/health-profile', function () {
     return view('staff.health-profile');
 });
