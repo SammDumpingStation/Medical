@@ -24,16 +24,13 @@
                     clip-rule="evenodd"></path>
             </svg>
         </button>
-        <ul id="dropdown-layouts" class="hidden py-2 space-y-2">
-            <li>
-                <a href=""
-                    class="flex items-center p-2 text-base text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-700">Stacked</a>
-            </li>
-            <li>
-                <a href=""
-                    class="flex items-center p-2 text-base text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-700">Sidebar</a>
-            </li>
+        <ul id="dropdown-layouts" class=" py-2 space-y-2">
+            @foreach ($menuList as $key => $value)
+                <li>
+                    <a href="{{ $value }}"
+                        class="{{ request()->is(ltrim($value, '/')) ? 'bg-gray-100 text-gray-900 dark:bg-gray-700' : 'text-gray-500' }} flex items-center p-2 text-base text-gray-500 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-700">{{ $key }}</a>
+                </li>
+            @endforeach
         </ul>
     @endif
-
 </li>

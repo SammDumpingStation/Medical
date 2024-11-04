@@ -12,7 +12,7 @@ class Checkbox extends Component
     public string $name;
     public string $value;
 
-    public function mount(bool $default = false, string $title = 'Lorem', string $id = '1', string $name = 'Default', string $value = 'Default')
+    public function mount(bool $default = false, string $title = '', string $id = '1', string $name = 'Default', string $value = 'Default')
     {
         $this->default = $default;
         $this->title = $title;

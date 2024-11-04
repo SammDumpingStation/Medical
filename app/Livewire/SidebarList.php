@@ -11,14 +11,16 @@ class SidebarList extends Component
     public string $href;
     public string $active;
     public bool $isDropdown;
+    public $menuList;
 
-
-    public function mount(string $label, $icon, string $href, string $active, bool $isDropdown = false) {
+    public function mount(string $label, $icon, string $href, string $active, bool $isDropdown = false, array $menuList  = [])
+    {
         $this->label = $label;
         $this->icon = $icon;
         $this->href = $href;
         $this->active = $active;
         $this->isDropdown = $isDropdown;
+        $this->menuList = $menuList;
     }
 
     public function render()

@@ -1,7 +1,6 @@
 <form class="space-y-14">
     <div>
-        <h2 class="text-lg font-bold leading-none tracking-tight text-gray-900 md:text-2xl dark:text-white mb-6">
-            Immunization</h2>
+        <h4 class="text-xl mb-4 font-bold dark:text-white">Immunization</h4>
         <div class="grid gap-6 mb-6 md:grid-cols-2">
             <div>
                 <label for="newborn-immunizations"
@@ -31,8 +30,7 @@
         </div>
     </div>
     <div>
-        <h2 class="text-lg font-bold leading-none tracking-tight text-gray-900 md:text-2xl dark:text-white mb-6">
-            Covid 19 Specifics</h2>
+        <h4 class="text-xl mb-4 font-bold dark:text-white">Covid 19 Specifics</h4>
         <div class="grid gap-6 mb-6 md:grid-cols-2">
             <div>
                 <livewire:toggle :default="true" title=" COVID-19 Vaccinated" />
@@ -56,13 +54,6 @@
     </div>
 
 
-    <div class="flex items-center justify-between w-full">
-        <button data-tabs-target="#dashboard" type="button" role="tab" aria-controls="dashboard"
-            aria-selected="false"
-            class="mt-5 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Previous</button>
-        <button data-tabs-target="#dashboard" type="button" role="tab" aria-controls="dashboard"
-            aria-selected="false"
-            class="mt-5 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Next</button>
-    </div>
+    <livewire:next-prev-button />
 
 </form>
