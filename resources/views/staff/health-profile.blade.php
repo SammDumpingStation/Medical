@@ -1,8 +1,8 @@
 <x-layout>
     <section>
         <div>
-            <h2 class="text-xl font-extrabold leading-none tracking-tight text-gray-900 md:text-3xl dark:text-white">
-                Health Profile</h2>
+            <h1 class="text-xl font-semibold text-gray-900 sm:text-2xl dark:text-white">Student Health Profile</h1>
+
             <p class="text-gray-500 dark:text-gray-400">Create a Student Health Profile</p>
         </div>
 

@@ -1,6 +1,5 @@
 <x-layout>
-    <h2 class="text-3xl font-extrabold leading-none tracking-tight text-gray-900 md:text-4xl dark:text-white">
-        Statistical Dashboard</h2>
+    <h1 class="text-xl font-semibold text-gray-900 sm:text-2xl dark:text-white">Statistical Dashboard</h1>
     <div class="px-4 pt-4 2xl:px-0">
         <div class="">
             <!-- Main widget -->
