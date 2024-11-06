@@ -16,47 +16,50 @@
 
 
 <body class="flex justify-center items-center h-[100vh] bg-[#003366]">
-
     <form action="/login" wire:submit="login" method="POST" class="w-[500px] bg-white p-8 rounded-2xl">
         @csrf
         <div class="flex flex-col items-center mb-10">
             <img src="images/nbsc-logo.png" class="h-24" alt="Logo" class="logo">
-            <h1
-                class="text-3xl font-extrabold leading-none tracking-tight text-gray-900 md:text-4xl dark:text-white">
+            <h1 class="text-3xl font-extrabold leading-none tracking-tight text-gray-900 md:text-4xl dark:text-white">
                 NBSC HOS</h1>
             <p class="mb-3 text-gray-500 dark:text-gray-400">Please fill in your credentials to login.</p>
         </div>
-        <div class="mb-6">
-            <label for="id-number" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Username</label>
-            <input type="text" id="id-number"
+        <div class="">
+            <label for="username" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Username</label>
+            <input type="text" name="username" id="username"
                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                 placeholder="name@example.com" required />
         </div>
-        @error('id_number')
-            <span class="text-red-500">{{ $message }}</span>
+        @error('username')
+            <span class="text-red-500 text-sm italic">{{ $message }}</span>
         @enderror
-        <div class="mb-3">
+        <div class="mt-6">
             <label for="password" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
                 Password</label>
-            <input type="password" id="password" placeholder="********"
+            <input type="password" name="password" id="password" placeholder="********"
                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                 required />
         </div>
         @error('password')
-            <span class="text-red-500">{{ $message }}</span>
+            <span class="text-red-500 text-sm italic">{{ $message }}</span>
         @enderror
-        <div class="flex items-start mb-5">
+        @if (session('error'))
+            <span class="text-red-500 text-sm italic">
+                {{ session('error') }}
+            </span>
+        @endif
+        <div class="flex items-start mb-5 mt-3">
             <div class="flex items-center h-5">
                 <input id="remember" type="checkbox" value=""
-                    class="w-4 h-4 border border-gray-300 cursor-pointer rounded bg-gray-50 focus:ring-3 focus:ring-blue-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800"
-                    required />
+                    class="w-4 h-4 border border-gray-300 cursor-pointer rounded bg-gray-50 focus:ring-3 focus:ring-blue-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800" />
             </div>
-            <label for="remember" class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300 cursor-pointer">Remember me</label>
+            <label for="remember"
+                class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300 cursor-pointer">Remember
+                me</label>
         </div>
-        <a href="/dashboard"
-            class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Submit</a>
+        <button type="submit"
+            class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Submit</button>
     </form>
-
 </body>
 
 </html>
