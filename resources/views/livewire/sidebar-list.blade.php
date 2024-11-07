@@ -6,7 +6,10 @@
                 class="{{ $active ? 'fill-gray-900 dark:fill-white' : 'fill-gray-500' }}  w-6 h-6 transition duration-75 group-hover:text-gray-900 dark:text-gray-400 dark:group-hover:text-white ">
                 {!! $icon !!}
             </div>
-            <span class="ml-3" sidebar-toggle-item>{{ $label }}</span>
+            <span
+                class="ml-3 whitespace-nowrap duration-300 ease-in-out overflow-hidden
+    {{ $sidebar ? 'opacity-100 w-auto flex' : 'hidden' }}"
+                sidebar-toggle-item>{{ $label }}</span>
         </a>
     @else
         <button type="button"

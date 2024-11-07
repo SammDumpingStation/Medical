@@ -17,6 +17,17 @@
                             clip-rule="evenodd"></path>
                     </svg>
                 </button>
+
+                <button wire:click="showSidebar" id="toggleSidebarMobile" aria-expanded="true"
+                    class="p-2 text-gray-600 rounded cursor-pointer hidden lg:block hover:text-gray-900 hover:bg-gray-100 focus:bg-gray-100 dark:focus:bg-gray-700 focus:ring-2 focus:ring-gray-100 dark:focus:ring-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
+                    <svg id="toggleSidebarMobileHamburger" class="w-8 h-8" fill="currentColor" viewBox="0 0 20 20"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd"
+                            d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h6a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z"
+                            clip-rule="evenodd"></path>
+                    </svg>
+                </button>
+
                 <a href="/" class="flex ml-2 md:mr-24">
                     <img src="{{ asset('images/nbsc-logo.png') }}" class="h-8 mr-3" alt="NBSC Logo" />
                     <span class="self-center text-xl font-semibold sm:text-2xl whitespace-nowrap dark:text-white">NBSC

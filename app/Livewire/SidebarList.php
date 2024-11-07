@@ -2,6 +2,7 @@
 
 namespace App\Livewire;
 
+use Livewire\Attributes\On;
 use Livewire\Component;
 
 class SidebarList extends Component
@@ -12,8 +13,15 @@ class SidebarList extends Component
     public string $active;
     public bool $isDropdown;
     public $menuList;
+    public $sidebar = true;
 
-    public function mount(string $label, $icon, string $href, string $active, bool $isDropdown = false, array $menuList  = [])
+    #[On('toggle-sidebar')]
+    public function toggleSidebar($sidebar)
+    {
+        $this->sidebar = $sidebar;
+    }
+
+    public function mount(string $label, $icon, string $href, string $active, bool $isDropdown = false, array $menuList = [])
     {
         $this->label = $label;
         $this->icon = $icon;

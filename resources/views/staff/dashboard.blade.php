@@ -1,18 +1,19 @@
 <x-layout>
-    <div class="px-4 flex flex-col mt-4 gap-4">
+    <x-slot:title>
+        Dashboard
+    </x-slot:title>
+    <div class="px-4 flex flex-col mt-4 gap-4 bg-white dark:bg-gray-900">
         <h1 class="text-xl font-semibold text-gray-900 sm:text-2xl dark:text-white">Dashboard</h1>
         <div class="grid gap-4 mb-4 md:grid-cols-2 xl:grid-cols-4">
-            <livewire:small-card title="Clinic Visits" subtitle="Visitors This Week" footer="Visits Report"
-                id="clinic-chart" />
-            <livewire:small-card title="Smoking Rate" subtitle="Smokers Among Student" footer="Smokers Report"
-                id="smoking-chart" />
-            <livewire:small-card title="Obesity Rate" subtitle="Obesity Among Students" footer="Obesity Report"
-                id="sales-by-category" />
-            <livewire:small-card title="Pregnancy Rate" subtitle="Pregnancy Rate Stats" footer="Pregnancy Report"
-                id="week-signups-chart" />
+            <livewire:small-card title="Vital Form" subtitle="Create a vital check form for patients." footer="Create Vital Form" />
+            <livewire:small-card title="Health Profile" subtitle="Setup a health profile for student patients."
+                footer="Create Health Profile" />
+            <livewire:small-card title="Statistics" subtitle="View health stats among student patients." footer="Proceed" />
+            <livewire:small-card title="Pharmacy" subtitle="Access the medicine inventory quickly."
+                footer="Proceed" />
         </div>
     </div>
 
-    <livewire:table :isDashboard="true" />
+    <livewire:visitation-table />
 
 </x-layout>
