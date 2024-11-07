@@ -5,21 +5,29 @@ namespace App\Http\Middleware;
 use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Symfony\Component\HttpFoundation\Response;
 
 class IsPatient
 {
     /**
      * Handle an incoming request.
      *
-     * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \Closure  $next
+     * @return \Symfony\Component\HttpFoundation\Response|\Illuminate\Http\RedirectResponse
      */
-    public function handle(Request $request, Closure $next): Response
+    public function handle(Request $request, Closure $next)
     {
-        if (Auth::check() && !Auth::user()->is_staff) {
-            return $next($request);
-        }
-        return abort(404);
+        if (Auth::check()) {
+            if (!Auth::user()->is_staff) {
+                // Allow the patient to proceed
+                return $next($request);
+            }
 
+            // Redirect staff users to the staff dashboard
+            return redirect('/staff');
+        }
+
+        // Return a 403 Forbidden response if the user is not authenticated
+        return abort(403, 'Unauthorized access.');
     }
 }

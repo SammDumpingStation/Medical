@@ -14,12 +14,19 @@ class IsStaff
      *
      * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
      */
-    public function handle(Request $request, Closure $next): Response
+    public function handle(Request $request, Closure $next)
     {
-        if (Auth::check() && Auth::user()->is_staff) {
-            return $next($request);
-        }
-        return abort(404);
+        if (Auth::check()) {
+            if (Auth::user()->is_staff) {
+                // Allow the patient to proceed
+                return $next($request);
+            }
 
+            // Redirect staff users to the staff dashboard
+            return redirect('/patient');
+        }
+
+        // Return a 403 Forbidden response if the user is not authenticated
+        return abort(403, 'Unauthorized access.');
     }
 }
