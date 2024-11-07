@@ -28,6 +28,6 @@ class IsPatient
         }
 
         // Return a 403 Forbidden response if the user is not authenticated
-        return abort(403, 'Unauthorized access.');
+        return redirect('/');
     }
 }

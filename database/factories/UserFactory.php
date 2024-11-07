@@ -26,10 +26,10 @@ class UserFactory extends Factory
         $role = $this->faker->randomElement(['patient', 'nurse', 'doctor']);
 
         return [
-            'username' => 'ID' . $this->faker->numberBetween(1000, 9999),
+            'school_id' => 2024 . $this->faker->unique()->numberBetween(100000, 999999),
             'is_staff' => $role !== 'patient' ? true : false, // Set false for 'patient'
             'role' => $role,
-            'password' => Hash::make('Admin123'),
+            'password' => Hash::make('password'),
             'remember_token' => Str::random(10),
             'created_at' => now(),
             'updated_at' => now(),
