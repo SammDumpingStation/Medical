@@ -5,16 +5,16 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Student extends Model
+class Patient extends Model
 {
     use HasFactory;
 
-    protected $primaryKey = 'school_id'; // Set primary key to 'school_id'
+    protected $primaryKey = 'patient_id'; // Set primary key to 'patient_id'
     protected $keyType = 'string'; // Set the type to 'string'
     public $incrementing = false; // Disable auto-increment
 
     protected $fillable = [
-        'school_id',
+        'patient_id',
         'full_name',
         'age',
         'gender',
@@ -33,15 +33,6 @@ class Student extends Model
 
     public function user()
     {
-        return $this->belongsTo(User::class, 'school_id', 'school_id');
+        return $this->belongsTo(User::class, 'patient_id', 'patient_id');
     }
-
-// /**
-//  * Get the emergency contacts for the student.
-//  */
-
-//     public function emergencyInformation()
-//     {
-//         return $this->hasMany(EmergencyInformation::class);
-//     }
 }

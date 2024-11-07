@@ -18,12 +18,12 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $fillable = [
-        'school_id',
+        'patient_id',
         'is_staff',
         'role',
         'password',
     ];
-    protected $primaryKey = 'school_id';
+    protected $primaryKey = 'patient_id';
     protected $keyType = 'string';
     public $incrementing = false;
 
@@ -52,6 +52,6 @@ class User extends Authenticatable
 
     public function student()
     {
-        return $this->hasOne(Student::class, 'school_id', 'school_id');
+        return $this->hasOne(Patient::class, 'patient_id', 'patient_id');
     }
 }

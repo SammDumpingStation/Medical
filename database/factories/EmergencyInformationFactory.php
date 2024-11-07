@@ -2,7 +2,7 @@
 
 namespace Database\Factories;
 
-use App\Models\Student;
+use App\Models\Patient;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -18,7 +18,7 @@ class EmergencyInformationFactory extends Factory
     public function definition(): array
     {
         return [
-            'school_id' => Student::factory(),
+            'patient_id' => Patient::factory(),
             'contact_person' => $this->faker->name(),
             'address' => $this->faker->address(),
             'phone_number' => $this->faker->phoneNumber(),

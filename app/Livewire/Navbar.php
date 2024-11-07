@@ -2,8 +2,7 @@
 
 namespace App\Livewire;
 
-use App\Models\Student;
-use App\Models\User;
+use App\Models\Patient;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 
@@ -16,8 +15,8 @@ class Navbar extends Component
 
     public function mount()
     {
-        $userId = Auth::user()->school_id;
-        $student = Student::find($userId)->full_name;
+        $userId = Auth::user()->patient_id;
+        $student = Patient::find($userId)->full_name;
         $this->student = $student;
         $this->role = Auth::user()->role;
     }

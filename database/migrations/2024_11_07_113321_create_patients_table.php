@@ -11,9 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('students', function (Blueprint $table) {
-            $table->string('school_id')->primary(); // Primary key as 'school_id'
-            $table->foreign('school_id')->references('school_id')->on('users')->onDelete('cascade'); // Foreign key to 'users'
+        Schema::create('patients', function (Blueprint $table) {
+            $table->string('patient_id')->primary(); // Primary key as 'patient_id'
+            $table->foreign('patient_id')->references('patient_id')->on('users')->onDelete('cascade'); // Foreign key to 'users'
             $table->string('full_name');
             $table->integer('age');
             $table->string('gender')->nullable();
@@ -34,6 +34,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('students');
+        Schema::dropIfExists('patients');
     }
 };

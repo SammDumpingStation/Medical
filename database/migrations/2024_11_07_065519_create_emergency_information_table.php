@@ -12,8 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('emergency_information', function (Blueprint $table) {
-            $table->string('school_id')->primary(); // Primary key as 'school_id'
-            $table->foreign('school_id')->references('school_id')->on('users')->onDelete('cascade'); // Foreign key to 'users'
+            $table->string('patient_id')->primary(); // Primary key as 'patient_id'
+            $table->foreign('patient_id')->references('patient_id')->on('users')->onDelete('cascade'); // Foreign key to 'users'
             $table->string('contact_person');
             $table->text('address');
             $table->string('phone_number');

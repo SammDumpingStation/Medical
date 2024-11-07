@@ -1,5 +1,5 @@
     <div class="fixed left-0 right-0 z-50 items-center hidden justify-center overflow-x-hidden overflow-y-auto top-4 md:inset-0 h-modal sm:h-full"
-        id="find-user-modal">
+        wire:ignore id="find-user-modal">
         <div class="relative w-full h-full max-w-2xl px-4 md:h-auto">
             <!-- Modal content -->
             <div class="relative bg-white rounded-lg shadow dark:bg-gray-800">
@@ -32,18 +32,17 @@
                                 <label for="student-id"
                                     class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
                                     Student ID</label>
-                                <livewire:search-bar />
-                                {{-- <input type="text" name="student-id" id="student-id"
+                                <input type="text" name="student-id" id="student-id" wire:model='studentID'
                                     class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                                    placeholder="Select a student by ID" required> --}}
+                                    placeholder="Select a student by ID"  required>
                             </div>
                         </div>
                 </div>
                 <!-- Modal footer -->
                 <div class="flex justify-end p-6 border-t border-gray-200 rounded-b dark:border-gray-700">
-                    <a href="/consultations/vital-form"
+                    <button wire:click="submit"
                         class="text-white bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">Select
-                        Student</a>
+                        Student</button>
                 </div>
                 </form>
             </div>

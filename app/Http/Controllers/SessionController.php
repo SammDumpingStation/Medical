@@ -30,12 +30,12 @@ class SessionController extends Controller
     {
         // Validate the input
         $attributes = $request->validate([
-            'school_id' => ['required', 'string', 'max:254', 'min:4'],
+            'patient_id' => ['required', 'string', 'max:254', 'min:4'],
             'password' => ['required', 'string'],
         ]);
 
         // Attempt to authenticate the user
-        if (Auth::attempt($request->only(['school_id', 'password']))) {
+        if (Auth::attempt($request->only(['patient_id', 'password']))) {
             // Regenerate the session to prevent session fixation attacks
             $request->session()->regenerate();
 
@@ -51,7 +51,7 @@ class SessionController extends Controller
         // If authentication fails, redirect back with error message
         return back()->withErrors([
             'password' => 'The provided credentials do not match our records.',
-        ])->onlyInput('school_id');
+        ])->onlyInput('patient_id');
     }
 
     /**

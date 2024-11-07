@@ -8,12 +8,12 @@ use Illuminate\Database\Eloquent\Model;
 class EmergencyInformation extends Model
 {
     use HasFactory;
-    protected $primaryKey = 'school_id'; // Set primary key to 'school_id'
+    protected $primaryKey = 'patient_id'; // Set primary key to 'patient_id'
     protected $keyType = 'string'; // Set the type to 'string'
     public $incrementing = false; // Disable auto-increment
 
     protected $fillable = [
-        'school_id',
+        'patient_id',
         'contact_person',
         'address',
         'phone_number',
@@ -23,8 +23,8 @@ class EmergencyInformation extends Model
     /**
      * Get the student that this emergency contact belongs to.
      */
-    public function student()
+    public function patient()
     {
-        return $this->belongsTo(Student::class);
+        return $this->belongsTo(Patient::class);
     }
 }

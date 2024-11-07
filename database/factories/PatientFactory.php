@@ -6,9 +6,9 @@ use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Student>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Patient>
  */
-class StudentFactory extends Factory
+class PatientFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -18,7 +18,7 @@ class StudentFactory extends Factory
     public function definition(): array
     {
         return [
-            'school_id' => User::factory(),
+            'patient_id' => User::factory(),
             'full_name' => $this->faker->name(),
             'age' => $this->faker->numberBetween(18, 25),
             'gender' => $this->faker->randomElement(['Male', 'Female', 'Other']),
@@ -30,5 +30,6 @@ class StudentFactory extends Factory
             'phone_number' => $this->faker->phoneNumber(),
             'civil_status' => $this->faker->randomElement(['Single', 'Married', 'Divorced', 'Widowed']),
         ];
+
     }
 }
