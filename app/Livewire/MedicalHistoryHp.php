@@ -95,6 +95,9 @@ class MedicalHistoryHp extends Component
         $this->epilepsy = $patientInfo['epilepsy'] ?? false;
         $this->tuberculosis = $patientInfo['tuberculosis'] ?? false;
         $this->psychologicalDisorder = $patientInfo['psychologicalDisorder'] ?? false;
+        $this->motherConditions = $patientInfo['motherConditions'] ?? [];
+        $this->fatherConditions = $patientInfo['fatherConditions'] ?? [];
+        $this->admissions = $patientInfo['admissions'] ?? [];
     }
 
     public function saveToSession()
