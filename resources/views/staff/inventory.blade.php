@@ -1,3 +1,3 @@
 <x-layout>
-    <livewire:second-table />
+    <livewire:inventory-table />
 </x-layout>

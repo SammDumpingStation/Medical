@@ -1,4 +1,3 @@
 <x-layout>
-    <livewire:second-table />
-
+    <livewire:pharmacy-table />
 </x-layout>

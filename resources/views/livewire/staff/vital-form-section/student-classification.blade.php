@@ -50,6 +50,6 @@
             </label>
         </li>
     </ul>
-    <livewire:next-prev-button />
+
 
 </div>

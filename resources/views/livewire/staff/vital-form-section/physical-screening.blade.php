@@ -133,8 +133,4 @@
             </div>
         </div>
     </div>
-
-
-    <livewire:next-prev-button />
-
 </div>

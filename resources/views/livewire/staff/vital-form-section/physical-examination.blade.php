@@ -54,7 +54,7 @@
 
 
 
-    <livewire:next-prev-button />
+
 
 
 </div>

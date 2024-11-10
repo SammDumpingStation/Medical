@@ -1,3 +1,3 @@
 <x-layout>
-    <livewire:second-table />
+    <p>Hi</p>
 </x-layout>

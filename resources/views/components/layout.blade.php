@@ -32,7 +32,7 @@
         @if (Auth::user()->is_staff)
             <livewire:sidebar />
         @endif
-        <div class="min-h-[70vh]">
+        <div class="min-h-[70vh] bg-white dark:bg-gray-900">
             {{ $slot }}
         </div>
         <livewire:footer />

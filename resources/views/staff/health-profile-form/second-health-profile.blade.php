@@ -6,15 +6,15 @@
             </div>
             <div class="space-y-4">
                 <h1 class="text-base font-normal text-gray-500 dark:text-gray-400">Creating a Vital Sign Form for
-                    Student: <span class="block text-gray-900 font-bold text-xl dark:text-white">{{ $patient->full_name }}</span> </h1>
+                    Student: <span class="block text-gray-900 font-bold text-xl dark:text-white">HI</span> </h1>
                 <div class="max-w-md">
                     <label for="change-student"
                         class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">Search</label>
                     <div class="relative">
                         <input type="text" id="change-student"
                             class="block w-full p-4 text-sm text-gray-900 border cursor-not-allowed border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                            placeholder="No Student Selected" disabled value="{{ $patient->patient_id }}" />
-                        <button type="button"  data-modal-target="find-user-modal" data-modal-toggle="find-user-modal"
+                            placeholder="No Student Selected" disabled value="" />
+                        <button type="button" data-modal-target="find-user-modal" data-modal-toggle="find-user-modal"
                             class=" text-white absolute end-2.5 hover:bg-blue-800 bottom-2.5 bg-blue-700  focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Change
                             Student</button>
                     </div>
@@ -46,14 +46,14 @@
                         role="tab" aria-controls="ancillary-examination" aria-selected="false">Ancillary
                         Examination</button>
                 </li>
-                <li role="presentation">
+                <li class="me-2" role="presentation">
                     <button
                         class="inline-block p-4 border-b-2 rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300"
                         id="student-classification-tab" data-tabs-target="#student-classification" type="button"
                         role="tab" aria-controls="student-classification" aria-selected="false">Student
                         Classification</button>
                 </li>
-                <li role="presentation">
+                <li class="me-2" role="presentation">
                     <button
                         class="inline-block p-4 border-b-2 rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300"
                         id="personal-remarks-tab" data-tabs-target="#personal-remarks" type="button" role="tab"
@@ -64,7 +64,7 @@
         <div id="default-tab-content">
             <div class="hidden p-4 rounded-lg bg-white dark:bg-gray-800" id="physical-screening" role="tabpanel"
                 aria-labelledby="physical-screening-tab">
-                <livewire:physical-screening :patient="$patient" />
+                <livewire:physical-screening />
             </div>
             <div class="hidden p-4 rounded-lg bg-white dark:bg-gray-800" id="physical-examination" role="tabpanel"
                 aria-labelledby="physical-examination-tab">
@@ -83,6 +83,5 @@
                 <livewire:student-classification />
             </div>
         </div>
-        <livewire:find-student-modal />
     </div>
 </x-layout>
