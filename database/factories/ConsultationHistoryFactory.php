@@ -31,7 +31,7 @@ class ConsultationHistoryFactory extends Factory
         ];
 
         return [
-            'patient_id' => User::inRandomOrder()->first()->patient_id,
+            'patient_id' => User::factory(),
             'primary_diagnosis' => $this->faker->randomElement($diagnoses),
             'status' => $this->faker->randomElement(['Pending', 'Ongoing', 'Completed', 'Cancelled']),
             'date' => $this->faker->date,
