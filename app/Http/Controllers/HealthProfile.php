@@ -44,6 +44,11 @@ class HealthProfile extends Controller
         return view('staff.health-profile-form.second-health-profile', ['patient' => $id]);
     }
 
+    public function profileSummary()
+    {
+        return view('staff.health-profile-form.summary-health-profile');
+    }
+
     public function showForm3(Patient $id)
     {
         return view('staff.health-profile-form.third-health-profile', ['patient' => $id]);

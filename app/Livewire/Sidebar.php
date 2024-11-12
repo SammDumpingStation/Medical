@@ -15,7 +15,11 @@ class Sidebar extends Component
     {
         $this->sidebar = $sidebar;
     }
-    
+
+    public function navigate()
+    {
+        request()->session()->forget('patient_information');
+    }
 
     public function render()
     {

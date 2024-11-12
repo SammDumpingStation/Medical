@@ -1,6 +1,6 @@
 <li class="">
     @if (!$isDropdown)
-        <a href="{{ $href }}"
+        <a href="{{ $href }}" wire:click="navigate"
             class=" {{ $active ? 'bg-gray-100 text-gray-900 dark:bg-gray-700' : 'text-gray-500' }} flex items-center p-2 text-lg rounded-lg hover:bg-gray-100 group dark:text-gray-200 dark:hover:bg-gray-700">
             <div
                 class="{{ $active ? 'fill-gray-900 dark:fill-white' : 'fill-gray-500' }}  w-6 h-6 transition duration-75 group-hover:text-gray-900 dark:text-gray-400 dark:group-hover:text-white ">

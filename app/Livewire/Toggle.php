@@ -7,12 +7,11 @@ use Livewire\Component;
 class Toggle extends Component
 {
     public $title;
-    public $state = false;
+    public $state;
     public $checked;
 
     public function toggle()
     {
-        $this->state = !$this->state;
         $this->dispatch('toggle-data', title: $this->title, state: $this->state);
     }
 
@@ -20,7 +19,7 @@ class Toggle extends Component
     {
         $this->title = $title;
         $this->state = $state;
-        $this->checked = $checked;
+        $this->checked = !$checked ? false : true;
     }
     public function render()
     {

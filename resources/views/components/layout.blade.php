@@ -28,7 +28,7 @@
 
 <body class="bg-gray-50 dark:bg-gray-800 h-screen ">
     <livewire:navbar />
-    <div class="flex flex-col min-h-full pt-[70px] overflow-hidden lg:ml-64 bg-gray-50 dark:bg-gray-900">
+    <div class="flex flex-col min-h-full pt-[70px] print:pt-0 overflow-hidden lg:ml-64 bg-gray-50 dark:bg-gray-900">
         @if (Auth::user()->is_staff)
             <livewire:sidebar />
         @endif
@@ -42,7 +42,6 @@
             All rights reserved.
         </p>
     </div>
-    <script src="../path/to/flowbite/dist/flowbite.min.js"></script>
 </body>
 
 </html>

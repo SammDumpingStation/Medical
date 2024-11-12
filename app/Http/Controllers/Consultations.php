@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Patient;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
 
 class Consultations extends Controller
 {
@@ -12,6 +13,7 @@ class Consultations extends Controller
      */
     public function index()
     {
+        Session::forget('patient_information');
         return view('staff.consultations');
     }
 

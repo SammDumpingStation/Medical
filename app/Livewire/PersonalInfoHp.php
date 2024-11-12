@@ -9,6 +9,7 @@ class PersonalInfoHp extends Component
 {
     public $activeTab = 'profile';
     // Personal Information
+    public $patientID;
     public $full_name;
     public $age;
     public $gender;
@@ -34,29 +35,17 @@ class PersonalInfoHp extends Component
     public $specifics;
     public $registered;
 
-    protected $rules = [
-        'emergency_contact_name' => 'required|string|max:255',
-        'emergency_contact_address' => 'required|string|max:255',
-        'emergency_contact_phone' => 'required|string|max:20',
-        'emergency_contact_relationship' => 'required|string',
-        'willing_to_donate_blood' => 'boolean',
-        'person_with_disability' => 'boolean',
-    ];
-
     public function switchToTab($tabId)
     {
         $this->saveToSession();
-        $this->activeTab = $tabId;
         $this->dispatch('switch-tab', ['tabId' => $tabId]); // Trigger JavaScript event to change tab
     }
 
     public function saveToSession()
     {
-
-        $this->validate();
-
         $formData = [
             'personal_information' => [
+                'patient_id' => $this->patientID,
                 'full_name' => $this->full_name,
                 'age' => $this->age,
                 'gender' => $this->gender,
@@ -88,6 +77,7 @@ class PersonalInfoHp extends Component
     }
     public function mount($patient)
     {
+        $this->patientID = $patient->patient_id;
         $this->full_name = $patient->full_name;
         $this->age = $patient->age;
         $this->gender = $patient->gender;

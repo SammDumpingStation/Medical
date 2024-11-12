@@ -25,21 +25,23 @@
                                     </tr>
                                 </thead>
                                 <tbody class="bg-white divide-y divide-gray-200 dark:bg-gray-800 dark:divide-gray-700">
-                                    @foreach ($bodyPart as $part)
-                                        <tr
+                                    @foreach ($bodyPart as $index => $part)
+                                        <tr wire:key="row-{{ $index }}"
                                             class="hover:bg-gray-100 divide-x divide-gray-200 dark:bg-gray-800 dark:divide-gray-700 dark:hover:bg-gray-700">
-                                            <td class="">
-                                                <livewire:checkbox />
+                                            <td class="p-4 text-center">
+                                                <livewire:checkbox :wire:key="'checkbox-'.$index" :id="'checkbox-' . $index"
+                                                    :value="$part" />
                                             </td>
                                             <td class="flex items-center p-4">
                                                 <div class="text-base font-semibold text-gray-900 dark:text-white">
-                                                    {{ $part }}</div>
+                                                    {{ $part }}
+                                                </div>
                                             </td>
-                                            <td
-                                                class="overflow-hidden text-base font-normal text-gray-500 truncate xl:max-w-xs dark:text-gray-400">
-                                                <input type="text" name="findings" id="findings"
-                                                    class="block px-4 w-full text-sm text-gray-900 bg-transparent border-0 focus:border dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:ring-0 focus:border-blue-600 peer"
-                                                    placeholder=" " required />
+                                            <td class="p-4">
+                                                <input type="text" wire:model.live="findings.{{ $part }}"
+                                                    @disabled(in_array($part, $checkedBodyPart))
+                                                    class="block w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 focus:border-blue-600 dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:ring-0 disabled:opacity-50 disabled:cursor-not-allowed"
+                                                    placeholder="{{ in_array($part, $checkedBodyPart) ? 'Uncheck Normal first' : 'Enter findings' }}" />
                                             </td>
                                         </tr>
                                     @endforeach
@@ -52,9 +54,14 @@
         </main>
     </div>
 
-
-
-
-
-
+    <div class="flex items-center justify-between w-full">
+        <button wire:click="switchToTab('physical-screening')" type="button"
+            class="mt-5 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+            Previous
+        </button>
+        <button wire:click="switchToTab('ancillary-examination')" type="button"
+            class="mt-5 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+            Next
+        </button>
+    </div>
 </div>

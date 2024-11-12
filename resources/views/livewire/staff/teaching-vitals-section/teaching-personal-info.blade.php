@@ -45,47 +45,18 @@
                     placeholder="ex. Tankulan, Manolo Fortich, Bukidnon" required />
             </div>
             <div>
-                <label for="municipal"
-                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Municipal</label>
-                <input type="text" id="mucicipal"
-                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                    placeholder="Manolo Fortich" required />
-            </div>
-            <div>
-                <label for="religion" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Religion
-                </label>
-                <input type="text" id="religion"
-                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                    placeholder="Catholic" required />
-            </div>
-            <div>
-                <label for="occupation" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Occupation
-                </label>
-                <input type="text" id="occupation"
-                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                    placeholder="Student" required />
-            </div>
-            <div>
                 <label for="phone" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Phone
                     number</label>
                 <input type="tel" id="phone"
                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                     placeholder="123-45-678" pattern="[0-9]{3}-[0-9]{2}-[0-9]{3}" required />
             </div>
-
             <div>
-                <label for="civil_status" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Civil
-                    Status
-                </label>
-                <select id="gender"
-                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                    <option selected>Choose a status</option>
-                    <option value="Single">Single</option>
-                    <option value="Married">Married</option>
-                    <option value="Divorced">Divorced</option>
-                    <option value="Widowed">Widowed</option>
-                    <option value="Divorced">Divorced</option>
-                </select>
+                <label for="philhealth"
+                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Philhealth</label>
+                <input type="text" id="mucicipal"
+                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    placeholder="Philhealth Number" required />
             </div>
         </div>
     </div>
@@ -130,13 +101,6 @@
                     <option value="Other">Other</option>
                 </select>
             </div>
-        </div>
-    </div>
-    <div class="">
-        <h4 class="text-xl mb-4 font-bold dark:text-white">Additional Questions</h4>
-        <div class="grid grid-cols-2 ml-6 gap-6">
-            <livewire:toggle title="Willing to donate blood?" />
-            <livewire:toggle title="Person with disability" />
         </div>
     </div>
 </div>

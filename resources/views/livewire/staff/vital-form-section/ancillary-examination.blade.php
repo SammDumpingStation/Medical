@@ -16,7 +16,7 @@
                                             </th>
                                             <th scope="col"
                                                 class="p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400">
-                                                Body Part
+                                                Examination Type
                                             </th>
                                             <th scope="col"
                                                 class="p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400">
@@ -26,24 +26,26 @@
                                     </thead>
                                     <tbody
                                         class="bg-white divide-y divide-gray-200 dark:bg-gray-800 dark:divide-gray-700">
-                                        @foreach ($examinations as $examination)
-                                            <tr
-                                                class="hover:bg-gray-100 divide-x divide-gray-200 dark:bg-gray-800 dark:divide-gray-700 dark:hover:bg-gray-700">
-                                                <td class="">
-                                                    <livewire:checkbox />
-                                                </td>
-                                                <td class="flex items-center p-4">
-                                                    <div class="text-base font-semibold text-gray-900 dark:text-white">
-                                                        {{ $examination }}</div>
-                                                </td>
-                                                <td
-                                                    class="overflow-hidden text-base font-normal text-gray-500 truncate xl:max-w-xs dark:text-gray-400">
-                                                    <input type="text" name="findings" id="findings"
-                                                        class="block px-4 w-full text-sm text-gray-900 bg-transparent border-0 focus:border dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-negativene focus:ring-0 focus:border-blue-600 peer"
-                                                        placeholder=" " required />
-                                                </td>
-                                            </tr>
-                                        @endforeach
+                                         @foreach ($examinations as $index => $part)
+                                        <tr wire:key="row-{{ $index }}"
+                                            class="hover:bg-gray-100 divide-x divide-gray-200 dark:bg-gray-800 dark:divide-gray-700 dark:hover:bg-gray-700">
+                                            <td class="p-4 text-center">
+                                                <livewire:checkbox :wire:key="'checkbox-'.$index" :id="'checkbox-' . $index"
+                                                    :value="$part" />
+                                            </td>
+                                            <td class="flex items-center p-4">
+                                                <div class="text-base font-semibold text-gray-900 dark:text-white">
+                                                    {{ $part }}
+                                                </div>
+                                            </td>
+                                            <td class="p-4">
+                                                <input type="text" wire:model.live="findings.{{ $part }}"
+                                                    @disabled(in_array($part, $checkedExamination))
+                                                    class="block w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 focus:border-blue-600 dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:ring-0 disabled:opacity-50 disabled:cursor-not-allowed"
+                                                    placeholder="{{ in_array($part, $checkedExamination) ? 'Uncheck Normal first' : 'Enter findings' }}" />
+                                            </td>
+                                        </tr>
+                                    @endforeach
                                     </tbody>
                                 </table>
                             </div>
@@ -61,8 +63,8 @@
                 <label for="pregnancy" class="block mb-3 font-medium text-gray-900 dark:text-white">Pregnancy Test
                 </label>
                 <div class="flex ml-4 gap-6">
-                    <livewire:radio title="Positive" id="pregnancy-positive" value="positive" name="pregnancy" />
-                    <livewire:radio title="Negative" id="pregnancy-negative" value="negative" name="pregnancy" />
+                    <livewire:radio title="Positive" id="pregnancy-positive" value="Positive" name="pregnancy" />
+                    <livewire:radio title="Negative" id="pregnancy-negative" value="Negative" name="pregnancy" />
                 </div>
             </div>
             <div>
@@ -70,14 +72,14 @@
                     Screening)
                 </label>
                 <div class="flex ml-4 gap-6">
-                    <livewire:radio title="Reactive" id="smoke-reactive" value="reactive" name="hepb" />
-                    <livewire:radio title="Non-reactive" id="smoke-non-reactive" value="non-reactive" name="hepb" />
+                    <livewire:radio title="Reactive" id="reactive" value="Reactive" name="hepb" />
+                    <livewire:radio title="Non-reactive" id="non-reactive" value="Non-reactive" name="hepb" />
                 </div>
             </div>
             <div>
                 <label for="blood-type" class="block mb-3 font-medium text-gray-900 dark:text-white">Blood Type
                 </label>
-                <select id="blood-type"
+                <select id="blood-type" wire:model='blood_type'
                     class="bg-gray-50 border max-w-md border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                     <option value="">Select Blood Type</option>
                     <option value="A+">A+</option>
@@ -91,5 +93,11 @@
                 </select>
             </div>
         </div>
+    </div>
+    <div class="flex items-center justify-between w-full">
+        <button id="medical-prev" wire:click="switchToTab('physical-examination')"
+            class="mt-5 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Previous</button>
+        <button id="medical-next" wire:click="switchToTab('student-classification')"
+            class="mt-5 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Next</button>
     </div>
 </div>

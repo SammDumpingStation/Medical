@@ -2,6 +2,7 @@
 
 namespace App\Livewire;
 
+use Illuminate\Support\Facades\Session;
 use Livewire\Attributes\On;
 use Livewire\Component;
 
@@ -19,6 +20,11 @@ class SidebarList extends Component
     public function toggleSidebar($sidebar)
     {
         $this->sidebar = $sidebar;
+    }
+
+    public function navigate()
+    {
+        request()->session()->forget('patient_information');
     }
 
     public function mount(string $label, $icon, string $href, string $active, bool $isDropdown = false, array $menuList = [])

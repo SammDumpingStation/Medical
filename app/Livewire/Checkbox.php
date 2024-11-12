@@ -6,20 +6,30 @@ use Livewire\Component;
 
 class Checkbox extends Component
 {
-    public bool $default;
-    public string $title;
     public string $id;
-    public string $name;
     public string $value;
+    public string $title;
+    public bool $isChecked = true;
 
-    public function mount(bool $default = false, string $title = '', string $id = '1', string $name = 'Default', string $value = 'Default')
+    public function mount(string $id = '', string $value = '')
     {
-        $this->default = $default;
-        $this->title = $title;
         $this->id = $id;
-        $this->name = $name;
-        $this->default = $default;
+        $this->value = $value;
+        $this->dispatch('checkbox', [
+            'value' => $this->value,
+            'checked' => true,
+        ]);
+
     }
+
+    public function updatedIsChecked($value)
+    {
+        $this->dispatch('checkbox', [
+            'value' => $this->value,
+            'checked' => $value,
+        ]);
+    }
+
     public function render()
     {
         return view('livewire.checkbox');

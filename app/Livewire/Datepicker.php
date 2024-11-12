@@ -11,9 +11,19 @@ class Datepicker extends Component
     public string $value;
     public bool $disabled;
 
-    public function mount(string $id, $value = '2001-02-26', $disabled = false)
+    public function admissionClick()
     {
-        $this->value = Carbon::createFromFormat('Y-m-d', $value)->format('m/d/Y');
+        dd($this->value);
+        // $this->dispatch('datepicker-admission-data', value: $this->value);
+    }
+
+    public function mount(string $id, $value = '', $disabled = false)
+    {
+        // If no value is provided, set the default value to today’s date
+        $this->value = $value ?
+        Carbon::createFromFormat('Y-m-d', $value)->format('m/d/Y') :
+        Carbon::today()->format('m/d/Y');
+
         $this->id = $id;
         $this->disabled = $disabled;
     }

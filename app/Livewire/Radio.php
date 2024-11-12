@@ -3,6 +3,7 @@
 namespace App\Livewire;
 
 use Livewire\Component;
+use phpDocumentor\Reflection\Types\This;
 
 class Radio extends Component
 {
@@ -11,16 +12,20 @@ class Radio extends Component
     public string $id;
     public string $name;
     public string $value;
-    public $model;
 
-    public function mount(bool $default = false, string $title = 'Lorem', string $id = '1', string $name = 'Default', string $value = 'Default', $model = '')
+    public function radioSelect()
     {
-        $this->default = $default;
+        // Emit an event with the radio group name and selected value
+        $this->dispatch('radioSelected', $this->name, $this->value);
+    }
+
+    public function mount(string $title = 'Lorem', string $id = '1', string $name = 'Default', string $value = 'Default', $default = '')
+    {
         $this->title = $title;
         $this->id = $id;
         $this->name = $name;
-        $this->default = $default;
-        $this->model = $model;
+        $this->value = $value;
+        $this->default = $default === $value;
     }
     public function render()
     {
