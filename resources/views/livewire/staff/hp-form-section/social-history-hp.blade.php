@@ -7,9 +7,10 @@
                     Smoking (Cigarrates, Vape, E-Cigar)?
                 </label>
                 <div class="flex ml-4 gap-6">
-                    <livewire:radio :default="true" title="Yes" id="smoke-yes" value="Yes" name="smoking" />
-                    <livewire:radio title="Quitted" id="smoke-quitted" value="Quitted" name="smoking" />
-                    <livewire:radio title="No" id="smoke-no" value="No" name="smoking" />
+                    <livewire:radio :default="$smoking" title="Yes" id="smoke-yes" value="Yes" name="smoking" />
+                    <livewire:radio :default="$smoking" title="No" id="smoke-no" value="No" name="smoking" />
+                    <livewire:radio :default="$smoking" title="Quitted" id="smoke-quitted" value="Quitted"
+                        name="smoking" />
                 </div>
                 @if ($smoking === 'Yes')
                     <div class="flex gap-6 mt-4">
@@ -27,8 +28,6 @@
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                 placeholder="" required />
                         </div>
-
-
                     </div>
                 @endif
             </div>
@@ -39,9 +38,10 @@
                 </label>
 
                 <div class="flex ml-4 gap-6">
-                    <livewire:radio title="Yes" id="alcohol-yes" value="Yes" name="alcohol" />
-                    <livewire:radio title="Quitted" id="alcohol-quitted" value="Quitted" name="alcohol" />
-                    <livewire:radio title="No" id="alcohol-no" value="No" name="alcohol" />
+                    <livewire:radio :default="$alcohol" title="Yes" id="alcohol-yes" value="Yes" name="alcohol" />
+                    <livewire:radio :default="$alcohol" title="No" id="alcohol-no" value="No" name="alcohol" />
+                    <livewire:radio :default="$alcohol" title="Quitted" id="alcohol-quitted" value="Quitted"
+                        name="alcohol" />
                 </div>
                 @if ($alcohol === 'Yes')
                     <div class="flex gap-6 mt-4">
@@ -49,9 +49,10 @@
                             <label for="beer-type"
                                 class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Beer Type</label>
                             <div class="flex ml-4 gap-6">
-                                <livewire:radio title="Beer/Rhum" id="beer-alcohol" value="Beer/Rhum"
+                                <livewire:radio :default="$alcoholType" title="Beer/Rhum" id="beer-alcohol" value="Beer/Rhum"
                                     name="alcohol-type" />
-                                <livewire:radio title="Others" id="others-alcohol" value="others" name="alcohol-type" />
+                                <livewire:radio :default="$alcoholType" title="Others" id="others-alcohol" value="others"
+                                    name="alcohol-type" />
                             </div>
                         </div>
                         <div class="flex-1">
@@ -66,10 +67,10 @@
                                 <label for="bottles-per-session"
                                     class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Frequency</label>
                                 <div class="flex ml-4 gap-6">
-                                    <livewire:radio title="Occasionally" id="occasionally-frequency"
+                                    <livewire:radio :default="$alcoholFrequency" title="Occasionally" id="occasionally-frequency"
                                         value="ocassionally" name="alcohol-frequency" />
-                                    <livewire:radio title="Monthly" id="monthly-frequency" value="monthly"
-                                        name="alcohol-frequency" />
+                                    <livewire:radio :default="$alcoholFrequency" title="Monthly" id="monthly-frequency"
+                                        value="monthly" name="alcohol-frequency" />
                                 </div>
                             </div>
 
@@ -82,9 +83,10 @@
                     Illegal Drugs/Subtance?
                 </label>
                 <div class="flex ml-4 gap-6">
-                    <livewire:radio title="Yes" id="drug-yes" value="Yes" name="drug" />
-                    <livewire:radio title="Quitted" id="drug-quitted" value="Quitted" name="drug" />
-                    <livewire:radio title="No" id="drug-no" value="No" name="drug" />
+                    <livewire:radio :default="$drug" title="Yes" id="drug-yes" value="Yes" name="drug" />
+                    <livewire:radio :default="$drug" title="No" id="drug-no" value="No" name="drug" />
+                    <livewire:radio :default="$drug" title="Quitted" id="drug-quitted" value="Quitted"
+                        name="drug" />
                 </div>
                 @if ($drug === 'Yes')
                     <div class="flex gap-6 mt-4">
@@ -104,9 +106,13 @@
                 </label>
 
                 <div class="flex ml-4 gap-6">
-                    <livewire:radio title="Yes" id="sex-yes" value="Yes" name="sex" />
-                    <livewire:radio title="Quitted" id="sex-quitted" value="Quitted" name="sex" />
-                    <livewire:radio title="No" id="sex-no" value="No" name="sex" />
+                    <livewire:radio :default="$sex" title="Yes" id="sex-yes" value="Yes"
+                        name="sex" />
+                    <livewire:radio :default="$sex" title="No" id="sex-no" value="No"
+                        name="sex" />
+                    <livewire:radio :default="$sex" title="Quitted" id="sex-quitted" value="Quitted"
+                        name="sex" />
+
                 </div>
                 @if ($sex === 'Yes')
                     <div class="flex flex-col gap-6 mt-4">

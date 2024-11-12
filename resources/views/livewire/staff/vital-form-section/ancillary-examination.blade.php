@@ -26,26 +26,26 @@
                                     </thead>
                                     <tbody
                                         class="bg-white divide-y divide-gray-200 dark:bg-gray-800 dark:divide-gray-700">
-                                         @foreach ($examinations as $index => $part)
-                                        <tr wire:key="row-{{ $index }}"
-                                            class="hover:bg-gray-100 divide-x divide-gray-200 dark:bg-gray-800 dark:divide-gray-700 dark:hover:bg-gray-700">
-                                            <td class="p-4 text-center">
-                                                <livewire:checkbox :wire:key="'checkbox-'.$index" :id="'checkbox-' . $index"
-                                                    :value="$part" />
-                                            </td>
-                                            <td class="flex items-center p-4">
-                                                <div class="text-base font-semibold text-gray-900 dark:text-white">
-                                                    {{ $part }}
-                                                </div>
-                                            </td>
-                                            <td class="p-4">
-                                                <input type="text" wire:model.live="findings.{{ $part }}"
-                                                    @disabled(in_array($part, $checkedExamination))
-                                                    class="block w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 focus:border-blue-600 dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:ring-0 disabled:opacity-50 disabled:cursor-not-allowed"
-                                                    placeholder="{{ in_array($part, $checkedExamination) ? 'Uncheck Normal first' : 'Enter findings' }}" />
-                                            </td>
-                                        </tr>
-                                    @endforeach
+                                        @foreach ($examinations as $index => $exam)
+                                            <tr wire:key="row-{{ $index }}"
+                                                class="hover:bg-gray-100 divide-x divide-gray-200 dark:bg-gray-800 dark:divide-gray-700 dark:hover:bg-gray-700">
+                                                <td class="p-4 text-center">
+                                                    <livewire:checkbox :wire:key="'checkbox-'.$index" :id="'checkbox-' . $index"
+                                                        :value="$exam" />
+                                                </td>
+                                                <td class="flex items-center p-4">
+                                                    <div class="text-base font-semibold text-gray-900 dark:text-white">
+                                                        {{ $exam }}
+                                                    </div>
+                                                </td>
+                                                <td class="p-4">
+                                                    <input type="text" wire:model.live="findings.{{ $exam }}"
+                                                        @disabled(in_array($exam, $checkedExamination))
+                                                        class="block w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 focus:border-blue-600 dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:ring-0 disabled:opacity-50 disabled:cursor-not-allowed"
+                                                        placeholder="{{ in_array($exam, $checkedExamination) ? 'Uncheck Normal first' : 'Enter findings' }}" />
+                                                </td>
+                                            </tr>
+                                        @endforeach
                                     </tbody>
                                 </table>
                             </div>
@@ -63,8 +63,8 @@
                 <label for="pregnancy" class="block mb-3 font-medium text-gray-900 dark:text-white">Pregnancy Test
                 </label>
                 <div class="flex ml-4 gap-6">
-                    <livewire:radio title="Positive" id="pregnancy-positive" value="Positive" name="pregnancy" />
-                    <livewire:radio title="Negative" id="pregnancy-negative" value="Negative" name="pregnancy" />
+                    <livewire:radio title="Positive" id="pregnancy-positive" :default="$pregnancy" value="Positive" name="pregnancy" />
+                    <livewire:radio title="Negative" id="pregnancy-negative" value="Negative" :default="$pregnancy" name="pregnancy" />
                 </div>
             </div>
             <div>
@@ -72,8 +72,8 @@
                     Screening)
                 </label>
                 <div class="flex ml-4 gap-6">
-                    <livewire:radio title="Reactive" id="reactive" value="Reactive" name="hepb" />
-                    <livewire:radio title="Non-reactive" id="non-reactive" value="Non-reactive" name="hepb" />
+                    <livewire:radio title="Reactive" id="reactive" :default="$hepb" value="Reactive" name="hepb" />
+                    <livewire:radio title="Non-reactive" id="non-reactive" :default="$hepb" value="Non-reactive" name="hepb" />
                 </div>
             </div>
             <div>

@@ -11,18 +11,25 @@ class Checkbox extends Component
     public string $title;
     public bool $isChecked = true;
 
-    public function mount(string $id = '', string $value = '')
+    public function mount()
     {
-        $this->id = $id;
-        $this->value = $value;
-        $this->dispatch('checkbox', [
-            'value' => $this->value,
-            'checked' => true,
-        ]);
+        // Get the current physical examination data from session
+        $patientInfo = session('patient_information', []);
+        $physicalExam = $patientInfo['physical_examination'] ?? null;
+        $ancillaryExam = $patientInfo['ancillary_examination'] ?? null;
+
+        if ($physicalExam) {
+            // Check if this body part is marked as normal
+            $this->isChecked = in_array($this->value, $physicalExam['normal'] ?? []);
+        }
+        if ($ancillaryExam) {
+            // Check if this body part is marked as normal
+            $this->isChecked = in_array($this->value, $ancillaryExam['normal'] ?? []);
+        }
 
     }
 
-    public function updatedIsChecked($value)
+    public function updating($name, $value)
     {
         $this->dispatch('checkbox', [
             'value' => $this->value,

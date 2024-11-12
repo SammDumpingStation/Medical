@@ -8,6 +8,15 @@ use Livewire\Component;
 class StudentClassification extends Component
 {
     public $type;
+    public $default;
+    public function mount()
+    {
+        $this->default = Session::get('patient_information.student_classification') ?? '';
+    }
+    public function typeSelect($type)
+    {
+        $this->type = $type;
+    }
     public function switchToTab($tabId)
     {
         $this->saveToSession();

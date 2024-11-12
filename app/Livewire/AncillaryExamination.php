@@ -9,20 +9,38 @@ use Livewire\Component;
 class AncillaryExamination extends Component
 {
     public $examinations = ['Complete Blood Count', 'Fecalysis/Stool Exam', 'Urinalysis', 'Chest X-RAY', 'MMSE Score'];
-    public $pregnancy = false, $hepb = 'Non-reactive', $blood_type;
+    public $pregnancy = 'Negative';
+    public $hepb = 'Non-reactive';
+    public $blood_type;
     public $checkedExamination = [];
     public $findings = [];
 
     public function mount()
     {
-        // Initialize checkedExamination with all values since they start checked
-        $this->checkedExamination = array_values(array_intersect($this->examinations, $this->examinations));
-        foreach ($this->examinations as $part) {
-            $this->findings[$part] = '';
+        // Get existing data from session if it exists
+        $patientInfo = Session::get('patient_information', []);
+        $ancillaryExam = $patientInfo['ancillary_examination'] ?? null;
+
+        if ($ancillaryExam) {
+            // Set checked examinations from session
+            $this->checkedExamination = $ancillaryExam['normal'] ?? [];
+
+            // Initialize findings with session data or empty strings
+            foreach ($this->examinations as $exam) {
+                $this->findings[$exam] = $ancillaryExam['findings'][$exam] ?? '';
+            }
+
+            // Set other examination values from session
+            $this->pregnancy = $ancillaryExam['pregnancy_test'] ?? false;
+            $this->hepb = $ancillaryExam['hepb'] ?? 'Non-reactive';
+            $this->blood_type = $ancillaryExam['blood_type'] ?? '';
+        } else {
+            // If no session data, initialize with default values
+            foreach ($this->examinations as $exam) {
+                $this->findings[$exam] = '';
+            }
+            $this->checkedExamination = $this->examinations; // All checked by default
         }
-        $this->pregnancy = Session::get('patient_information.ancillary_information.pregnancy_test' ?? false);
-        $this->hepb = Session::get('patient_information.ancillary_information.hepb' ?? 'Non-reactive');
-        $this->blood_type = Session::get('patient_information.ancillary_information.blood_type' ?? '');
     }
 
     #[On('radioSelected')]
@@ -38,7 +56,6 @@ class AncillaryExamination extends Component
     #[On('checkbox')]
     public function getCheckbox($data)
     {
-        // Validate that the incoming value exists in examinations array
         if (!in_array($data['value'], $this->examinations)) {
             return;
         }
@@ -46,39 +63,44 @@ class AncillaryExamination extends Component
         if ($data['checked']) {
             if (!in_array($data['value'], $this->checkedExamination)) {
                 $this->checkedExamination[] = $data['value'];
+                // Clear findings when marked as normal
+                $this->findings[$data['value']] = '';
             }
         } else {
             $this->checkedExamination = array_values(array_filter(
                 $this->checkedExamination,
-                fn($part) => $part !== $data['value'] && in_array($part, $this->examinations)
+                fn($exam) => $exam !== $data['value'] && in_array($exam, $this->examinations)
             ));
         }
     }
 
-    public function saveToSession()
+    public function saveExamination()
     {
-        // Filter to ensure only valid body parts are included
         $validCheckedParts = array_values(array_intersect($this->checkedExamination, $this->examinations));
 
-        $validFindings = array_filter($this->findings, function ($key) use ($validCheckedParts) {
-            return !in_array($key, $validCheckedParts);
-        }, ARRAY_FILTER_USE_KEY);
+        // Keep all findings, both empty and filled
+        $validFindings = array_intersect_key($this->findings, array_flip($this->examinations));
 
-        $patient = Session::get('patient_information', []);
-        $patient['ancillary_examination'] = [
+        return [
             'normal' => $validCheckedParts,
             'findings' => $validFindings,
-            'pregnancy_test' => $this->pregnancy ?? 'Negative',
-            'hepb' => $this->hepb ?? 'Non-reactive',
-            'blood_type' => $this->blood_type ?? 'O',
+            'pregnancy_test' => $this->pregnancy,
+            'hepb' => $this->hepb,
+            'blood_type' => $this->blood_type,
         ];
+    }
+
+    public function saveToSession()
+    {
+        $patient = Session::get('patient_information', []);
+        $patient['ancillary_examination'] = $this->saveExamination();
         Session::put('patient_information', $patient);
     }
 
     public function switchToTab($tabId)
     {
         $this->saveToSession();
-        $this->dispatch('switch-tab-form2', ['tabId' => $tabId]); // Trigger JavaScript event to change tab
+        $this->dispatch('switch-tab-form2', ['tabId' => $tabId]);
     }
 
     public function render()

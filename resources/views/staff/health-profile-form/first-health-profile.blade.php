@@ -15,35 +15,32 @@
             <div class="mb-4 border-b border-gray-200 dark:border-gray-700">
                 <ul class="flex flex-wrap -mb-px text-sm font-medium text-center" id="first-health-profile-tab"
                     data-tabs-toggle="#default-tab-content" role="tablist">
-                    <li role="presentation">
-                        <button
-                            class="inline-block p-4 border-b-2 rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300"
-                            id="immunizations-tab" data-tabs-target="#immunizations" type="button" role="tab"
-                            aria-controls="immunizations" aria-selected="false">Immunizations</button>
-                    </li>
+
                     <li class="me-2" role="presentation">
-                        <button class="inline-block p-4 border-b-2 rounded-t-lg" id="profile-tab"
+                        <button disabled class="inline-block p-4 border-b-2 rounded-t-lg" id="profile-tab"
                             data-tabs-target="#profile" type="button" role="tab" aria-controls="profile"
-                            aria-selected="false">Profile</button>
+                            aria-selected="false">Personal Information</button>
                     </li>
                     <li class="me-2" role="presentation">
-                        <button
-                            class="inline-block p-4 border-b-2 rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300"
-                            id="social-history-tab" data-tabs-target="#social-history" type="button" role="tab"
+                        <button disabled class="inline-block p-4 border-b-2 rounded-t-lg" id="social-history-tab"
+                            data-tabs-target="#social-history" type="button" role="tab"
                             aria-controls="social-history" aria-selected="false">Social History</button>
                     </li>
                     <li class="me-2" role="presentation">
-                        <button
-                            class="inline-block p-4 border-b-2 rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300"
-                            id="medical-history-tab" data-tabs-target="#medical-history" type="button" role="tab"
+                        <button disabled class="inline-block p-4 border-b-2 rounded-t-lg" id="medical-history-tab"
+                            data-tabs-target="#medical-history" type="button" role="tab"
                             aria-controls="medical-history" aria-selected="false">Medical History</button>
                     </li>
 
                     <li role="presentation">
-                        <button
-                            class="inline-block p-4 border-b-2 rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300"
-                            id="surgical-history-tab" data-tabs-target="#surgical-history" type="button" role="tab"
+                        <button disabled class="inline-block p-4 border-b-2 rounded-t-lg" id="surgical-history-tab"
+                            data-tabs-target="#surgical-history" type="button" role="tab"
                             aria-controls="surgical-history" aria-selected="false">Surgical History</button>
+                    </li>
+                    <li role="presentation">
+                        <button disabled class="inline-block p-4 border-b-2 rounded-t-lg" id="immunizations-tab"
+                            data-tabs-target="#immunizations" type="button" role="tab"
+                            aria-controls="immunizations" aria-selected="false">Immunizations</button>
                     </li>
 
                 </ul>

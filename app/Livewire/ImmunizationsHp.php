@@ -35,7 +35,7 @@ class ImmunizationsHp extends Component
     }
 
     #[On('toggle-data')]
-    public function toggleData($title, $state)
+    public function toggleData($title)
     {
         if ($title === 'HPV') {
             $this->hpv = !$this->hpv;
@@ -88,7 +88,7 @@ class ImmunizationsHp extends Component
 
     public function mount()
     {
-        $patientInfo = Session::get('patient_information.immunizations', []);
+        $patientInfo = Session::get('patient_information.patient_information.patient_id', []);
 
         $this->patientID = Session::get('patient_information.personal_information.patient_id') ?? '';
         $this->patientGender = Session::get('patient_information.personal_information.gender') ?? '';

@@ -14,19 +14,29 @@ class PhysicalExamination extends Component
 
     public function mount()
     {
-        // Initialize checkedBodyPart with filtered values
-        $this->checkedBodyPart = array_values(array_intersect($this->bodyPart, $this->bodyPart));
+        // Get existing data from session if it exists
+        $patientInfo = Session::get('patient_information', []);
+        $physicalExam = $patientInfo['physical_examination'] ?? null;
 
-        // Initialize findings array with empty values for each body part
-        foreach ($this->bodyPart as $part) {
-            $this->findings[$part] = '';
+        if ($physicalExam) {
+            // Set checked body parts from session
+            $this->checkedBodyPart = $physicalExam['normal'] ?? [];
+
+            // Initialize findings with session data or empty strings
+            foreach ($this->bodyPart as $part) {
+                $this->findings[$part] = $physicalExam['findings'][$part] ?? '';
+            }
+        } else {
+            // If no session data, initialize with empty values
+            foreach ($this->bodyPart as $part) {
+                $this->findings[$part] = '';
+            }
         }
     }
 
     #[On('checkbox')]
     public function getCheckbox($data)
     {
-        // Add validation to ensure the value is in bodyPart array
         if (!in_array($data['value'], $this->bodyPart)) {
             return;
         }
@@ -34,28 +44,30 @@ class PhysicalExamination extends Component
         if ($data['checked']) {
             if (!in_array($data['value'], $this->checkedBodyPart)) {
                 $this->checkedBodyPart[] = $data['value'];
+                // Clear findings when marked as normal
+                $this->findings[$data['value']] = '';
             }
         } else {
             $this->checkedBodyPart = array_values(array_filter(
                 $this->checkedBodyPart,
                 fn($part) => $part !== $data['value'] && in_array($part, $this->bodyPart)
             ));
-            // Clear findings when unchecked
-            $this->findings[$data['value']] = '';
         }
     }
 
     public function saveExamination()
     {
-        // Filter to ensure only valid body parts are included
+        // Filter checked body parts to include only valid ones from $bodyPart
         $validCheckedParts = array_values(array_intersect($this->checkedBodyPart, $this->bodyPart));
 
-        $validFindings = array_filter($this->findings, function ($key) use ($validCheckedParts) {
-            return !in_array($key, $validCheckedParts);
-        }, ARRAY_FILTER_USE_KEY);
+        // Only include findings with non-empty values (abnormal findings)
+        $validFindings = array_filter(
+            array_intersect_key($this->findings, array_flip($this->bodyPart)),
+            fn($finding) => $finding !== '' // Include only non-empty findings
+        );
 
         return [
-            'checked_parts' => $validCheckedParts,
+            'normal' => $validCheckedParts,
             'findings' => $validFindings,
         ];
     }
@@ -70,7 +82,7 @@ class PhysicalExamination extends Component
     public function switchToTab($tabId)
     {
         $this->saveToSession();
-        $this->dispatch('switch-tab-form2', ['tabId' => $tabId]); // Trigger JavaScript event to change tab
+        $this->dispatch('switch-tab-form2', ['tabId' => $tabId]);
     }
 
     public function render()

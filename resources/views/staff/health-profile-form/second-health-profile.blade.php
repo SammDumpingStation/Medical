@@ -11,6 +11,7 @@
         <div class="mb-4 border-b border-gray-200 dark:border-gray-700">
             <ul class="flex flex-wrap -mb-px text-sm font-medium text-center" id="second-health-profile-tab"
                 data-tabs-toggle="#default-tab-content" role="tablist">
+
                 <li class="me-2" role="presentation">
                     <button class="inline-block p-4 border-b-2 rounded-t-lg" id="physical-screening-tab"
                         data-tabs-target="#physical-screening" type="button" role="tab"
@@ -43,6 +44,7 @@
                         id="personal-remarks-tab" data-tabs-target="#personal-remarks" type="button" role="tab"
                         aria-controls="personal-remarks" aria-selected="false">Personal Remarks</button>
                 </li>
+
             </ul>
         </div>
         <div id="default-tab-content">
