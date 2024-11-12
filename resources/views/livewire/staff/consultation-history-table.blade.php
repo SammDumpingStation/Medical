@@ -31,29 +31,29 @@
                                         <td class="flex items-center p-4 space-x-6 whitespace-nowrap">
                                             <div class="text-sm font-normal text-gray-500 dark:text-gray-400">
                                                 <div class="text-base text-gray-900 dark:text-white">
-                                                    {{ $data->patient_id }}
+                                                    {{ $data->patient->patient_id }}
                                                 </div>
                                             </div>
                                         </td>
                                         <td
                                             class="p-4 border dark:border-gray-700 text-base font-medium text-gray-500 whitespace-nowrap dark:text-white">
-                                            {{ $data->patient_name }}
+                                            {{ $data->patient->full_name }}
                                         </td>
                                         <td
                                             class="p-4 border dark:border-gray-700 text-base font-medium text-gray-500 whitespace-nowrap dark:text-white">
-                                            {{ $data->age }}
+                                            {{ $data->patient->age }}
                                         </td>
                                         <td
                                             class="p-4 border dark:border-gray-700 text-base font-medium text-gray-500 whitespace-nowrap dark:text-white">
-                                            {{ $data->gender }}
+                                            {{ $data->patient->gender }}
                                         </td>
                                         <td
                                             class="p-4 border dark:border-gray-700 text-base font-medium text-gray-500 whitespace-nowrap dark:text-white">
-                                            {{ $data->year_level }}
+                                            {{ $data->patient->year_level }}
                                         </td>
                                         <td
                                             class="p-4 border dark:border-gray-700 text-base font-medium text-gray-500 whitespace-nowrap dark:text-white">
-                                            {{ $data->department }}
+                                            {{ $data->patient->department }}
                                         </td>
                                         <td
                                             class="p-4 border dark:border-gray-700 text-base font-medium text-gray-500 whitespace-nowrap dark:text-white">

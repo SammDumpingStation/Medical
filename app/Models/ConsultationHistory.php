@@ -13,14 +13,14 @@ class ConsultationHistory extends Model
 
     protected $fillable = [
         'patient_id',
-        'patient_name',
-        'age',
-        'gender',
-        'year_level',
-        'department',
         'primary_diagnosis',
         'status',
         'date',
         'time',
     ];
+
+    public function patient()
+{
+        return $this->hasOne(Patient::class, 'patient_id', 'patient_id');
+    }
 }

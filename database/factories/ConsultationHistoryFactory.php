@@ -32,11 +32,6 @@ class ConsultationHistoryFactory extends Factory
 
         return [
             'patient_id' => User::inRandomOrder()->first()->patient_id,
-            'patient_name' => $this->faker->name,
-            'age' => $this->faker->numberBetween(18, 90),
-            'gender' => $this->faker->randomElement(['Male', 'Female', 'Other']),
-            'year_level' => $this->faker->randomElement(['1st Year', '2nd Year', '3rd Year', '4th Year']),
-            'department' => $this->faker->randomElement($departments),
             'primary_diagnosis' => $this->faker->randomElement($diagnoses),
             'status' => $this->faker->randomElement(['Pending', 'Ongoing', 'Completed', 'Cancelled']),
             'date' => $this->faker->date,

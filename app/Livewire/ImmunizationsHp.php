@@ -86,11 +86,11 @@ class ImmunizationsHp extends Component
 
     }
 
-    public function mount()
+    public function mount($patientID)
     {
         $patientInfo = Session::get('patient_information.patient_information.patient_id', []);
 
-        $this->patientID = Session::get('patient_information.personal_information.patient_id') ?? '';
+        $this->patientID = $patientID;
         $this->patientGender = Session::get('patient_information.personal_information.gender') ?? '';
         $this->newbornImmunization = $patientInfo['newbornImmunization'] ?? false; // null, 'yes', 'no', or 'unknown'
         $this->tetanusToxoid = $patientInfo['tetanusToxoid'] ?? false;
@@ -142,6 +142,7 @@ class ImmunizationsHp extends Component
 
     public function switchToTab($tabId)
     {
+        $this->saveToSession();
         $this->dispatch('switch-tab', ['tabId' => $tabId]); // Trigger JavaScript event to change tab
     }
     public function render()

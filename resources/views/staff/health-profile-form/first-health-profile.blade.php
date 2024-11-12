@@ -64,7 +64,7 @@
                 </div>
                 <div class="hidden p-4 rounded-lg bg-white dark:bg-gray-800" id="immunizations" role="tabpanel"
                     aria-labelledby="immunizations-tab">
-                    <livewire:immunizations-hp />
+                    <livewire:immunizations-hp :patientID="$patient->patient_id" />
                 </div>
             </div>
         </div>

@@ -58,29 +58,29 @@
                                         <td class="flex items-center p-4 space-x-6 whitespace-nowrap">
                                             <div class="text-sm font-normal text-gray-500 dark:text-gray-400">
                                                 <div class="text-base text-gray-900 dark:text-white">
-                                                    {{ $data->patient_id }}
+                                                    {{ $data->patient->patient_id }}
                                                 </div>
                                             </div>
                                         </td>
                                         <td
                                             class="p-4 border dark:border-gray-700 text-base font-medium text-gray-500 whitespace-nowrap dark:text-white">
-                                            {{ $data->patient_name }}
+                                            {{ $data->patient->full_name }}
                                         </td>
                                         <td
                                             class="p-4 border dark:border-gray-700 text-base font-medium text-gray-500 whitespace-nowrap dark:text-white">
-                                            {{ $data->age }}
+                                            {{ $data->patient->age }}
                                         </td>
                                         <td
                                             class="p-4 border dark:border-gray-700 text-base font-medium text-gray-500 whitespace-nowrap dark:text-white">
-                                            {{ $data->gender }}
+                                            {{ $data->patient->gender }}
                                         </td>
                                         <td
                                             class="p-4 border dark:border-gray-700 text-base font-medium text-gray-500 whitespace-nowrap dark:text-white">
-                                            {{ $data->year_level }}
+                                            {{ $data->patient->year_level }}
                                         </td>
                                         <td
                                             class="p-4 border dark:border-gray-700 text-base font-medium text-gray-500 whitespace-nowrap dark:text-white">
-                                            {{ $data->department }}
+                                            {{ $data->patient->department }}
                                         </td>
                                         <td
                                             class="p-4 border dark:border-gray-700 text-base font-medium text-gray-500 whitespace-nowrap dark:text-white">
@@ -94,7 +94,7 @@
                                         </td>
                                         <td
                                             class="p-4 space-x-2 text-sm text-gray-500 whitespace-nowrap dark:text-white">
-                                            <a href="/consultation/student/{{ $data->patient_id }}/create-form"
+                                            <a href="/consultation/student/{{ $data->patient->full_id }}/create-form"
                                                 class="hover:bg-blue-800 text-white bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
                                                 Create Form
                                             </a>
