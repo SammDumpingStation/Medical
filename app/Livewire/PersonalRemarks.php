@@ -8,10 +8,12 @@ use Livewire\Component;
 class PersonalRemarks extends Component
 {
     public $patientID;
+    public $gender;
 
     public function mount()
     {
         $this->patientID = Session::get('patient_information.personal_information.patient_id') ?? 0;
+        $this->gender = Session::get('patient_information.personal_information.gender') ?? '';
     }
     public function switchToTab($tabId)
     {

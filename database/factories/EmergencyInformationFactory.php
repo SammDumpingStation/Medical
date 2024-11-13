@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use App\Models\Patient;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -18,7 +19,7 @@ class EmergencyInformationFactory extends Factory
     public function definition(): array
     {
         return [
-            'patient_id' => Patient::factory(),
+            'patient_id' => User::inRandomOrder()->first()->patient_id,
             'contact_person' => $this->faker->name(),
             'address' => $this->faker->address(),
             'phone_number' => $this->faker->phoneNumber(),

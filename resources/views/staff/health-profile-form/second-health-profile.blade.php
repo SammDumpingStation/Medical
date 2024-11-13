@@ -2,9 +2,9 @@
     <div class="p-4 bg-white flex flex-col justify-between dark:bg-gray-800">
         <h1 class="text-xl font-semibold text-gray-900 sm:text-2xl dark:text-white">Student Health Profile Creation</h1>
         @if ($patient->gender === 'Female')
-            Form 1 out of 3
+            Form 2 out of 3
         @else
-            Form 1 out of 2
+            Form 2 out of 2
         @endif
     </div>
     <div class="bg-white dark:bg-gray-800 p-4 rounded-lg ">

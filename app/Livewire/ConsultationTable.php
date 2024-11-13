@@ -30,8 +30,6 @@ class ConsultationTable extends Component
     public function render()
     {
         $datas = ConsultationHistory::orderBy('date', 'desc')->where('patient_id', 'LIKE', "%{$this->search}%")->paginate(10);
-        dd($datas);
-
         return view('livewire.staff.consultation-table', ['datas' => $datas]
         );
     }

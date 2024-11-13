@@ -3,6 +3,7 @@
 namespace App\Livewire;
 
 use App\Models\ConsultationHistory;
+use App\Models\MedicineInventory;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -31,7 +32,7 @@ class PharmacyTable extends Component
 
     public function render()
     {
-        $datas = ConsultationHistory::where('patient_id', 'LIKE', "%{$this->search}%")->paginate(10);
+        $datas = MedicineInventory::where('Name', 'LIKE', "%{$this->search}%")->paginate(10);
         return view('livewire.pharmacy-table', ['datas' => $datas]
         );
     }

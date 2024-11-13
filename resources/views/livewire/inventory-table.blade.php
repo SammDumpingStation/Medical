@@ -16,7 +16,7 @@
                                         stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
                                 </svg>
                             </div>
-                            <input type="number" id="default-search" wire:model.live.debounce.500ms='search'
+                            <input type="text" id="default-search" wire:model.live.debounce.500ms='search'
                                 class=" block w-full p-4 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                 placeholder="Search Student by ID" required />
                             <button type="submit"
@@ -58,25 +58,29 @@
                                         <td class="flex items-center p-4 space-x-6 whitespace-nowrap">
                                             <div class="text-sm font-normal text-gray-500 dark:text-gray-400">
                                                 <div class="text-base text-gray-900 dark:text-white">
-                                                    {{ $data->patient_id }}
+                                                    {{ $data->name }}
                                                 </div>
                                             </div>
                                         </td>
                                         <td
                                             class="p-4 border dark:border-gray-700 text-base font-medium text-gray-500 whitespace-nowrap dark:text-white">
-                                            {{ $data->patient_name }}
+                                            {{ $data->acquired_at }}
                                         </td>
                                         <td
                                             class="p-4 border dark:border-gray-700 text-base font-medium text-gray-500 whitespace-nowrap dark:text-white">
-                                            {{ $data->age }}
+                                            {{ $data->no_of_pieces }}
                                         </td>
                                         <td
                                             class="p-4 border dark:border-gray-700 text-base font-medium text-gray-500 whitespace-nowrap dark:text-white">
-                                            {{ $data->gender }}
+                                            {{ $data->status }}
                                         </td>
                                         <td
                                             class="p-4 border dark:border-gray-700 text-base font-medium text-gray-500 whitespace-nowrap dark:text-white">
-                                            {{ $data->year_level }}
+                                            {{ $data->turn_over_to_supply }}
+                                        </td>
+                                        <td
+                                            class="p-4 border dark:border-gray-700 text-base font-medium text-gray-500 whitespace-nowrap dark:text-white">
+                                            {{ $data->damaged }}
                                         </td>
                                     @empty
                                     <tr>

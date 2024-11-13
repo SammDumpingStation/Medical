@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Patient;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -31,7 +32,7 @@ class ConsultationHistoryFactory extends Factory
         ];
 
         return [
-            'patient_id' => User::factory(),
+            'patient_id' => Patient::factory(),
             'primary_diagnosis' => $this->faker->randomElement($diagnoses),
             'status' => $this->faker->randomElement(['Pending', 'Ongoing', 'Completed', 'Cancelled']),
             'date' => $this->faker->date,

@@ -16,7 +16,7 @@
                                         stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
                                 </svg>
                             </div>
-                            <input type="number" id="default-search" wire:model.live.debounce.500ms='search'
+                            <input type="text" id="default-search" wire:model.live.debounce.500ms='search'
                                 class=" block w-full p-4 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                 placeholder="Search Student by ID" required />
                             <button type="submit"
@@ -29,7 +29,8 @@
         <div class="items-center px-4 justify-between lg:flex">
             <div class="mb-4 lg:mb-0">
                 <h3 class="mb-2 text-xl font-bold text-gray-900 dark:text-white">Medicine Inventory</h3>
-                <span class="text-base font-normal text-gray-500 dark:text-gray-400">Check all the in and outs of the medecine here!</span>
+                <span class="text-base font-normal text-gray-500 dark:text-gray-400">Check all the in and outs of the
+                    medecine here!</span>
             </div>
         </div>
         {{-- table --}}
@@ -57,53 +58,51 @@
                                         <td class="flex items-center p-4 space-x-6 whitespace-nowrap">
                                             <div class="text-sm font-normal text-gray-500 dark:text-gray-400">
                                                 <div class="text-base text-gray-900 dark:text-white">
-                                                    {{ $data->patient_id }}
+                                                    {{ $data->Name ?? '' }}
                                                 </div>
                                             </div>
                                         </td>
                                         <td
                                             class="p-4 border dark:border-gray-700 text-base font-medium text-gray-500 whitespace-nowrap dark:text-white">
-                                            {{ $data->patient_name }}
+                                            {{ $data->brand_name ?? '' }}
                                         </td>
                                         <td
                                             class="p-4 border dark:border-gray-700 text-base font-medium text-gray-500 whitespace-nowrap dark:text-white">
-                                            {{ $data->age }}
+                                            {{ $data->dosage ?? '' }}
                                         </td>
                                         <td
                                             class="p-4 border dark:border-gray-700 text-base font-medium text-gray-500 whitespace-nowrap dark:text-white">
-                                            {{ $data->gender }}
+                                            {{ $data->manufactured_date ?? '' }}
                                         </td>
                                         <td
                                             class="p-4 border dark:border-gray-700 text-base font-medium text-gray-500 whitespace-nowrap dark:text-white">
-                                            {{ $data->year_level }}
+                                            {{ $data->expiry ?? '' }}
                                         </td>
                                         <td
                                             class="p-4 border dark:border-gray-700 text-base font-medium text-gray-500 whitespace-nowrap dark:text-white">
-                                            {{ $data->department }}
+                                            {{ $data->turn_over_to_supply ?? '' }}
                                         </td>
                                         <td
                                             class="p-4 border dark:border-gray-700 text-base font-medium text-gray-500 whitespace-nowrap dark:text-white">
-                                            {{ $data->primary_diagnosis }}
+                                            {{ $data->stock_on_hand ?? '' }}
                                         </td>
                                         <td class="p-4 border whitespace-nowrap dark:text-white">
                                             <span
                                                 class="p-4 space-x-2 text-sm text-gray-500 whitespace-nowrap dark:text-white">
-                                                {{ $data->status }}
+                                                {{ $data->dispensed ?? '' }}
                                             </span>
                                         </td>
-                                        <td
-                                            class="p-4 space-x-2 text-sm text-gray-500 whitespace-nowrap dark:text-white">
-                                            <a href="/health-profile/create-form-1/{{ $data->patient_id }}"
-                                                class="hover:bg-blue-800 text-white bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
-                                                Create Form
-                                            </a>
-                                        </td>
+                                        <td class="p-4 border whitespace-nowrap dark:text-white">
+                                            <span
+                                                class="p-4 space-x-2 text-sm text-gray-500 whitespace-nowrap dark:text-white">
+                                                {{ $data->status ?? '' }}
+                                            </span>
                                     </tr>
                                 @empty
                                     <tr>
                                         <td colspan="10" rowspan="10"
                                             class="text-center py-40 text-xl font-semibold">
-                                            No patient with that matching ID available
+                                            No medicine with that matching name available
                                         </td>
                                     </tr>
                                 @endforelse

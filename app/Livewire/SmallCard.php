@@ -10,6 +10,7 @@ class SmallCard extends Component
     public string $subtitle;
     public string $id;
     public string $footer;
+    public string $link;
 
     public function mount(string $title, string $subtitle, string $footer)
     {
