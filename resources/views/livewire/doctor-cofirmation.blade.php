@@ -41,7 +41,7 @@
                         <li class="me-2" role="presentation">
                             <button class="inline-block p-4 border-b-2 rounded-t-lg" id="confirmation-tab"
                                 data-tabs-target="#confirmation" type="button" role="tab"
-                                aria-controls="confirmation" aria-selected="false">Social History</button>
+                                aria-controls="confirmation" aria-selected="false">Confirm Health Profile Creation</button>
                         </li>
 
                     </ul>

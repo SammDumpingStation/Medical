@@ -27,8 +27,8 @@ class UserFactory extends Factory
 
         return [
             'patient_id' => 2024 . $this->faker->unique()->numberBetween(100000, 999999),
-            'is_staff' => $role !== 'patient' ? true : false, // Set false for 'patient'
-            'role' => $role,
+            'is_staff' => false, // Set false for 'patient'
+            'role' => 'patient',
             'password' => Hash::make('password'),
             'remember_token' => Str::random(10),
             'created_at' => now(),
