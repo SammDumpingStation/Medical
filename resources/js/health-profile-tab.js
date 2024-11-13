@@ -125,3 +125,33 @@ document.addEventListener("livewire:init", () => {
         tabs.show(tabId); // Switch to the specified tab
     });
 });
+
+document.addEventListener("livewire:init", () => {
+    Livewire.on("switch-tab-form2", (event) => {
+        const tabId = event[0].tabId; // Adjust to match the structure of your dispatched data
+
+        // Ensure Flowbite is fully initialized before accessing tabs            // Reference to the container holding the tab triggers and targets
+        const tabsElement = document.getElementById("doctor-confirmation-tab");
+
+        // Define the array of tab elements
+        const tabElements = [
+            {
+                id: "health-profile",
+                triggerEl: document.querySelector("#health-profile-tab"),
+                targetEl: document.querySelector("#health-profile"),
+            },
+            {
+                id: "confirmation",
+                triggerEl: document.querySelector(
+                    "#head-to-toe-assessment-tab"
+                ),
+                targetEl: document.querySelector("#confirmation"),
+            },
+        ];
+
+        // Create Tabs instance
+        const tabs = new Tabs(tabsElement, tabElements);
+
+        tabs.show(tabId); // Switch to the specified tab
+    });
+});

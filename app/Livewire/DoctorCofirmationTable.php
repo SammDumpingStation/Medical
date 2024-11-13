@@ -6,13 +6,11 @@ use App\Models\ConsultationHistory;
 use Livewire\Component;
 use Livewire\WithPagination;
 
-class HealthProfileTable extends Component
-{
-    use WithPagination;
+class DoctorCofirmationTable extends Component
+{use WithPagination;
 
     public $headers = [];
     public $search;
-    public $disabled = false;
 
     public function mount()
     {
@@ -30,8 +28,7 @@ class HealthProfileTable extends Component
 
     public function render()
     {
-        $datas = ConsultationHistory::where('patient_id', 'LIKE', "%{$this->search}%")->paginate(10);
-        return view('livewire.staff.hp-form-section.health-profile-table', ['datas' => $datas]
+        $datas = ConsultationHistory::orderBy('date', 'desc')->where('patient_id', 'LIKE', "%{$this->search}%")->paginate(10);
+        return view('livewire.doctor-cofirmation-table', ['datas' => $datas]
         );
-    }
-}
+    }}
