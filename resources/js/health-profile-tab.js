@@ -49,7 +49,9 @@ document.addEventListener("livewire:init", () => {
         const tabId = event[0].tabId; // Adjust to match the structure of your dispatched data
 
         // Ensure Flowbite is fully initialized before accessing tabs            // Reference to the container holding the tab triggers and targets
-        const tabsElement = document.getElementById("second-health-profile-tab");
+        const tabsElement = document.getElementById(
+            "second-health-profile-tab"
+        );
 
         // Define the array of tab elements
         const tabElements = [
@@ -79,6 +81,41 @@ document.addEventListener("livewire:init", () => {
                 id: "personal-remarks",
                 triggerEl: document.querySelector("#personal-remarks-tab"),
                 targetEl: document.querySelector("#personal-remarks"),
+            },
+        ];
+
+        // Create Tabs instance
+        const tabs = new Tabs(tabsElement, tabElements);
+
+        tabs.show(tabId); // Switch to the specified tab
+    });
+});
+
+document.addEventListener("livewire:init", () => {
+    Livewire.on("switch-tab-form2", (event) => {
+        const tabId = event[0].tabId; // Adjust to match the structure of your dispatched data
+
+        // Ensure Flowbite is fully initialized before accessing tabs            // Reference to the container holding the tab triggers and targets
+        const tabsElement = document.getElementById("third-health-profile-tab");
+
+        // Define the array of tab elements
+        const tabElements = [
+            {
+                id: "menstrual-history",
+                triggerEl: document.querySelector("#menstrual-history-tab"),
+                targetEl: document.querySelector("#menstrual-history"),
+            },
+            {
+                id: "head-to-toe-assessment",
+                triggerEl: document.querySelector(
+                    "#head-to-toe-assessment-tab"
+                ),
+                targetEl: document.querySelector("#head-to-toe-assessment"),
+            },
+            {
+                id: "other-findings",
+                triggerEl: document.querySelector("#other-findings-tab"),
+                targetEl: document.querySelector("#other-findings"),
             },
         ];
 

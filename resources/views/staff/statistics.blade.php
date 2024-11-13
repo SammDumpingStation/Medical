@@ -1,5 +1,5 @@
 <x-layout>
-    <h1 class="text-xl font-semibold text-gray-900 sm:text-2xl dark:text-white">Statistical Dashboard</h1>
+    <h1 class="text-xl font-semibold text-gray-900 sm:text-2xl dark:text-white p-4">Statistical Dashboard</h1>
     <div class="px-4 pt-4 2xl:px-0">
         <div class="">
             <!-- Main widget -->
@@ -8,8 +8,8 @@
                 <div class="flex items-center justify-between mb-4">
                     <div class="flex-shrink-0">
                         <span
-                            class="text-xl font-bold leading-none text-gray-900 sm:text-2xl dark:text-white">$45,385</span>
-                        <h3 class="text-base font-light text-gray-500 dark:text-gray-400">Sales this week</h3>
+                            class="text-xl font-bold leading-none text-gray-900 sm:text-2xl dark:text-white">123</span>
+                        <h3 class="text-base font-light text-gray-500 dark:text-gray-400">Visitation This Week</h3>
                     </div>
                     <div
                         class="flex items-center justify-end flex-1 text-base font-medium text-green-500 dark:text-green-400">
