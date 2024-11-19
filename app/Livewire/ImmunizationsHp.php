@@ -5,6 +5,7 @@ namespace App\Livewire;
 use Illuminate\Support\Facades\Session;
 use Livewire\Attributes\On;
 use Livewire\Component;
+use App\Models\immunizations;
 
 class ImmunizationsHp extends Component
 {
@@ -26,6 +27,10 @@ class ImmunizationsHp extends Component
     public $secondBooster, $secondBoosterBrand;
     public $unvaccinatedReason = '';
 
+    public $first_dose_date;
+    public $second_dose_date;
+    
+
     #[On('radioSelected')]
     public function radioSelected($name, $value)
     {
@@ -35,6 +40,7 @@ class ImmunizationsHp extends Component
     }
 
     #[On('toggle-data')]
+    
     public function toggleData($title)
     {
         if ($title === 'HPV') {
@@ -113,32 +119,60 @@ class ImmunizationsHp extends Component
         $this->secondBoosterBrand = $patientInfo['secondBoosterBrand'] ?? '';
         $this->unvaccinatedReason = $patientInfo['unvaccinatedReason'] ?? '';
     }
-    public function saveToSession()
-    {
-        $patient = Session::get('patient_information');
-        $patient['immunizations'] = [
-            'patientID' => $this->patientID,
-            'newbornImmunization' => $this->newbornImmunization, // null, 'yes', 'no', or 'unknown'
-            'tetanusToxoid' => $this->tetanusToxoid,
-            'pneumococcalVaccine' => $this->pneumococcalVaccine,
+
+   public function saveToSession()
+{
+    // Save the data to session first
+    $patient = Session::get('patient_information');
+    $patient['immunizations'] = [
+        'patientID' => $this->patientID,
+        'newbornImmunization' => $this->newbornImmunization, 
+        'tetanusToxoid' => $this->tetanusToxoid,
+        'pneumococcalVaccine' => $this->pneumococcalVaccine,
+        'hpv' => $this->hpv,
+        'hpvDetails' => $this->hpvDetails,
+        'influenzaFlu' => $this->influenzaFlu,
+        'others' => $this->others,
+        'covidVaccinated' => $this->covidVaccinated,
+        'firstDose' => $this->firstDose,
+        'secondDose' => $this->secondDose,
+        'firstDoseBrand' => $this->firstDoseBrand,
+        'secondDoseBrand' => $this->secondDoseBrand,
+        'covidBooster' => $this->covidBooster,
+        'firstBooster' => $this->firstBooster,
+        'secondBooster' => $this->secondBooster,
+        'firstBoosterBrand' => $this->firstBoosterBrand,
+        'secondBoosterBrand' => $this->secondBoosterBrand,
+        'unvaccinatedReason' => $this->unvaccinatedReason,
+    ];
+    Session::put('patient_information', $patient);
+
+    // Insert or update the immunization record in the database
+    $immunization = Immunizations::updateOrCreate(
+        ['patient_id' => $this->patientID], // Find the record by patient_id
+        [
+            'newborn_immunization' => $this->newbornImmunization,
+            'tetanus_toxoid' => $this->tetanusToxoid,
+            'pneumococcal_vaccine' => $this->pneumococcalVaccine,
             'hpv' => $this->hpv,
-            'hpvDetails' => $this->hpvDetails,
-            'influenzaFlu' => $this->influenzaFlu,
+            'hpv_details' => $this->hpvDetails,
+            'influenza_flu' => $this->influenzaFlu,
             'others' => $this->others,
-            'covidVaccinated' => $this->covidVaccinated,
-            'firstDose' => $this->firstDose,
-            'secondDose' => $this->secondDose,
-            'firstDoseBrand' => $this->firstDoseBrand,
-            'secondDoseBrand' => $this->secondDoseBrand,
-            'covidBooster' => $this->covidBooster,
-            'firstBooster' => $this->firstBooster,
-            'secondBooster' => $this->secondBooster,
-            'firstBoosterBrand' => $this->firstBoosterBrand,
-            'secondBoosterBrand' => $this->secondBoosterBrand,
-            'unvaccinatedReason' => $this->unvaccinatedReason,
-        ];
-        Session::put('patient_information', $patient);
-    }
+            'covid_vaccinated' => $this->covidVaccinated,
+            'first_dose' => $this->firstDose,
+            'first_dose_brand' => $this->firstDoseBrand,
+            'second_dose' => $this->secondDose,
+            'second_dose_brand' => $this->secondDoseBrand,
+            'covid_booster' => $this->covidBooster,
+            'first_booster' => $this->firstBooster,
+            'first_booster_brand' => $this->firstBoosterBrand,
+            'second_booster' => $this->secondBooster,
+            'second_booster_brand' => $this->secondBoosterBrand,
+            'unvaccinated_reason' => $this->unvaccinatedReason,
+        ]
+    );
+}
+
 
     public function switchToTab($tabId)
     {

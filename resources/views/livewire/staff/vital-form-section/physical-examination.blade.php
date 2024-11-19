@@ -1,5 +1,5 @@
 <div class="">
-    <h4 class="text-xl mb-4 font-bold dark:text-white">Physical Examination</h4>
+    <h4 class="text-xl mb-4 font-bold dark:text-white">Physical Examinations</h4>
 
     <div id="main-content" class="relative w-full h-full bg-gray-50 dark:bg-gray-900">
         <main>

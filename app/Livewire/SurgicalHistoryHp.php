@@ -1,19 +1,23 @@
 <?php
-
 namespace App\Livewire;
 
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Session;
 use Livewire\Component;
+use App\Models\PastSurgicalHistory;
 
 class SurgicalHistoryHp extends Component
 {
+    public $patientID;
     public $operations = [];
     public $type;
     public $date;
 
     public function mount()
     {
+        // Retrieve the patient ID from the session
+        $this->patientID = Session::get('patient_information.patient_id');
+
         // Check if operations data is in session, if so load it, otherwise initialize with default
         $this->operations = Session::get('patient_information.operations', [
             ['type' => '', 'date' => ''],
@@ -22,8 +26,35 @@ class SurgicalHistoryHp extends Component
 
     public function addOperation()
     {
+        // Just add a new empty operation input
         $this->operations[] = ['type' => '', 'date' => ''];
-        $this->saveToSession(); // Save to session each time an operation is added
+    }
+
+    public function saveOperations()
+    {
+        $patientID = $this->patientID;
+
+        // Validation
+        $this->validate([
+            'operations.*.type' => 'required|string|max:255',
+            'operations.*.date' => 'required|date',
+        ]);
+
+        // Save each operation to the database
+        foreach ($this->operations as $operation) {
+            PastSurgicalHistory::create([
+                'patient_id' => $patientID,
+                'operation_type' => $operation['type'],
+                'operation_time' => Carbon::parse($operation['date']),
+            ]);
+        }
+
+        // Save operations to session
+        $this->saveToSession();
+
+        // Clear operations after saving if needed
+        $this->operations = [['type' => '', 'date' => '']];
+        session()->flash('message', 'Operations saved successfully.');
     }
 
     public function removeOperation($index)

@@ -2,12 +2,16 @@
 
 namespace App\Livewire;
 
+
+use App\Models\AncillaryExaminationsModel;
 use Illuminate\Support\Facades\Session;
 use Livewire\Attributes\On;
 use Livewire\Component;
 
+
 class AncillaryExamination extends Component
 {
+    public $patientID;
     public $examinations = ['Complete Blood Count', 'Fecalysis/Stool Exam', 'Urinalysis', 'Chest X-RAY', 'MMSE Score'];
     public $pregnancy = 'Negative';
     public $hepb = 'Non-reactive';
@@ -17,6 +21,9 @@ class AncillaryExamination extends Component
 
     public function mount()
     {
+        // Retrieve the patient ID from the session
+        $this->patientID = Session::get('patient_information.personal_information.patient_id') ?? '';
+
         // Get existing data from session if it exists
         $patientInfo = Session::get('patient_information', []);
         $ancillaryExam = $patientInfo['ancillary_examination'] ?? null;
@@ -31,7 +38,7 @@ class AncillaryExamination extends Component
             }
 
             // Set other examination values from session
-            $this->pregnancy = $ancillaryExam['pregnancy_test'] ?? false;
+            $this->pregnancy = $ancillaryExam['pregnancy_test'] ?? 'Negative';
             $this->hepb = $ancillaryExam['hepb'] ?? 'Non-reactive';
             $this->blood_type = $ancillaryExam['blood_type'] ?? '';
         } else {
@@ -90,21 +97,40 @@ class AncillaryExamination extends Component
         ];
     }
 
-    public function saveToSession()
-    {
-        $patient = Session::get('patient_information', []);
-        $patient['ancillary_examination'] = $this->saveExamination();
-        Session::put('patient_information', $patient);
-    }
+    public function saveToDatabase()
+{
+    // Retrieve data for saving
+    $examinationData = $this->saveExamination();
+    $patientID = $this->patientID;
+
+    // Map examinations to the respective database columns, setting "Normal" where applicable
+    $dbData = [
+        'patient_id' => $patientID,
+        'complete_blood_count' => in_array('Complete Blood Count', $this->checkedExamination) ? 'Normal' : ($examinationData['findings']['Complete Blood Count'] ?? null),
+        'fecalysis' => in_array('Fecalysis/Stool Exam', $this->checkedExamination) ? 'Normal' : ($examinationData['findings']['Fecalysis/Stool Exam'] ?? null),
+        'urinalysis' => in_array('Urinalysis', $this->checkedExamination) ? 'Normal' : ($examinationData['findings']['Urinalysis'] ?? null),
+        'chest_xray' => in_array('Chest X-RAY', $this->checkedExamination) ? 'Normal' : ($examinationData['findings']['Chest X-RAY'] ?? null),
+        'mmse_score' => in_array('MMSE Score', $this->checkedExamination) ? 'Normal' : ($examinationData['findings']['MMSE Score'] ?? null),
+        'pregnancy_test' => $examinationData['pregnancy_test'],
+        'hep_b' => $examinationData['hepb'],
+        'blood_type' => $examinationData['blood_type'],
+    ];
+
+    // Save to the database
+    AncillaryExaminationsModel::create($dbData);
+}
+
 
     public function switchToTab($tabId)
     {
-        $this->saveToSession();
+        $this->saveToDatabase(); 
         $this->dispatch('switch-tab-form2', ['tabId' => $tabId]);
     }
 
     public function render()
     {
-        return view('livewire.staff.vital-form-section.ancillary-examination');
+        return view('livewire.staff.vital-form-section.ancillary-examination', [
+            'patientID' => $this->patientID,
+        ]);
     }
 }

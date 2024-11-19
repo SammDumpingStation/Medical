@@ -1,0 +1,21 @@
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+
+class PatientModel extends Model
+{
+ 
+public function details()
+{
+    return $this->hasOne(PatientDetails::class, 'patient_id');
+}
+
+public function socialHistory()
+{
+    return $this->hasOne(SocialHistory::class, 'patient_id');
+}
+
+}

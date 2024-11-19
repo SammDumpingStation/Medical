@@ -5,10 +5,15 @@ namespace App\Livewire;
 use Illuminate\Support\Facades\Session;
 use Livewire\Attributes\On;
 use Livewire\Component;
+use Illuminate\Support\Facades\Log;
+use App\Models\MedicalHistory;
+use App\Models\Admission;
 
 class MedicalHistoryHp extends Component
 {
     // Personal medical conditions
+    public $patientID;
+    
     public $allergy;
     public $foodAllergy, $foodDetails;
     public $drugAllergy, $drugDetails;
@@ -25,28 +30,14 @@ class MedicalHistoryHp extends Component
     public $tuberculosis, $tuberculosisDetails;
     public $psychologicalDisorder, $psychologicalDisorderDetails;
 
-    // Family medical history
-    public $motherConditions = [];
-    public $fatherConditions = [];
-
     // Recent hospital admission
-    public $admissions = [];
-
-    protected $rules = [
-        'motherConditions' => 'nullable|string',
-        'fatherConditions' => 'nullable|string',
-        'diagnosis' => 'nullable|string',
-        'admissionDate' => 'nullable|date',
-    ];
+    // public $admissions = [];
+  
 
     #[On('toggle-data')]
     public function toggle($title)
     {
-        // // Check if the title exists in the mapping
-        // if (array_key_exists($title, $this->titleMapping)) {
-        //     $variable = $this->titleMapping[$title];
-        //     $this->$variable = $state;
-        // }
+        // Toggle the respective fields
         if ($title === 'Allergy') {
             $this->allergy = !$this->allergy;
         }
@@ -93,26 +84,21 @@ class MedicalHistoryHp extends Component
             $this->psychologicalDisorder = !$this->psychologicalDisorder;
         }
 
+        // Save the updated data to session after every toggle
         $this->saveToSession();
-    }
-
-    #[On('family-condition-data')]
-    public function familyCondition($motherCondition, $fatherCondition)
-    {
-        $this->motherConditions = $motherCondition;
-        $this->fatherConditions = $fatherCondition;
-    }
-
-    #[On('recent-admission-data')]
-    public function recentAdmission($admissions)
-    {
-        $this->admissions = $admissions;
     }
 
     public function mount()
     {
+      
         // Fix the syntax for Session::get with default values
         $patientInfo = Session::get('patient_information.medical_history', []);
+        
+        // Retrieve the patient ID from the session
+        $this->patientID = Session::get('patient_information.patient_id');
+        
+        // Log the patient ID to ensure it's being passed correctly
+        Log::info('Patient ID for MedicalHistory:', ['patient_id' => $this->patientID]);
 
         $this->allergy = $patientInfo['allergy'] ?? false;
         $this->foodAllergy = $patientInfo['foodAllergy'] ?? false;
@@ -123,29 +109,30 @@ class MedicalHistoryHp extends Component
         $this->coronaryArteryDisease = $patientInfo['coronaryArteryDisease'] ?? false;
         $this->pepticUlcer = $patientInfo['pepticUlcer'] ?? false;
         $this->hypertension = $patientInfo['hypertension'] ?? false;
-        $this->hypertensionDetails = $patientInfo['hypertensionDetails'] ?? ''; // New
+        $this->hypertensionDetails = $patientInfo['hypertensionDetails'] ?? '';
         $this->skinDisorder = $patientInfo['skinDisorder'] ?? false;
-        $this->skinDisorderDetails = $patientInfo['skinDisorderDetails'] ?? ''; // New
+        $this->skinDisorderDetails = $patientInfo['skinDisorderDetails'] ?? '';
         $this->hepatitis = $patientInfo['hepatitis'] ?? false;
-        $this->hepatitisDetails = $patientInfo['hepatitisDetails'] ?? ''; // New
+        $this->hepatitisDetails = $patientInfo['hepatitisDetails'] ?? '';
         $this->cancer = $patientInfo['cancer'] ?? false;
-        $this->cancerDetails = $patientInfo['cancerDetails'] ?? ''; // New
+        $this->cancerDetails = $patientInfo['cancerDetails'] ?? '';
         $this->thyroidDisease = $patientInfo['thyroidDisease'] ?? false;
         $this->pcos = $patientInfo['pcos'] ?? false;
         $this->epilepsy = $patientInfo['epilepsy'] ?? false;
-        $this->epilepsyDetails = $patientInfo['epilepsyDetails'] ?? ''; // New
+        $this->epilepsyDetails = $patientInfo['epilepsyDetails'] ?? '';
         $this->tuberculosis = $patientInfo['tuberculosis'] ?? false;
-        $this->tuberculosisDetails = $patientInfo['tuberculosisDetails'] ?? ''; // New
+        $this->tuberculosisDetails = $patientInfo['tuberculosisDetails'] ?? '';
         $this->psychologicalDisorder = $patientInfo['psychologicalDisorder'] ?? false;
-        $this->psychologicalDisorderDetails = $patientInfo['psychologicalDisorderDetails'] ?? ''; // New
-        $this->motherConditions = $patientInfo['motherConditions'] ?? [''];
-        $this->fatherConditions = $patientInfo['fatherConditions'] ?? [''];
-        $this->admissions = $patientInfo['admissions'] ?? [''];
+        $this->psychologicalDisorderDetails = $patientInfo['psychologicalDisorderDetails'] ?? '';
+     
+        // $this->admissions = $patientInfo['admissions'] ?? [''];
+       
 
     }
 
     public function saveToSession()
     {
+        // Save the current data to session
         $patientInfo = Session::get('patient_information', []);
 
         $patientInfo['medical_history'] = [
@@ -164,8 +151,8 @@ class MedicalHistoryHp extends Component
             'skinDisorderDetails' => $this->skinDisorderDetails,
             'hepatitis' => $this->hepatitis,
             'hepatitisDetails' => $this->hepatitisDetails,
-            'cancerDetails' => $this->cancerDetails,
             'cancer' => $this->cancer,
+            'cancerDetails' => $this->cancerDetails,
             'pcos' => $this->pcos,
             'epilepsy' => $this->epilepsy,
             'epilepsyDetails' => $this->epilepsyDetails,
@@ -173,19 +160,78 @@ class MedicalHistoryHp extends Component
             'tuberculosisDetails' => $this->tuberculosisDetails,
             'psychologicalDisorder' => $this->psychologicalDisorder,
             'psychologicalDisorderDetails' => $this->psychologicalDisorderDetails,
-            'motherConditions' => $this->motherConditions,
-            'fatherConditions' => $this->fatherConditions,
-            'admissions' => $this->admissions,
+           
         ];
 
+        $this->saveToDatabase(); // Ensure this method persists the data
+
+        // Update the session
         Session::put('patient_information', $patientInfo);
     }
 
+    public function saveToDatabase()
+    {
+        $patientID = $this->patientID;
+
+        Log::info('Saving medical history for Patient ID: ' . $patientID);
+
+        // Log patient ID to verify it's not null or incorrect
+        if (!$patientID) {
+            Log::error('Patient ID is missing or invalid.');
+            session()->flash('error', 'Patient ID is missing or invalid.');
+            return;
+        }
+
+        try {
+            // Ensure that patient_id is included in the fields to be updated/created
+            $medicalHistory = MedicalHistory::updateOrCreate(
+                ['patient_id' => $patientID], 
+                [
+                    'patient_id' => $patientID,  
+                    'allergy' => $this->allergy,
+                    'food_allergy' => $this->foodAllergy,
+                    'food_details' => $this->foodDetails,
+                    'drug_allergy' => $this->drugAllergy,
+                    'drug_details' => $this->drugDetails,
+                    'asthma' => $this->asthma,
+                    'coronary_artery_disease' => $this->coronaryArteryDisease,
+                    'peptic_ulcer' => $this->pepticUlcer,
+                    'hypertension' => $this->hypertension,
+                    'hypertension_details' => $this->hypertensionDetails,
+                    'skin_disorder' => $this->skinDisorder,
+                    'skin_disorder_details' => $this->skinDisorderDetails,
+                    'hepatitis' => $this->hepatitis,
+                    'hepatitis_details' => $this->hepatitisDetails,
+                    'cancer' => $this->cancer,
+                    'cancer_details' => $this->cancerDetails,
+                    'thyroid_disease' => $this->thyroidDisease,
+                    'pcos' => $this->pcos,
+                    'epilepsy' => $this->epilepsy,
+                    'epilepsy_details' => $this->epilepsyDetails,
+                    'tuberculosis' => $this->tuberculosis,
+                    'tuberculosis_details' => $this->tuberculosisDetails,
+                    'psychological_disorder' => $this->psychologicalDisorder,
+                    'psychological_disorder_details' => $this->psychologicalDisorderDetails,
+                 
+
+                ]
+            );
+          
+            Log::info('Medical history saved successfully for Patient ID: ' . $patientID);
+        } catch (Exception $e) {
+            Log::error('Error saving medical history', ['error' => $e->getMessage()]);
+            session()->flash('error', 'An error occurred while saving medical history. Please try again.');
+        }
+    }
+
+    
+
     public function switchToTab($tabId)
     {
-        $this->saveToSession();
+        $this->saveToSession(); // Save data to session before switching tabs
         $this->dispatch('switch-tab', ['tabId' => $tabId]); // Trigger JavaScript event to change tab
     }
+
     public function render()
     {
         return view('livewire.staff.hp-form-section.medical-history-hp');

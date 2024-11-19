@@ -9,6 +9,11 @@
                 <input type="text" id="full_name"
                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm cursor-not-allowed rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                     placeholder="John Doe" wire:model="full_name" value="{{ $full_name }}" disabled required />
+                    
+                    <input type="hidden" id="id"
+                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm cursor-not-allowed rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    placeholder="John Doe" wire:model="patientID" value="{{ $patientID  }}" disabled required />
+
             </div>
             <div class=" grid gap-3 grid-cols-2">
                 <div class="max-w-sm flex gap-3">
@@ -207,3 +212,14 @@
     </div>
 
 </div>
+
+
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const patientID = document.getElementById('id').value;
+        if (patientID) {
+            localStorage.setItem('patientID', patientID);
+        }
+    });
+</script>

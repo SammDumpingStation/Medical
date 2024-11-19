@@ -118,6 +118,7 @@
 
     </div>
     <livewire:family-medical-condition />
+    
     <livewire:recent-admissions />
     <div class="flex items-center justify-between w-full">
         <button id="medical-prev" wire:click="switchToTab('social')"

@@ -2,18 +2,46 @@
 
 namespace App\Livewire;
 
+use App\Models\PhysicalExaminationModel;
 use Illuminate\Support\Facades\Session;
 use Livewire\Attributes\On;
 use Livewire\Component;
+use Illuminate\Support\Facades\Log;
 
 class PhysicalExamination extends Component
 {
-    public $bodyPart = ['Skin', 'Head, Neck, Scalp', 'Eyes (External)', 'Pupils Opthalmoscopic', 'Ears, Nose, Sinuses', 'Mouth, Throat', 'Neck, Lymphnodes, Throid', 'Chest, Breast, Axilla', 'Lungs', 'Heart and Valvular', 'Back and Abdomen', 'Genitalia', 'Anus, Rectum', 'Extremities'];
+    public $patientID;
+
+    public $bodyPart = [
+        'Skin', 
+        'Head, Neck, Scalp', 
+        'Eyes (External)', 
+        'Pupils Opthalmoscopic', 
+        'Ears, Nose, Sinuses', 
+        'Mouth, Throat', 
+        'Neck, Lymphnodes, Throid', 
+        'Chest, Breast, Axilla', 
+        'Lungs', 
+        'Heart and Valvular', 
+        'Back and Abdomen', 
+        'Genitalia', 
+        'Anus, Rectum', 
+        'Extremities'
+    ];
     public $checkedBodyPart = [];
     public $findings = [];
 
+    
+
     public function mount()
     {
+       // Log the entire session or just the specific key to ensure it's available
+    Log::info('Patient Information from session: ', Session::get('patient_information'));
+
+    // Retrieve patient_id
+    $this->patientID = Session::get('patient_information.personal_information.patient_id') ?? '';
+
+    Log::info('Retrieved patient_id in mount: ' . $this->patientID);
         // Get existing data from session if it exists
         $patientInfo = Session::get('patient_information', []);
         $physicalExam = $patientInfo['physical_examination'] ?? null;
@@ -57,36 +85,77 @@ class PhysicalExamination extends Component
 
     public function saveExamination()
     {
-        // Filter checked body parts to include only valid ones from $bodyPart
+        // Include checked body parts as NORMAL
         $validCheckedParts = array_values(array_intersect($this->checkedBodyPart, $this->bodyPart));
-
-        // Only include findings with non-empty values (abnormal findings)
-        $validFindings = array_filter(
-            array_intersect_key($this->findings, array_flip($this->bodyPart)),
-            fn($finding) => $finding !== '' // Include only non-empty findings
-        );
-
+    
+        // Initialize findings with NORMAL for checked body parts
+        $validFindings = [];
+    
+        foreach ($this->bodyPart as $part) {
+            if (in_array($part, $validCheckedParts)) {
+                // If body part is checked, set it to NORMAL
+                $validFindings[$part] = 'NORMAL';
+            } elseif (!empty($this->findings[$part])) {
+                // If body part is not checked but has a specific finding, use it
+                $validFindings[$part] = $this->findings[$part];
+            }
+        }
+    
         return [
             'normal' => $validCheckedParts,
             'findings' => $validFindings,
         ];
     }
+    
 
-    public function saveToSession()
+    public function saveToDatabase()
     {
-        $patient = Session::get('patient_information', []);
-        $patient['physical_examination'] = $this->saveExamination();
-        Session::put('patient_information', $patient);
+
+    
+    // Log the entire session or just the specific key to ensure it's available
+    Log::info('Patient Information from session: ', Session::get('patient_information'));
+
+    // Retrieve patient_id
+    $this->patientID = Session::get('patient_information.personal_information.patient_id') ?? '';
+
+
+        $examinationData = $this->saveExamination();
+        $patientID = $this->patientID; // Ensure the correct patient ID is used
+
+      
+        // Map body parts to the respective database columns
+        $dbData = [
+            'patient_id' => $patientID,
+            'skin' => $examinationData['findings']['Skin'] ?? null,
+            'head_neck_scalp' => $examinationData['findings']['Head, Neck, Scalp'] ?? null,
+            'external_eyes' => $examinationData['findings']['Eyes (External)'] ?? null,
+            'pupils_opthalmoscopic' => $examinationData['findings']['Pupils Opthalmoscopic'] ?? null,
+            'ears_nose_sinuses' => $examinationData['findings']['Ears, Nose, Sinuses'] ?? null,
+            'mouth_throat' => $examinationData['findings']['Mouth, Throat'] ?? null,
+            'neck_lymphnodes_throid' => $examinationData['findings']['Neck, Lymphnodes, Throid'] ?? null,
+            'chest_breast_axilla' => $examinationData['findings']['Chest, Breast, Axilla'] ?? null,
+            'lungs' => $examinationData['findings']['Lungs'] ?? null,
+            'heart_and_valvular' => $examinationData['findings']['Heart and Valvular'] ?? null,
+            'back_and_abdomen' => $examinationData['findings']['Back and Abdomen'] ?? null,
+            'genitalia' => $examinationData['findings']['Genitalia'] ?? null,
+            'anus_rectum' => $examinationData['findings']['Anus, Rectum'] ?? null,
+            'extremities' => $examinationData['findings']['Extremities'] ?? null,
+        ];
+
+        // Save to the database
+        PhysicalExaminationModel::create($dbData);
     }
 
     public function switchToTab($tabId)
     {
-        $this->saveToSession();
+        $this->saveToDatabase(); // Save data before switching tab
         $this->dispatch('switch-tab-form2', ['tabId' => $tabId]);
     }
 
     public function render()
     {
-        return view('livewire.staff.vital-form-section.physical-examination');
+        return view('livewire.staff.vital-form-section.physical-examination', [
+            'patientID' => $this->patientID,
+        ]);
     }
 }
