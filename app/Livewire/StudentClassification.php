@@ -2,7 +2,7 @@
 
 namespace App\Livewire;
 
-use App\Models\StudentClassificationModel; // Include the model for database interaction
+use App\Models\StudentClassificationModel;
 use Illuminate\Support\Facades\Session;
 use Livewire\Component;
 
@@ -11,15 +11,13 @@ class StudentClassification extends Component
     public $type;
     public $default;
     public $patientID;
-    public $successMessage = null; // Property to hold success message
+    public $successMessage = null; 
 
     public function mount()
     {
-        // Retrieve patient ID from the session
         $this->patientID = Session::get('patient_information.personal_information.patient_id') ?? '';
 
-        // Retrieve the default student classification from the session
-        $this->default = Session::get('patient_information.student_classification') ?? '';
+       $this->default = Session::get('patient_information.student_classification') ?? '';
     }
 
     public function typeSelect($type)
@@ -30,51 +28,42 @@ class StudentClassification extends Component
     public function switchToTab($tabId)
     {
         $this->saveToSession();
-        $this->saveToDatabase(); // Save the data to the database
-        $this->dispatch('switch-tab-form2', ['tabId' => $tabId]); // Trigger JavaScript event to change tab
+        $this->saveToDatabase(); 
+        $this->dispatch('switch-tab-form2', ['tabId' => $tabId]); 
     }
 
     public function saveToSession()
     {
-        // Retrieve current session data
         $patient = Session::get('patient_information', []);
         $patient['student_classification'] = $this->type;
 
-        // Save updated session data
         Session::put('patient_information', $patient);
     }
 
     public function saveToDatabase()
     {
         try {
-            // Prepare data for database insertion
             $data = [
                 'patient_id' => $this->patientID,
-                'alphabet' => $this->type, // Assuming 'alphabet' is the classification type
-                'description' => $this->getDescriptionByType($this->type), // Add a description if necessary
+                'alphabet' => $this->type,
+                'description' => $this->getDescriptionByType($this->type), 
             ];
 
-            // Check if a record with the same patient_id exists
-            $existingRecord = StudentClassificationModel::find($this->patientID);
+           $existingRecord = StudentClassificationModel::find($this->patientID);
             if ($existingRecord) {
-                // If the record exists, update it
                 $existingRecord->update($data);
             } else {
-                // If the record does not exist, create a new one
-                StudentClassificationModel::create($data);
+                 StudentClassificationModel::create($data);
             }
 
-            // Set success message after saving
             $this->successMessage = 'Student Classification successfully saved!';
         } catch (\Exception $e) {
-            // Handle any exceptions (optional)
             $this->successMessage = 'Error saving Student Classification.';
         }
     }
 
     public function getDescriptionByType($type)
     {
-        // Example logic for returning a description based on the classification type
         switch ($type) {
             case 'A':
                 return 'Medically, physically, and mentally FIT for ANY WORK or STUDY';

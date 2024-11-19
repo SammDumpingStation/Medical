@@ -9,7 +9,7 @@ class MedicalHistory extends Model
 {
     use HasFactory;
 
-    protected $table = 'medical_histories'; // Explicitly define the table name
+    protected $table = 'medical_histories';
     protected $primaryKey = 'patient_id'; 
 
     protected $fillable = [

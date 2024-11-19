@@ -9,13 +9,12 @@ class Admission extends Model
 {
     use HasFactory;
 
-    protected $table = 'admissions'; // Explicitly define the table name
+    protected $table = 'admissions';
 
     protected $fillable = [
         'patient_id', 'admission_date', 'diagnosis', 'treatment'
     ];
 
-    // Define the inverse relationship back to MedicalHistory
     public function medicalHistory()
     {
         return $this->belongsTo(MedicalHistory::class, 'patient_id', 'patient_id');

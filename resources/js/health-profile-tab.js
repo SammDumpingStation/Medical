@@ -1,14 +1,11 @@
 import { Tabs } from "flowbite";
 
-// Listen for Livewire events as soon as the script loads
 document.addEventListener("livewire:init", () => {
     Livewire.on("switch-tab", (event) => {
-        const tabId = event[0].tabId; // Adjust to match the structure of your dispatched data
 
-        // Ensure Flowbite is fully initialized before accessing tabs            // Reference to the container holding the tab triggers and targets
+        const tabId = event[0].tabId;
         const tabsElement = document.getElementById("first-health-profile-tab");
 
-        // Define the array of tab elements
         const tabElements = [
             {
                 id: "profile",
@@ -37,23 +34,20 @@ document.addEventListener("livewire:init", () => {
             },
         ];
 
-        // Create Tabs instance
         const tabs = new Tabs(tabsElement, tabElements);
 
-        tabs.show(tabId); // Switch to the specified tab
+        tabs.show(tabId);
     });
 });
 
 document.addEventListener("livewire:init", () => {
     Livewire.on("switch-tab-form2", (event) => {
-        const tabId = event[0].tabId; // Adjust to match the structure of your dispatched data
+        const tabId = event[0].tabId;
 
-        // Ensure Flowbite is fully initialized before accessing tabs            // Reference to the container holding the tab triggers and targets
         const tabsElement = document.getElementById(
             "second-health-profile-tab"
         );
 
-        // Define the array of tab elements
         const tabElements = [
             {
                 id: "physical-screening",
@@ -84,21 +78,16 @@ document.addEventListener("livewire:init", () => {
             },
         ];
 
-        // Create Tabs instance
         const tabs = new Tabs(tabsElement, tabElements);
-
-        tabs.show(tabId); // Switch to the specified tab
+        // Switch to the specified tab
     });
 });
 
 document.addEventListener("livewire:init", () => {
     Livewire.on("switch-tab-form2", (event) => {
-        const tabId = event[0].tabId; // Adjust to match the structure of your dispatched data
-
-        // Ensure Flowbite is fully initialized before accessing tabs            // Reference to the container holding the tab triggers and targets
+        const tabId = event[0].tabId;
         const tabsElement = document.getElementById("third-health-profile-tab");
 
-        // Define the array of tab elements
         const tabElements = [
             {
                 id: "menstrual-history",
@@ -119,21 +108,17 @@ document.addEventListener("livewire:init", () => {
             },
         ];
 
-        // Create Tabs instance
         const tabs = new Tabs(tabsElement, tabElements);
 
-        tabs.show(tabId); // Switch to the specified tab
+        tabs.show(tabId);
     });
 });
 
 document.addEventListener("livewire:init", () => {
     Livewire.on("switch-tab-form2", (event) => {
-        const tabId = event[0].tabId; // Adjust to match the structure of your dispatched data
-
-        // Ensure Flowbite is fully initialized before accessing tabs            // Reference to the container holding the tab triggers and targets
+        const tabId = event[0].tabId;
         const tabsElement = document.getElementById("doctor-confirmation-tab");
 
-        // Define the array of tab elements
         const tabElements = [
             {
                 id: "health-profile",
@@ -149,9 +134,8 @@ document.addEventListener("livewire:init", () => {
             },
         ];
 
-        // Create Tabs instance
         const tabs = new Tabs(tabsElement, tabElements);
 
-        tabs.show(tabId); // Switch to the specified tab
+        tabs.show(tabId);
     });
 });

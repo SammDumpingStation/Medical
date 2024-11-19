@@ -11,14 +11,13 @@ class ImmunizationsHp extends Component
 {
     public $patientID;
     public $patientGender;
-    public $newbornImmunization; // null, 'yes', 'no', or 'unknown'
+    public $newbornImmunization; 
     public $tetanusToxoid, $tetanusDetails;
     public $pneumococcalVaccine;
     public $hpv, $hpvDetails;
     public $influenzaFlu, $influenzaFluDetails;
     public $others;
 
-    // Properties for "Covid 19 Specifics" section
     public $covidVaccinated;
     public $firstDose, $firstDoseBrand;
     public $secondDose, $secondDoseBrand;
@@ -105,7 +104,7 @@ class ImmunizationsHp extends Component
         $this->hpvDetails = $patientInfo['hpvDetails'] ?? '';
         $this->influenzaFlu = $patientInfo['influenzaFlu'] ?? false;
         $this->others = $patientInfo['others'] ?? false;
-        // Properties for "Covid 19 Specifics" section
+ 
         $this->covidVaccinated = $patientInfo['covidVaccinated'] ?? false;
         $this->firstDose = $patientInfo['firstDose'] ?? false;
         $this->secondDose = $patientInfo['secondDose'] ?? false;
@@ -122,7 +121,6 @@ class ImmunizationsHp extends Component
 
    public function saveToSession()
 {
-    // Save the data to session first
     $patient = Session::get('patient_information');
     $patient['immunizations'] = [
         'patientID' => $this->patientID,
@@ -147,9 +145,8 @@ class ImmunizationsHp extends Component
     ];
     Session::put('patient_information', $patient);
 
-    // Insert or update the immunization record in the database
     $immunization = Immunizations::updateOrCreate(
-        ['patient_id' => $this->patientID], // Find the record by patient_id
+        ['patient_id' => $this->patientID], 
         [
             'newborn_immunization' => $this->newbornImmunization,
             'tetanus_toxoid' => $this->tetanusToxoid,
@@ -177,7 +174,7 @@ class ImmunizationsHp extends Component
     public function switchToTab($tabId)
     {
         $this->saveToSession();
-        $this->dispatch('switch-tab', ['tabId' => $tabId]); // Trigger JavaScript event to change tab
+        $this->dispatch('switch-tab', ['tabId' => $tabId]); 
     }
     public function render()
     {

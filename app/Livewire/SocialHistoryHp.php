@@ -22,17 +22,13 @@ class SocialHistoryHp extends Component
 
     public function mount()
 {
-    // Retrieve the patient ID from the session
-    $this->patientID = Session::get('patient_information.patient_id');
+   $this->patientID = Session::get('patient_information.personal_information.patient_id', 0);
 
-    // Log the patient ID to ensure it's being passed correctly
-    Log::info('Patient ID:', ['patient_id' => $this->patientID]);
+    Log::info('Patient ID SocialHIstoryHp:', ['patient_id' => $this->patientID]);
 
-    // Attempt to retrieve existing social history from the database
     $socialHistory = SocialHistory::where('patient_id', $this->patientID)->first();
 
     if ($socialHistory) {
-        // Populate properties from the database if data exists
         $this->smoking = $socialHistory->smoking ?? 'No';
         $this->packPerDay = $socialHistory->pack_per_day ?? null;
         $this->packInYears = $socialHistory->pack_in_years ?? null;
@@ -46,7 +42,6 @@ class SocialHistoryHp extends Component
         $this->partnerCount = $socialHistory->partner_count ?? null;
         $this->partnerType = $socialHistory->partner_type ?? null;
     } else {
-        // If no data found in the database, initialize the fields with default values
         $this->smoking = 'No';
         $this->packPerDay = null;
         $this->packInYears = null;
@@ -91,10 +86,8 @@ class SocialHistoryHp extends Component
 
     public function saveToSession()
     {
-        // Retrieve existing data from 'patient_information' session
         $patientInfo = Session::get('patient_information', []);
 
-        // Prepare the new social history data
         $newSocialHistory = [
             'smoking' => $this->smoking,
             'packPerDay' => $this->packPerDay,
@@ -110,34 +103,25 @@ class SocialHistoryHp extends Component
             'partnerType' => $this->partnerType,
         ];
 
-        // Log the old and new data to see the differences
         Log::debug('Current session data:', ['existing_social_history' => $patientInfo['social_history'] ?? 'No existing data']);
         Log::debug('New data to be saved:', ['new_social_history' => $newSocialHistory]);
 
-        // Check if there is a change in social history data
         if (empty($patientInfo['social_history']) || $patientInfo['social_history'] !== $newSocialHistory) {
-            // Log that there is a change and that the data will be saved
             Log::info('New social history data detected, initiating save...');
 
-            // Add or update 'social_history' key with new data
             $patientInfo['social_history'] = $newSocialHistory;
 
-            // Save the modified array back to the session
             Session::put('patient_information', $patientInfo);
 
-            // Retrieve the patient ID from the session again (just in case)
             $patientID = $this->patientID;
 
-            // Log that the data was successfully saved to session
             Log::info('Social history data saved to session.');
 
             try {
-                // Log the patient ID to ensure it's being retrieved correctly
                 Log::debug('Saving social history for Patient ID:', ['patient_id' => $patientID]);
 
-                // Check if a record for the patient already exists
                 $socialHistory = SocialHistory::updateOrCreate(
-                    ['patient_id' => $patientID], // Corrected to use $this->patientID directly
+                    ['patient_id' => $patientID], 
                     [
                         'smoking' => $this->smoking,
                         'pack_per_day' => $this->packPerDay,
@@ -154,22 +138,19 @@ class SocialHistoryHp extends Component
                     ]
                 );
 
-                // Log the successful insertion or update
-                Log::info('Social History saved for Patient ID ' . $patientID, ['social_history' => $socialHistory]);
+                 Log::info('Social History saved for Patient ID ' . $patientID, ['social_history' => $socialHistory]);
 
-                return $socialHistory;  // Optionally return the saved object
+                return $socialHistory; 
             } catch (\Exception $e) {
-                // Log the error if something goes wrong
                 Log::error('Error saving social history for Patient ID ' . $patientID, [
                     'error' => $e->getMessage(),
                     'trace' => $e->getTraceAsString(),
                 ]);
 
-                // Optionally, rethrow the exception if you want it to be handled higher up
-                throw $e;
+                 throw $e;
             }
         } else {
-            // Log if no changes were detected
+          
             Log::info('No changes in social history data, skipping save.');
         }
     }
@@ -177,7 +158,7 @@ class SocialHistoryHp extends Component
     public function switchToTab($tabId)
     {
         $this->saveToSession();
-        $this->dispatch('switch-tab', ['tabId' => $tabId]); // Trigger JavaScript event to change tab
+        $this->dispatch('switch-tab', ['tabId' => $tabId]); 
     }
 
     public function render()

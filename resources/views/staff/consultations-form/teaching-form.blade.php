@@ -47,8 +47,8 @@
                     <li role="presentation">
                         <button
                             class="inline-block p-4 border-b-2 rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300"
-                            id="diagnosis-tab" data-tabs-target="#diagnosis" type="button"
-                            role="tab" aria-controls="diagnosis" aria-selected="false">Diagnosis</button>
+                            id="diagnosis-tab" data-tabs-target="#diagnosis" type="button" role="tab"
+                            aria-controls="diagnosis" aria-selected="false">Diagnosis</button>
                     </li>
                 </ul>
             </div>

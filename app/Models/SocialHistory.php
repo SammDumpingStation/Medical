@@ -9,10 +9,8 @@ class SocialHistory extends Model
 {
     use HasFactory;
 
-       // Define the table name if it's not the plural form of the model
        protected $table = 'social_histories';
 
-       // Define the primary key if it's not 'id'
        protected $primaryKey = 'patient_id';
 
        protected $fillable = [

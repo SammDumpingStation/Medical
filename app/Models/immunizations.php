@@ -9,13 +9,10 @@ class immunizations extends Model
 {
     use HasFactory;
 
-    // Define the table name if it's not the plural form of the model
     protected $table = 'immunizations_records';
 
-    // Define the primary key if it's not 'id'
     protected $primaryKey = 'patient_id';
 
-    // Define which fields are mass assignable
     protected $fillable = [
         'patient_id',
         'newborn_immunization',
@@ -40,7 +37,6 @@ class immunizations extends Model
         'unvaccinated_reason',
     ];
 
-    // Define the relationship to Patient model if applicable
     public function patient()
     {
         return $this->belongsTo(Patient::class, 'patient_id', 'patient_id');

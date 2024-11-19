@@ -11,7 +11,6 @@ class PersonalRemarksModel extends Model
 
     protected $table = 'personalremarks';
 
-    // Specify the fields that can be mass-assigned
     protected $fillable = [
         'patient_id',
         'diagnosis',

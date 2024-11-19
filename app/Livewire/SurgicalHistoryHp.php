@@ -1,10 +1,12 @@
 <?php
+
 namespace App\Livewire;
 
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Session;
 use Livewire\Component;
 use App\Models\PastSurgicalHistory;
+use Illuminate\Support\Facades\Log;
 
 class SurgicalHistoryHp extends Component
 {
@@ -15,18 +17,26 @@ class SurgicalHistoryHp extends Component
 
     public function mount()
     {
-        // Retrieve the patient ID from the session
-        $this->patientID = Session::get('patient_information.patient_id');
+        $this->patientID = Session::get('patient_information.personal_information.patient_id', 0);
+        Log::info('Patient ID for MedicalHistory:', ['patient_id' => $this->patientID]);
 
-        // Check if operations data is in session, if so load it, otherwise initialize with default
-        $this->operations = Session::get('patient_information.operations', [
-            ['type' => '', 'date' => ''],
-        ]);
+         $this->operations = PastSurgicalHistory::where('patient_id', $this->patientID)
+            ->get()
+            ->map(function ($operation) {
+                return [
+                    'type' => $operation->operation_type,
+                    'date' => Carbon::parse($operation->operation_time)->format('Y-m-d'),
+                ];
+            })
+            ->toArray();
+
+        if (empty($this->operations)) {
+            $this->operations = [['type' => '', 'date' => '']];
+        }
     }
 
     public function addOperation()
     {
-        // Just add a new empty operation input
         $this->operations[] = ['type' => '', 'date' => ''];
     }
 
@@ -34,14 +44,12 @@ class SurgicalHistoryHp extends Component
     {
         $patientID = $this->patientID;
 
-        // Validation
         $this->validate([
             'operations.*.type' => 'required|string|max:255',
             'operations.*.date' => 'required|date',
         ]);
 
-        // Save each operation to the database
-        foreach ($this->operations as $operation) {
+         foreach ($this->operations as $operation) {
             PastSurgicalHistory::create([
                 'patient_id' => $patientID,
                 'operation_type' => $operation['type'],
@@ -49,10 +57,8 @@ class SurgicalHistoryHp extends Component
             ]);
         }
 
-        // Save operations to session
         $this->saveToSession();
 
-        // Clear operations after saving if needed
         $this->operations = [['type' => '', 'date' => '']];
         session()->flash('message', 'Operations saved successfully.');
     }
@@ -60,21 +66,21 @@ class SurgicalHistoryHp extends Component
     public function removeOperation($index)
     {
         unset($this->operations[$index]);
-        $this->operations = array_values($this->operations); // Reindex the array
-        $this->saveToSession(); // Save to session each time an operation is removed
+        $this->operations = array_values($this->operations); 
+        $this->saveToSession(); 
     }
 
     public function switchToTab($tabId)
     {
-        $this->saveToSession(); // Save to session before switching tabs
-        $this->dispatch('switch-tab', ['tabId' => $tabId]); // Trigger JavaScript event to change tab
+        $this->saveToSession(); 
+        $this->dispatch('switch-tab', ['tabId' => $tabId]); 
     }
 
     public function saveToSession()
     {
         $patient = Session::get('patient_information', []);
         $patient['operations'] = $this->operations;
-        Session::put('patient_information', $patient); // Save operations data to session
+        Session::put('patient_information', $patient); 
     }
 
     public function render()

@@ -8,7 +8,6 @@ class AncillaryExaminationsModel extends Model
 {
     protected $table = 'ancillary_examinations';
 
-    // If you want to explicitly define the fillable fields
     protected $fillable = [
         'patient_id',
         'complete_blood_count',

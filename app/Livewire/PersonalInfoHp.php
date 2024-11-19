@@ -4,12 +4,13 @@ namespace App\Livewire;
 
 use Illuminate\Support\Facades\Session;
 use Livewire\Component;
-use App\Models\PatientDetails; // Make sure to include the PatientDetails model
+use App\Models\PatientDetails; 
+use Illuminate\Support\Facades\Log;
 
 class PersonalInfoHp extends Component
 {
     public $activeTab = 'profile';
-    // Personal Information
+  
     public $patientID;
     public $full_name;
     public $age;
@@ -22,24 +23,21 @@ class PersonalInfoHp extends Component
     public $phone_number;
     public $civil_status;
 
-    // Emergency Contact
     public $emergency_contact_name;
     public $emergency_contact_address;
     public $emergency_contact_phone;
     public $emergency_contact_relationship;
 
-    // Additional Questions
     public $willing_to_donate_blood = false;
     public $person_with_disability = false;
 
-    // Specify Disability
     public $specifics;
     public $registered;
 
     public function switchToTab($tabId)
     {
         $this->saveToSession();
-        $this->dispatch('switch-tab', ['tabId' => $tabId]); // Trigger JavaScript event to change tab
+        $this->dispatch('switch-tab', ['tabId' => $tabId]); 
     }
 
     public function saveToSession()
@@ -76,13 +74,11 @@ class PersonalInfoHp extends Component
     
         Session::put(['patient_information' => $formData]);
     
-        // Save to the database as well
         $this->saveToDatabase($formData['emergency_contact'], $formData['additional_questions'], $formData['disability_specifics']);
     }
     
     public function saveToDatabase($emergencyContact, $additionalQuestions, $disabilitySpecifics)
     {
-        // Convert person_with_disability and willing_to_donate_blood to boolean (false if 0, true if 1)
         $personWithDisability = (bool) $additionalQuestions['person_with_disability'];
         $willingToDonateBlood = (bool) $additionalQuestions['willing_to_donate_blood'];
         $reg = (bool) $disabilitySpecifics['registered'];
@@ -104,16 +100,14 @@ class PersonalInfoHp extends Component
         }
 
         if($reg == 1){
-            $regResult = "True";
+            $regResult = "Yes";
         }else{
-            $regResult = "False";
+            $regResult = "No";
         }
 
-        // Insert or update the PatientDetails model based on patient_id
         $patientDetails = PatientDetails::where('patient_id', $this->patientID)->first();
     
         if ($patientDetails) {
-            // If a record exists, update it
             $patientDetails->update([
                 'emergency_contact_name' => $emergencyContact['name'],
                 'emergency_contact_address' => $emergencyContact['address'],
@@ -125,7 +119,6 @@ class PersonalInfoHp extends Component
                 'registered' => $regResult,
             ]);
         } else {
-            // If no record exists, create a new one
             PatientDetails::create([
                 'patient_id' => $this->patientID, // Ensure the patient_id is set
                 'emergency_contact_name' => $emergencyContact['name'],
@@ -142,47 +135,57 @@ class PersonalInfoHp extends Component
     
 
     public function mount($patient)
-    {
-        // Set patient personal information
-        $this->patientID = $patient->patient_id;
-        $this->full_name = $patient->full_name;
-        $this->age = $patient->age;
-        $this->gender = $patient->gender;
-        $this->birthday = $patient->birthday;
-        $this->address = $patient->address;
-        $this->municipal = $patient->municipal;
-        $this->religion = $patient->religion;
-        $this->occupation = $patient->occupation;
-        $this->phone_number = $patient->phone_number;
-        $this->civil_status = $patient->civil_status;
-    
-        // Store patientID in session
-        Session::put('patient_information.patient_id', $this->patientID);
-    
-        // Retrieve emergency contact details from the database if they exist
-        $patientDetails = PatientDetails::where('patient_id', $this->patientID)->first();
-    
-        if ($patientDetails) {
-            // Populate fields from the database if the data exists
-            $this->emergency_contact_name = $patientDetails->emergency_contact_name ?? '';
-            $this->emergency_contact_address = $patientDetails->emergency_contact_address ?? '';
-            $this->emergency_contact_phone = $patientDetails->emergency_contact_phone ?? '';
-            $this->emergency_contact_relationship = $patientDetails->emergency_contact_relationship ?? '';
-            $this->willing_to_donate_blood = $patientDetails->willing_to_donate_blood === "True";
-            $this->person_with_disability = $patientDetails->person_with_disability === "True";
-        } else {
-            // If no data found, initialize the fields as empty
-            $this->emergency_contact_name = '';
-            $this->emergency_contact_address = '';
-            $this->emergency_contact_phone = '';
-            $this->emergency_contact_relationship = '';
-            $this->willing_to_donate_blood = false;
-            $this->person_with_disability = false;
+{
+    $this->patientID = $patient->patient_id;
+    $this->full_name = $patient->full_name;
+    $this->age = $patient->age;
+    $this->gender = $patient->gender;
+    $this->birthday = $patient->birthday;
+    $this->address = $patient->address;
+    $this->municipal = $patient->municipal;
+    $this->religion = $patient->religion;
+    $this->occupation = $patient->occupation;
+    $this->phone_number = $patient->phone_number;
+    $this->civil_status = $patient->civil_status;
+
+    $this->patientDetails = PatientDetails::where('patient_id', $this->patientID)->first();
+   
+    Log::info('Patient ID PersonalINfo:', ['patient_id' => $this->patientDetails]);
+
+
+        if ($this->patientDetails) {
+            Session::put('patient_information.personal_information.patient_id', $this->patientDetails->patient_id);
         }
+
+    $patientDetails = PatientDetails::where('patient_id', $this->patientID)->first();
+
+    if ($patientDetails) {
+        $this->emergency_contact_name = $patientDetails->emergency_contact_name ?? '';
+        $this->emergency_contact_address = $patientDetails->emergency_contact_address ?? '';
+        $this->emergency_contact_phone = $patientDetails->emergency_contact_phone ?? '';
+        $this->emergency_contact_relationship = $patientDetails->emergency_contact_relationship ?? '';
+
+        $this->willing_to_donate_blood = $patientDetails->willing_to_donate_blood === 'True';
+        $this->person_with_disability = $patientDetails->person_with_disability === 'True';
+        $this->specifics = $patientDetails->specifics ?? '';
+        $this->registered = $patientDetails->registered === 'True';
+    } else {
+        $this->emergency_contact_name = '';
+        $this->emergency_contact_address = '';
+        $this->emergency_contact_phone = '';
+        $this->emergency_contact_relationship = '';
+        $this->willing_to_donate_blood = false;
+        $this->person_with_disability = false;
+        $this->specifics = '';
+        $this->registered = false;
     }
+}
+
     
-    public function render()
-    {
-        return view('livewire.staff.hp-form-section.personal-info-hp');
-    }
+
+public function render()
+{
+    return view('livewire.staff.hp-form-section.personal-info-hp');
+
+}
 }

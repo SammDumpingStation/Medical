@@ -9,13 +9,10 @@ class PatientDetails extends Model
 {
     use HasFactory;
 
-    // Specify the table name if it does not follow the Eloquent naming convention
     protected $table = 'patient_details';
 
-     // Specify the primary key column
      protected $primaryKey = 'patient_id';
 
-    // Allow mass assignment for these fields
     protected $fillable = [
         'patient_id',
         'emergency_contact_name',

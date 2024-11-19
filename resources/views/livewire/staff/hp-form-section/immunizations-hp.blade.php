@@ -201,9 +201,3 @@
             to Next Form</a>
     </div>
 </section>
-<script>
-    window.livewire.on('debug-log', (eventData) => {
-        console.log(eventData.message); // Log the message
-        console.log(eventData.data);    // Log the data array for debugging
-    });
-</script>

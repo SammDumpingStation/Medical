@@ -9,7 +9,6 @@ class Sidebar extends Component
 {
     public $sidebar = true;
 
-    // Update the event listener name
     #[On('toggle-sidebar')]
     public function toggleSidebar($sidebar)
     {

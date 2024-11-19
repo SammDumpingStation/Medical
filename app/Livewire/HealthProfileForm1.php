@@ -12,7 +12,7 @@ use App\Models\MedicalHistory;
 use App\Models\PastSurgicalHistory;
 use App\Models\Immunizations;
 use App\Models\Admission;
-use App\Models\ParentCondition; // Import the ParentCondition model
+use App\Models\ParentCondition; 
 
 class HealthProfileForm1 extends Component
 {
@@ -21,18 +21,14 @@ class HealthProfileForm1 extends Component
 
     public function mount()
     {
-        // Retrieve the patient ID from the session
         $this->patientID = Session::get('patient_information.personal_information.patient_id') ?? 0;
     
-        // Log the patient ID to ensure it's being passed correctly
         Log::info('Patient ID:', ['patient_id' => $this->patientID]);
 
-        // Fetch data from the database based on the patient ID
-        $this->personal_information = Patient::where('patient_id', $this->patientID)->first();
+         $this->personal_information = Patient::where('patient_id', $this->patientID)->first();
         $this->social_history = SocialHistory::where('patient_id', $this->patientID)->first();
         $this->medical_history = MedicalHistory::where('patient_id', $this->patientID)->first();
              
-        // Log if necessary to debug
               Log::info('Fetched Medical History data for Patient ID:', ['medical_history' => $this->medical_history]);
  
         $this->surgical_history = PastSurgicalHistory::where('patient_id', $this->patientID)->first() ?? new PastSurgicalHistory();
@@ -45,12 +41,9 @@ class HealthProfileForm1 extends Component
         $this->recentAdmissions = Admission::where('patient_id', $this->patientID)->get();
         Log::info('Fetched recentAdmissions:', ['recentAdmissions' => $this->recentAdmissions]);
 
-
-        // Fetch parent conditions for family history
         $this->parent_conditions = ParentCondition::where('patient_id', $this->patientID)->first() ?? new ParentCondition();
 
-        // Log if necessary to debug
-        Log::info('Fetched health profile data for Patient ID:', ['patient_id' => $this->patientID]);
+       Log::info('Fetched health profile data for Patient ID:', ['patient_id' => $this->patientID]);
     }
 
     public function render()

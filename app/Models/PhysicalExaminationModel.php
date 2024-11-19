@@ -8,7 +8,6 @@ class PhysicalExaminationModel extends Model
 {
     protected $table = 'physical_examinations';
 
-    // Define which fields can be mass-assigned
     protected $fillable = [
         'patient_id',
         'skin',

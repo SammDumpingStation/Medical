@@ -9,17 +9,14 @@ class StudentClassificationModel extends Model
 {
     use HasFactory;
 
-    // Specify the table associated with the model if it's not following Laravel's naming convention
-    protected $table = 'student_classifications'; // Change to your table name
+    protected $table = 'student_classifications'; 
 
-    // Specify the primary key if it's not 'id'
-    protected $primaryKey = 'patient_id'; // Assuming 'patient_id' is the primary key
+    protected $primaryKey = 'patient_id'; 
 
-    // Allow mass assignment on the following fields
     protected $fillable = [
         'patient_id',
-        'alphabet',       // The classification type (A, B, C, etc.)
-        'description',    // Additional details or description of the classification
+        'alphabet',      
+        'description',    
     ];
 
     // Disable auto-incrementing if the primary key is not an integer

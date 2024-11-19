@@ -15,7 +15,6 @@ class ParentCondition extends Model
         'patient_id', 'mother_conditions', 'father_conditions'
     ];
 
-    // Define the inverse relationship back to MedicalHistory
     public function medicalHistory()
     {
         return $this->belongsTo(MedicalHistory::class, 'patient_id', 'patient_id');
