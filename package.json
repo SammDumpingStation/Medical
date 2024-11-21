@@ -33,6 +33,7 @@
     },
     "dependencies": {
         "@popperjs/core": "^2.10.2",
-        "apexcharts": "^3.54.1"
+        "apexcharts": "^3.54.1",
+        "medical-laravel": "file:"
     }
 }

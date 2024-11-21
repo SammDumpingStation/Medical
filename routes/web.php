@@ -13,12 +13,17 @@ Route::post('/logout', [SessionController::class, 'destroy'])->middleware('auth'
 
 Route::view('/staff', 'staff.dashboard')->middleware('is_staff');
 
-//Consultations Section
+// Consultations Section
 Route::get('/consultations', [Consultations::class, 'index'])->middleware('is_staff');
 Route::get('/consultations/select-type', [Consultations::class, 'selectType'])->middleware('is_staff');
-//Student Part
+
+// Student Consultation Flow
 Route::get('/consultation/student', [Consultations::class, 'studentIndex'])->middleware('is_staff');
-Route::get('/consultation/student/{id}/create-form', [Consultations::class, 'createStudent'])->middleware('is_staff');
+Route::get('/consultation/student/{id}/create-form', [Consultations::class, 'createStudent'])->middleware('is_staff'); // Part 1
+Route::post('/consultation/student/{id}/store-form', [Consultations::class, 'storeFormPart1']); // Store Part 1
+Route::get('/consultation/student/{id}/create-form-part2', [Consultations::class, 'createStudentPart2'])->name('consultation.createStudentPart2');
+Route::post('/consultation/student/{id}/store-form-part2', [Consultations::class, 'storeFormPart2']); // Store Part 2
+
 //Teaching/Non-Teaching
 Route::get('/consultation/teaching', [Consultations::class, 'teachingIndex'])->middleware('is_staff');
 Route::get('/consultation/teaching/create-form', [Consultations::class, 'createTeaching'])->middleware('is_staff');
