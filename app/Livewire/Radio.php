@@ -7,7 +7,9 @@ use phpDocumentor\Reflection\Types\This;
 
 class Radio extends Component
 {
-    public bool $default;
+    public ?bool $default = null;
+
+
     public string $title;
     public string $id;
     public string $name;
@@ -15,7 +17,6 @@ class Radio extends Component
 
     public function radioSelect()
     {
-        // Emit an event with the radio group name and selected value
         $this->dispatch('radioSelected', $this->name, $this->value);
     }
 

@@ -8,8 +8,17 @@ use Illuminate\Database\Eloquent\Model;
 class PastSurgicalHistory extends Model
 {
     use HasFactory;
-    protected $primaryKey = 'patient_id'; // Set primary key to 'patient_id'
-    protected $keyType = 'string'; // Set the type to 'string'
-    public $incrementing = false; // Disable auto-increment
-    protected $guarded = [];
+    
+    protected $primaryKey = 'patient_id';
+    
+    protected $keyType = 'string';
+    
+    public $incrementing = false;
+    
+    protected $fillable = [
+        'patient_id', 
+        'operation_type', 
+        'is_registered', 
+        'operation_time'
+    ];
 }

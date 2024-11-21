@@ -1,5 +1,8 @@
 <div>
     <div>
+        
+    <input type="hidden" id="patient-id-field" wire:model="patientId" />
+
         <h4 class="text-xl mb-4 font-bold dark:text-white">Social History</h4>
         <div class="grid ml-6 gap-6 mb-6 md:grid-cols-2">
             <div>
@@ -146,3 +149,19 @@
             class="mt-5 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Next</button>
     </div>
 </div>
+
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const patientId = localStorage.getItem('patientID');
+        console.log("Social", patientId);
+
+        if (patientId) {
+        
+            // Find the hidden input and update it with the retrieved patientId
+            document.getElementById('patient-id-field').value = patientId;
+            // Trigger Livewire to update the property
+            @this.set('patientId', patientId);
+        }
+    });
+</script>

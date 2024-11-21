@@ -4,46 +4,93 @@ namespace App\Livewire;
 
 use Illuminate\Support\Facades\Session;
 use Livewire\Component;
+use Illuminate\Support\Facades\Log;
+use App\Models\Admission;
 
 class RecentAdmissions extends Component
-{public $admissions = [];
+{
+    public $admissions = [];
+    public $patientID;
 
     public function mount()
     {
-        // Initialize with saved data or one empty admission
-        $this->admissions = Session::get('patient_information.medical_history.admissions') ?? [
-            ['diagnosis' => '', 'date' => '']
-        ];
+        $this->patientID = Session::get('patient_information.personal_information.patient_id', 0);
+        Log::info('Patient ID for MedicalHistory:', ['patient_id' => $this->patientID]);
+
+        $this->admissions = Admission::where('patient_id', $this->patientID)
+            ->orderBy('admission_date', 'desc') 
+            ->get(['diagnosis', 'admission_date'])
+            ->toArray();
+
+         Log::info("Existing Admissions: ", $this->admissions);
+
+        if (empty($this->admissions)) {
+            $this->admissions = [['diagnosis' => '', 'admission_date' => '']];
+        }
     }
 
     public function updatedAdmissions($value, $key)
     {
-        // Parse the key to get index and field (e.g., "0.diagnosis" or "0.date")
+    if (strpos($key, '.') !== false) {
         list($index, $field) = explode('.', $key);
 
-        // Ensure both fields exist for this index
         if (!isset($this->admissions[$index])) {
-            $this->admissions[$index] = ['diagnosis' => '', 'date' => ''];
+            $this->admissions[$index] = ['diagnosis' => '', 'admission_date' => ''];
         }
 
-        // Update the specific field while preserving the other
         $this->admissions[$index][$field] = $value;
-
-        // Save to session after each update
-        $this->saveToSession();
+    } else {
+        Log::error("Invalid key format: $key");
     }
+
+    $this->saveToSession();
+}
+
 
     public function addAdmission()
     {
-        $this->admissions[] = ['diagnosis' => '', 'date' => ''];
-        $this->saveToSession();
+       $this->admissions[] = ['diagnosis' => '', 'admission_date' => ''];
+
+         $this->saveToSession();
+    }
+
+    public function saveAdmission()
+    {
+        try {
+            foreach ($this->admissions as $admission) {
+                if (isset($admission['id'])) {
+                    Admission::where('id', $admission['id'])
+                        ->where('patient_id', $this->patientID)
+                        ->update([
+                            'diagnosis' => $admission['diagnosis'],
+                            'admission_date' => $admission['admission_date'],
+                        ]);
+                } else {
+                    Admission::create([
+                        'patient_id' => $this->patientID,
+                        'diagnosis' => $admission['diagnosis'],
+                        'admission_date' => $admission['admission_date'],
+                    ]);
+                }
+            }
+
+            session()->flash('message', 'Admissions saved successfully!');
+
+            Session::forget('patient_information.medical_history.admissions');
+            $this->admissions = [['diagnosis' => '', 'admission_date' => '']];
+
+        } catch (\Exception $e) {
+            Log::error('Error saving admissions to the database', ['error' => $e->getMessage()]);
+            session()->flash('error', 'An error occurred while saving admissions. Please try again.');
+        }
     }
 
     protected function saveToSession()
     {
-        Session::put('patient_information.medical_history.admissions', $this->admissions);
+         Session::put('patient_information.medical_history.admissions', $this->admissions);
         $this->dispatch('recent-admission-data', admissions: $this->admissions);
     }
+
     public function render()
     {
         return view('livewire.staff.hp-form-section.recent-admissions');

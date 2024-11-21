@@ -9,9 +9,11 @@ class Patient extends Model
 {
     use HasFactory;
 
-    protected $primaryKey = 'patient_id'; // Set primary key to 'patient_id'
-    protected $keyType = 'string'; // Set the type to 'string'
-    public $incrementing = false; // Disable auto-increment
+    protected $table = 'patients';
+
+    protected $primaryKey = 'patient_id'; 
+    protected $keyType = 'string'; 
+    public $incrementing = false; 
 
     protected $fillable = [
         'patient_id',

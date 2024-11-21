@@ -4,11 +4,13 @@ namespace App\Livewire;
 
 use Illuminate\Support\Facades\Session;
 use Livewire\Component;
+use App\Models\PatientDetails; 
+use Illuminate\Support\Facades\Log;
 
 class PersonalInfoHp extends Component
 {
     public $activeTab = 'profile';
-    // Personal Information
+  
     public $patientID;
     public $full_name;
     public $age;
@@ -21,24 +23,21 @@ class PersonalInfoHp extends Component
     public $phone_number;
     public $civil_status;
 
-    // Emergency Contact
     public $emergency_contact_name;
     public $emergency_contact_address;
     public $emergency_contact_phone;
     public $emergency_contact_relationship;
 
-    // Additional Questions
     public $willing_to_donate_blood = false;
     public $person_with_disability = false;
 
-    //Specify Disability
     public $specifics;
     public $registered;
 
     public function switchToTab($tabId)
     {
         $this->saveToSession();
-        $this->dispatch('switch-tab', ['tabId' => $tabId]); // Trigger JavaScript event to change tab
+        $this->dispatch('switch-tab', ['tabId' => $tabId]); 
     }
 
     public function saveToSession()
@@ -72,31 +71,121 @@ class PersonalInfoHp extends Component
                 'registered' => $this->registered,
             ],
         ];
-
+    
         Session::put(['patient_information' => $formData]);
+    
+        $this->saveToDatabase($formData['emergency_contact'], $formData['additional_questions'], $formData['disability_specifics']);
     }
+    
+    public function saveToDatabase($emergencyContact, $additionalQuestions, $disabilitySpecifics)
+    {
+        $personWithDisability = (bool) $additionalQuestions['person_with_disability'];
+        $willingToDonateBlood = (bool) $additionalQuestions['willing_to_donate_blood'];
+        $reg = (bool) $disabilitySpecifics['registered'];
+        
+        $regResult = "";
+        $result = "";
+        $resultDonate = "";
+
+        if($personWithDisability){
+            $result = "True";
+        }else{
+            $result = "False";
+        }
+
+        if($willingToDonateBlood){
+            $resultDonate = "True";
+        }else{
+            $resultDonate = "False";
+        }
+
+        if($reg == 1){
+            $regResult = "Yes";
+        }else{
+            $regResult = "No";
+        }
+
+        $patientDetails = PatientDetails::where('patient_id', $this->patientID)->first();
+    
+        if ($patientDetails) {
+            $patientDetails->update([
+                'emergency_contact_name' => $emergencyContact['name'],
+                'emergency_contact_address' => $emergencyContact['address'],
+                'emergency_contact_phone' => $emergencyContact['phone'],
+                'emergency_contact_relationship' => $emergencyContact['relationship'],
+                'willing_to_donate_blood' => $resultDonate,
+                'person_with_disability' => $result,
+                'specifics' => $disabilitySpecifics['specifics'],
+                'registered' => $regResult,
+            ]);
+        } else {
+            PatientDetails::create([
+                'patient_id' => $this->patientID, // Ensure the patient_id is set
+                'emergency_contact_name' => $emergencyContact['name'],
+                'emergency_contact_address' => $emergencyContact['address'],
+                'emergency_contact_phone' => $emergencyContact['phone'],
+                'emergency_contact_relationship' => $emergencyContact['relationship'],
+                'willing_to_donate_blood' => $resultDonate,
+                'person_with_disability' => $result,
+                'specifics' => $disabilitySpecifics['specifics'],
+                'registered' =>  $regResult,
+            ]);
+        }
+    }
+    
+
     public function mount($patient)
-    {
-        $this->patientID = $patient->patient_id;
-        $this->full_name = $patient->full_name;
-        $this->age = $patient->age;
-        $this->gender = $patient->gender;
-        $this->birthday = $patient->birthday;
-        $this->address = $patient->address;
-        $this->municipal = $patient->municipal;
-        $this->religion = $patient->religion;
-        $this->occupation = $patient->occupation;
-        $this->phone_number = $patient->phone_number;
-        $this->civil_status = $patient->civil_status;
-        $this->emergency_contact_name = Session::get('patient_information.emergency_contact.name') ?? '';
-        $this->emergency_contact_address = Session::get('patient_information.emergency_contact.address') ?? '';
-        $this->emergency_contact_phone = Session::get('patient_information.emergency_contact.phone') ?? '';
-        $this->emergency_contact_relationship = Session::get('patient_information.emergency_contact.relationship') ?? '';
-        $this->willing_to_donate_blood = Session::get('patient_information.additional_questions.willing_to_donate_blood') ?? false;
-        $this->person_with_disability = Session::get('patient_information.additional_questions.person_with_disability') ?? false;
+{
+    $this->patientID = $patient->patient_id;
+    $this->full_name = $patient->full_name;
+    $this->age = $patient->age;
+    $this->gender = $patient->gender;
+    $this->birthday = $patient->birthday;
+    $this->address = $patient->address;
+    $this->municipal = $patient->municipal;
+    $this->religion = $patient->religion;
+    $this->occupation = $patient->occupation;
+    $this->phone_number = $patient->phone_number;
+    $this->civil_status = $patient->civil_status;
+
+    $this->patientDetails = PatientDetails::where('patient_id', $this->patientID)->first();
+   
+    Log::info('Patient ID PersonalINfo:', ['patient_id' => $this->patientDetails]);
+
+
+        if ($this->patientDetails) {
+            Session::put('patient_information.personal_information.patient_id', $this->patientDetails->patient_id);
+        }
+
+    $patientDetails = PatientDetails::where('patient_id', $this->patientID)->first();
+
+    if ($patientDetails) {
+        $this->emergency_contact_name = $patientDetails->emergency_contact_name ?? '';
+        $this->emergency_contact_address = $patientDetails->emergency_contact_address ?? '';
+        $this->emergency_contact_phone = $patientDetails->emergency_contact_phone ?? '';
+        $this->emergency_contact_relationship = $patientDetails->emergency_contact_relationship ?? '';
+
+        $this->willing_to_donate_blood = $patientDetails->willing_to_donate_blood === 'True';
+        $this->person_with_disability = $patientDetails->person_with_disability === 'True';
+        $this->specifics = $patientDetails->specifics ?? '';
+        $this->registered = $patientDetails->registered === 'True';
+    } else {
+        $this->emergency_contact_name = '';
+        $this->emergency_contact_address = '';
+        $this->emergency_contact_phone = '';
+        $this->emergency_contact_relationship = '';
+        $this->willing_to_donate_blood = false;
+        $this->person_with_disability = false;
+        $this->specifics = '';
+        $this->registered = false;
     }
-    public function render()
-    {
-        return view('livewire.staff.hp-form-section.personal-info-hp');
-    }
+}
+
+    
+
+public function render()
+{
+    return view('livewire.staff.hp-form-section.personal-info-hp');
+
+}
 }

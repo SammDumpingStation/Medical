@@ -7,8 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class ConsultationHistory extends Model
 {
-    /** @use HasFactory<\Database\Factories\ConsultationHistoryFactory> */
-    use HasFactory;
+     use HasFactory;
     public $timestamps = false;
 
     protected $fillable = [

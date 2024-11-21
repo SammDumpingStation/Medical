@@ -8,9 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class EmergencyInformation extends Model
 {
     use HasFactory;
-    protected $primaryKey = 'patient_id'; // Set primary key to 'patient_id'
-    protected $keyType = 'string'; // Set the type to 'string'
-    public $incrementing = false; // Disable auto-increment
+    protected $primaryKey = 'patient_id'; 
+    protected $keyType = 'string'; 
+    public $incrementing = false;
 
     protected $fillable = [
         'patient_id',

@@ -1,3 +1,4 @@
+<div wire:listen="refreshPharmacyTable">
     <div class="space-y-6 w-full">
         <div class="p-4 bg-white block sm:flex items-center justify-between dark:bg-gray-800">
             <div class="w-full mb-1">
@@ -137,9 +138,7 @@
         <div class="fixed left-0 right-0 z-50 items-center justify-center hidden overflow-x-hidden overflow-y-auto top-4 md:inset-0 h-modal sm:h-full"
             id="add-user-modal">
             <div class="relative w-full h-full max-w-2xl px-4 md:h-auto">
-                <!-- Modal content -->
                 <div class="relative bg-white rounded-lg shadow dark:bg-gray-800">
-                    <!-- Modal header -->
                     <div class="flex items-start justify-between p-5 border-b rounded-t dark:border-gray-700">
                         <h3 class="text-xl font-semibold dark:text-white">
                             Add new medicine
@@ -155,86 +154,89 @@
                             </svg>
                         </button>
                     </div>
-                    <!-- Modal body -->
                     <div class="p-6 space-y-6">
-                        <form action="#">
+                        <form wire:submit.prevent="addMedicine">
                             <div class="grid grid-cols-6 gap-6">
                                 <div class="col-span-6 sm:col-span-3">
-                                    <label for="first-name"
+                                    <label for="name"
                                         class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Name</label>
-                                    <input type="text" name="first-name" id="first-name"
+                                    <input type="text" wire:model="name" id="name"
                                         class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                                         placeholder="Bonnie" required>
                                 </div>
                                 <div class="col-span-6 sm:col-span-3">
-                                    <label for="last-name"
+                                    <label for="brand_name"
                                         class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Brand
                                         Name</label>
-                                    <input type="text" name="last-name" id="last-name"
+                                    <input type="text" wire:model="brand_name" id="brand_name"
                                         class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                                         placeholder="Green" required>
                                 </div>
                                 <div class="col-span-6 sm:col-span-3">
-                                    <label for="position"
+                                    <label for="dosage"
                                         class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Dosage</label>
-                                    <input type="text" name="position" id="position"
+                                    <input type="text" wire:model="dosage" id="dosage"
                                         class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                                         placeholder="Input Details Here" required>
                                 </div>
                                 <div class="col-span-6 sm:col-span-3">
-                                    <label for="position"
-                                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Manufactured Date</label>
-                                    <input type="text" name="position" id="position"
+                                    <label for="manufactured_date"
+                                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Manufactured
+                                        Date</label>
+                                    <input type="date" wire:model="manufactured_date" id="manufactured_date"
                                         class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                                        placeholder="Input Details Here" required>
+                                        required>
                                 </div>
                                 <div class="col-span-6 sm:col-span-3">
-                                    <label for="position"
+                                    <label for="expiry"
                                         class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Expiry</label>
-                                    <input type="text" name="position" id="position"
+                                    <input type="date" wire:model="expiry" id="expiry"
                                         class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                                        placeholder="Input Details Here" required>
+                                        required>
                                 </div>
                                 <div class="col-span-6 sm:col-span-3">
-                                    <label for="position"
+                                    <label for="turn_over_to_supply"
                                         class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Turn Over
                                         To Supply</label>
-                                    <input type="text" name="position" id="position"
+                                    <input type="date" wire:model="turn_over_to_supply" id="manufactured_date"
                                         class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                                        placeholder="Input Details Here" required>
+                                        required>
                                 </div>
                                 <div class="col-span-6 sm:col-span-3">
-                                    <label for="position"
+                                    <label for="stock_on_hand"
                                         class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Stock on
                                         Hand</label>
-                                    <input type="text" name="position" id="position"
+                                    <input type="number" wire:model="stock_on_hand" id="stock_on_hand"
                                         class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                                         placeholder="Input Details Here" required>
                                 </div>
                                 <div class="col-span-6 sm:col-span-3">
-                                    <label for="position"
+                                    <label for="dispensed"
                                         class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Dispensed</label>
-                                    <input type="text" name="position" id="position"
+                                    <input type="number" wire:model="dispensed" id="dispensed"
                                         class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                                         placeholder="Input Details Here" required>
                                 </div>
                                 <div class="col-span-6 sm:col-span-3">
-                                    <label for="position"
+                                    <label for="status"
                                         class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Status</label>
-                                    <input type="text" name="position" id="position"
+                                    <input type="text" wire:model="status" id="status"
                                         class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                                         placeholder="Input Details Here" required>
                                 </div>
                             </div>
+
+                            <div class="items-center p-6 border-t border-gray-200 rounded-b dark:border-gray-700">
+                                <button type="submit"
+                                    class="text-white bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">
+                                    Add medicine
+                                </button>
+                            </div>
+                        </form>
                     </div>
-                    <!-- Modal footer -->
-                    <div class="items-center p-6 border-t border-gray-200 rounded-b dark:border-gray-700">
-                        <button
-                            class="text-white bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
-                            type="submit">Add medicine</button>
-                    </div>
-                    </form>
                 </div>
             </div>
         </div>
+
     </div>
+</div>
