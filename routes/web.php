@@ -29,6 +29,7 @@ Route::get('/health-profile/create-form-1/{id}', [HealthProfile::class, 'showFor
 Route::get('/health-profile/create-form-2/{id}', [HealthProfile::class, 'showForm2'])->middleware('is_staff');
 Route::get('/health-profile/create-form/{id}/summary', [HealthProfile::class, 'profileSummary'])->middleware('is_staff');
 
+
 Route::get('/health-profile/create-form-3/{id}', [HealthProfile::class, 'showForm3'])->middleware('is_staff');
 
 Route::view('/prescriptions', 'staff.prescriptions')->middleware('is_staff');

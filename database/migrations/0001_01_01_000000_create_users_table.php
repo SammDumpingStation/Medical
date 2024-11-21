@@ -2,7 +2,9 @@
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\Hash;
 
 return new class extends Migration
 {
@@ -11,6 +13,7 @@ return new class extends Migration
      */
     public function up(): void
     {
+        // Create the users table
         Schema::create('users', function (Blueprint $table) {
             $table->string('patient_id')->primary();
             $table->string('is_staff');
@@ -20,6 +23,17 @@ return new class extends Migration
             $table->timestamps();
         });
 
+        // Insert a test user account
+        DB::table('users')->insert([
+            'patient_id' => 'testpatient001',  // This will be the primary key
+            'is_staff' => 'no',  // You can set this as per your requirements
+            'role' => 'user',    // Example role, modify as needed
+            'password' => Hash::make('testpassword123'),  // Hashed password
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+
+        // Create other tables if needed
         Schema::create('password_reset_tokens', function (Blueprint $table) {
             $table->string('email')->primary();
             $table->string('token');

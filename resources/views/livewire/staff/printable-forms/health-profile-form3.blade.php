@@ -1,4 +1,4 @@
-<x-layout>
+<div>
 
     <head>
         <style>
@@ -191,4 +191,4 @@
         </div>
     </body>
 
-</x-layout>
+</div>

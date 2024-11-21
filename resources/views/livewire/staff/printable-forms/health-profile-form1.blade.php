@@ -59,17 +59,27 @@
                 <div class="w-2/3">
                     <p class="text-[12px]">Date: {{ \Carbon\Carbon::now()->format('Y-m-d') }}</p>
                     <p class="text-[12px]">College Clinic File
-                        Number:___________________________ CollegeCourse:__________________</p>
+                        Number:___________________________</p>
+                    <p class="text-[12px]"> College Course:
+                        <span
+                            class="underline">{{ $personal_information ? $personal_information['course'] ?? 'N/A' : 'N/A' }}</span>
+                    </p>
+
+
                     <div class="flex items-center">
                         <p class="mr-2">1<sup>st</sup> yr</p>
-                        <input type="checkbox" disabled @checked(false) class="mr-4">
+                        <input type="checkbox" disabled @checked(($personal_information['year'] ?? 0) == 1) class="mr-4">
+
                         <p class="mr-2">2<sup>nd</sup> yr</p>
-                        <input type="checkbox" disabled @checked(false) class="mr-4">
+                        <input type="checkbox" disabled @checked(($personal_information['year'] ?? 0) == 2) class="mr-4">
+
                         <p class="mr-2">3<sup>rd</sup> yr</p>
-                        <input type="checkbox" disabled @checked(false) class="mr-4">
+                        <input type="checkbox" disabled @checked(($personal_information['year'] ?? 0) == 3) class="mr-4">
+
                         <p class="mr-2">4<sup>th</sup> yr</p>
-                        <input type="checkbox" disabled @checked(false)>
+                        <input type="checkbox" disabled @checked(($personal_information['year'] ?? 0) == 4)>
                     </div>
+
                 </div>
             </div>
             <div class="mb-6">
@@ -474,3 +484,14 @@
             </div>
 
         </div>
+
+<div>
+<a href="/health-profile/create-form/{{ $patientID }}/summary" 
+                wire:click="savePersonalRemarks" 
+                class="mt-5 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                Next
+            </a>
+</div>
+
+</div>
+</div>
