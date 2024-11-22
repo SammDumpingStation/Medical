@@ -15,7 +15,7 @@ class StatisticsController extends Controller
      */
     public function index()
     {
-        return view('staff.statistics');
+        return view('livewire.statistic');
     }
 
     public function showChart()
