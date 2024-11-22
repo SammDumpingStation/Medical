@@ -389,11 +389,42 @@
                             </span>
                             vs last semester
                         </p>
+                        <div>
+    <h2>Monthly User Registrations</h2>
+    <canvas id="user-registrations-chart"></canvas>
+
+    <script>
+        document.addEventListener('livewire:load', function () {
+            const ctx = document.getElementById('user-registrations-chart').getContext('2d');
+            const chartData = @json($chartData);
+
+            new Chart(ctx, {
+                type: 'line',
+                data: chartData,
+                options: {
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: 'Monthly User Registrations',
+                        },
+                    },
+                    scales: {
+                        x: {
+                            type: 'time',
+                            time: {
+                                unit: 'month',
+                            },
+                        },
+                    },
+                },
+            });
+        });
+    </script>
+</div>
+
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</x-layout>
-
-</div>
+    </div>

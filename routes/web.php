@@ -34,9 +34,9 @@ Route::get('/health-profile/create-form-3/{id}', [HealthProfile::class, 'showFor
 
 Route::view('/prescriptions', 'staff.prescriptions')->middleware('is_staff');
 Route::view('/dental-records', 'staff.dental-records')->middleware('is_staff');
-Route::view('/pharmacy', 'staff.pharmacy')->middleware('is_staff');
-Route::get('/statistics', [StatisticsController::class, 'index'])->middleware('is_staff');
-Route::get('/statistics', [StatisticsController::class, 'showChart'])->middleware('is_staff');
+Route::view('/pharmacy', view: 'staff.pharmacy')->middleware('is_staff');
+Route::view('/statistics', 'staff.statistics')->middleware('is_staff');
+
 
 Route::view('/inventory', 'staff.inventory')->middleware('is_staff');
 
