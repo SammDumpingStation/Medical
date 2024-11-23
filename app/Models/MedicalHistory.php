@@ -19,20 +19,18 @@ class MedicalHistory extends Model
         'hypertension_details', 'skin_disorder', 'skin_disorder_details', 'hepatitis', 
         'hepatitis_details', 'cancer', 'cancer_details', 'thyroid_disease', 'pcos', 
         'epilepsy', 'epilepsy_details', 'tuberculosis', 'tuberculosis_details', 
-        'psychological_disorder', 'psychological_disorder_details'
+        'psychological_disorder', 'psychological_disorder_details', 'created_at'
     ];
 
-    // Define a relationship with the ParentConditions model
-    public function parentConditions()
+     public function parentConditions()
     {
         return $this->hasOne(ParentCondition::class, 'patient_id', 'patient_id');
     }
 
-    // Define a relationship with the Admissions model
     public function admissions()
     {
         return $this->hasMany(Admission::class, 'patient_id', 'patient_id');
     }
 
-    // You can also add any custom logic or methods here if needed for further processing
+  
 }

@@ -22,19 +22,24 @@ class Patient extends Model
         'gender',
         'birthday',
         'address',
+        'year',
         'municipal',
         'religion',
         'occupation',
         'phone_number',
         'civil_status',
+        'form_confirmation',
+        'created_at',
     ];
 
-/**
- * Get the login credentials for the student.
- */
 
     public function user()
     {
         return $this->belongsTo(User::class, 'patient_id', 'patient_id');
     }
+    public function socialHistories()
+    {
+        return $this->hasMany(SocialHistory::class, 'patient_id', 'patient_id');
+    }
+    
 }

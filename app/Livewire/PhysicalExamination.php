@@ -23,7 +23,7 @@ class PhysicalExamination extends Component
         'Chest, Breast, Axilla', 
         'Lungs', 
         'Heart and Valvular', 
-        'Back and Abdomen', 
+        'Back, Abdomen, Spine', 
         'Genitalia', 
         'Anus, Rectum', 
         'Extremities'
@@ -75,7 +75,7 @@ class PhysicalExamination extends Component
                     case 'Heart and Valvular':
                         $this->findings[$part] = $existingRecord->heart_and_valvular ?? 'NORMAL';
                         break;
-                    case 'Back and Abdomen':
+                    case 'Back, Abdomen, Spine':
                         $this->findings[$part] = $existingRecord->back_and_abdomen ?? 'NORMAL';
                         break;
                     case 'Genitalia':
