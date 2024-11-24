@@ -1,79 +1,94 @@
-<form class="space-y-14">
-    <div>
-        <h4 class="text-xl mb-4 font-bold dark:text-white">Past Medical History</h4>
+<div class="p-6 bg-gray-50 dark:bg-gray-900 rounded-lg shadow-md">
+    <h4 class="text-2xl mb-6 font-bold text-gray-800 dark:text-white">Past Medical History</h4>
 
+    <!-- Physician Care Section -->
+    <div class="mb-8">
+        <label class="block text-lg text-gray-700 font-medium mb-4 dark:text-gray-300">
+            Are you currently under the care of a physician?
+        </label>
+        <div class="flex flex-wrap items-center gap-4">
+            <label class="flex items-center space-x-2">
+                <input type="radio" name="under_care" class="form-radio text-indigo-600">
+                <span class="text-gray-800 dark:text-gray-300">Yes</span>
+            </label>
+            <label class="flex items-center space-x-2">
+                <input type="radio" name="under_care" class="form-radio text-indigo-600">
+                <span class="text-gray-800 dark:text-gray-300">No</span>
+            </label>
+            <div class="flex items-center space-x-2">
+                <span class="text-gray-800 dark:text-gray-300">Last Appointment of Physician:</span>
+                <input type="text" 
+                       class="border-b border-gray-400 focus:border-indigo-600 focus:outline-none p-1 bg-transparent text-gray-800 dark:text-gray-300 dark:border-gray-600 dark:focus:border-indigo-500" 
+                       placeholder="Enter date">
+            </div>
+        </div>
+    </div>
+
+    <!-- Medical Conditions Section -->
+    <div class="mb-8">
+        <label class="block text-lg text-gray-700 font-medium mb-4 dark:text-gray-300">
+            Do you have any of the following medical conditions?
+        </label>
         <div class="grid gap-6 ml-6 mb-6 md:grid-cols-2">
-            <div>
-                <livewire:toggle title="Allergy" />
-                <div class="hidden">
-                    <livewire:checkbox title="Food" />
-                    <livewire:checkbox title="Drug" />
-                </div>
-
-            </div>
-            <livewire:toggle title="Allergy" />
-            <livewire:toggle title="Asthma" />
-            <livewire:toggle title="Cancer" />
-            <livewire:toggle title="Coronary Artery Disease" />
-            <livewire:toggle title="Thyroid Disease" />
-            <livewire:toggle title="Peptic Ulcer" />
-            <livewire:toggle title="PCOS" />
-            <livewire:toggle title="Hypertension" />
-            <livewire:toggle title="Epilepsy" />
-            <livewire:toggle title="Skin Disorder" />
-            <livewire:toggle title="Tuberculosis" />
-            <livewire:toggle title="Hepatitis" />
-            <livewire:toggle title="Psychological Disorder" />
+            <!-- Checkbox Options -->
+            <label class="flex items-center space-x-2">
+                <input type="checkbox" class="form-checkbox text-indigo-600">
+                <span class="text-gray-800 dark:text-gray-300">Diabetes</span>
+            </label>
+            <label class="flex items-center space-x-2">
+                <input type="checkbox" class="form-checkbox text-indigo-600">
+                <span class="text-gray-800 dark:text-gray-300">High Blood Pressure</span>
+            </label>
+            <label class="flex items-center space-x-2">
+                <input type="checkbox" class="form-checkbox text-indigo-600">
+                <span class="text-gray-800 dark:text-gray-300">Coronary Artery Disease</span>
+            </label>
+            <label class="flex items-center space-x-2">
+                <input type="checkbox" class="form-checkbox text-indigo-600">
+                <span class="text-gray-800 dark:text-gray-300">Seizure Disorder</span>
+            </label>
+            <label class="flex items-center space-x-2">
+                <input type="checkbox" class="form-checkbox text-indigo-600">
+                <span class="text-gray-800 dark:text-gray-300">Arthritis</span>
+            </label>
+            <label class="flex items-center space-x-2">
+                <input type="checkbox" class="form-checkbox text-indigo-600">
+                <span class="text-gray-800 dark:text-gray-300">Urinary Tract Infection</span>
+            </label>
+            <label class="flex items-center space-x-2">
+                <input type="checkbox" class="form-checkbox text-indigo-600">
+                <span class="text-gray-800 dark:text-gray-300">Hepatitis</span>
+            </label>
+            <label class="flex items-center space-x-2">
+                <input type="checkbox" class="form-checkbox text-indigo-600">
+                <span class="text-gray-800 dark:text-gray-300">Thyroid H. Imbalance</span>
+            </label>
+            <label class="flex items-center space-x-2">
+                <input type="checkbox" class="form-checkbox text-indigo-600">
+                <span class="text-gray-800 dark:text-gray-300">Allergies</span>
+            </label>
+            <!-- Text Input for Additional Conditions -->
+            <input type="text" 
+                   class="border-b border-gray-400 focus:border-indigo-600 focus:outline-none p-1 col-span-2 bg-transparent text-gray-800 dark:text-gray-300 dark:border-gray-600 dark:focus:border-indigo-500" 
+                   placeholder="Please specify">
+            <label class="flex items-center space-x-2">
+                <input type="checkbox" class="form-checkbox text-indigo-600">
+                <span class="text-gray-800 dark:text-gray-300">HIV/AIDS</span>
+            </label>
+            <label class="flex items-center space-x-2">
+                <input type="checkbox" class="form-checkbox text-indigo-600">
+                <span class="text-gray-800 dark:text-gray-300">Any Infection</span>
+            </label>
         </div>
-
     </div>
+
+    <!-- Other Medical Conditions Section -->
     <div>
-        <h4 class="text-xl mb-4 font-bold dark:text-white">Family Medical Condition</h4>
-        <div class="grid gap-6 ml-6 mb-6 md:grid-cols-2">
-            <div>
-                <label for="mother-side" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Mother
-                    Side</label>
-                <div class="flex items-center justify-center gap-3">
-                    <input type="text" id="mother-side"
-                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                        placeholder="ex. Cancer" required />
-                    <button
-                        class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">+</button>
-                </div>
-            </div>
-            <div>
-                <label for="father-side" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Father
-                    Side</label>
-                <div class="flex items-center justify-center gap-3">
-                    <input type="text" id="father-side"
-                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                        placeholder="ex. Tuberculosis" required />
-                    <button
-                        class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">+</button>
-                </div>
-            </div>
-        </div>
+        <label class="block text-lg text-gray-700 font-medium mb-4 dark:text-gray-300">
+            Any other medical conditions?
+        </label>
+        <input type="text" 
+               class="border-b border-gray-400 focus:border-indigo-600 focus:outline-none p-1 w-full bg-transparent text-gray-800 dark:text-gray-300 dark:border-gray-600 dark:focus:border-indigo-500" 
+               placeholder="Enter details">
     </div>
-    <div>
-        <h4 class="text-xl mb-4 font-bold dark:text-white">Recent Hospital Admissions</h4>
-
-        <div class="grid grid-cols-2 ml-6 gap-6">
-            <div>
-                <label for="Diagnosis"
-                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Diagnosis</label>
-                <input type="text" id="Diagnosis"
-                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                    placeholder="Fever, Cough Etc." required />
-            </div>
-            <div>
-                <label for="datepicker"
-                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">When?</label>
-                <livewire:datepicker id="diagnosis-datepicker" />
-            </div>
-
-        </div>
-    </div>
-</form>
-
-
-<!-- This is  a test tracing -->
+</div>

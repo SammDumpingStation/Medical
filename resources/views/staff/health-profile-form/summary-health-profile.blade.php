@@ -12,10 +12,6 @@
                     <button class="inline-block p-4 border-b-2 rounded-t-lg" id="form2-tab" data-tabs-target="#form2"
                         type="button" role="tab" aria-controls="form2" aria-selected="false">Form 2</button>
                 </li>
-                <li class="me-2" role="presentation">
-                    <button class="inline-block p-4 border-b-2 rounded-t-lg" id="form3-tab" data-tabs-target="#form3"
-                        type="button" role="tab" aria-controls="form3" aria-selected="false">Form 3</button>
-                </li>
             </ul>
         </div>
         <div id="default-tab-content">
