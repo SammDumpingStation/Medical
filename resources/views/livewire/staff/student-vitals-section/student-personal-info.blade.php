@@ -1,6 +1,6 @@
 <div class="space-y-14">
     <div>
-        <h4 class="text-xl mb-4 font-bold dark:text-white">Personal Information</h4>
+        <h4 class="text-xl mb-4 font-bold dark:text-white">Personal Informationss</h4>
 
         <div class="grid ml-6 gap-6 mb-6 md:grid-cols-2">
             <div class="">
@@ -104,4 +104,3 @@
         </div>
     </div>
 </div>
-

@@ -6,5 +6,15 @@ use Illuminate\Database\Eloquent\Model;
 
 class MedicalHistoryAdditionalInfo extends Model
 {
-    protected $guarded = [];
+  
+    protected $table = 'medical_history_additional_infos';
+
+     protected $fillable = [
+        'patient_id',    
+        'question',   
+        'response',     
+        'created_at',    
+        'updated_at',   
+    ];
+
 }

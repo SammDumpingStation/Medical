@@ -19,8 +19,18 @@ class MedicalHistory extends Model
         'hypertension_details', 'skin_disorder', 'skin_disorder_details', 'hepatitis', 
         'hepatitis_details', 'cancer', 'cancer_details', 'thyroid_disease', 'pcos', 
         'epilepsy', 'epilepsy_details', 'tuberculosis', 'tuberculosis_details', 
-        'psychological_disorder', 'psychological_disorder_details', 'created_at'
+        'psychological_disorder', 'psychological_disorder_details', 'created_at',
+        
+        'under_care', 'last_appointment_date', 
+        'diabetes', 'high_blood_pressure', 'coronary_artery_disease', 
+        'seizure_disorder', 'arthritis', 'urinary_tract_infection', 'hepatitis', 
+        'thyroid_h_imbalance', 'allergies', 'hiv_aids', 'any_infection', 
+        'additional_conditions', 'other_conditions',
+
+         'present_medications', 'pregnant', 'lmp_date', 
+         'procedures_operations', 'record_date'
     ];
+    
 
      public function parentConditions()
     {

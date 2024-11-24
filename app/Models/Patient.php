@@ -28,6 +28,7 @@ class Patient extends Model
         'occupation',
         'phone_number',
         'civil_status',
+        'phil_id',
         'form_confirmation',
         'created_at',
     ];
