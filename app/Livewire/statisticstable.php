@@ -135,32 +135,23 @@ class StatisticsTable extends Component
             try {
                 $startOfWeek = Carbon::now()->startOfWeek(Carbon::MONDAY); 
                 $endOfWeek = Carbon::now(); 
-        
                 $visitationsPerDay = [];
-        
                 foreach (range(0, 6) as $dayOffset) {
                     $date = Carbon::now()->startOfWeek()->addDays($dayOffset); 
-                    
-                    $visitationsCount = MedicalHistory::whereDate('created_at', $date)->count();
-                    
+                    $visitationsCount = MedicalHistory::whereDate('created_at', $date)->count();    
                     $visitationsPerDay[] = [
                         'day' => $date->format('l'), 
                         'count' => $visitationsCount 
                     ];
                 }
-        
                 $this->newVisitationsThisWeek = MedicalHistory::whereBetween('created_at', [$startOfWeek, $endOfWeek])->count();
                 $this->newVisitationsToday = MedicalHistory::whereDate('created_at', Carbon::today())->count();
                 $this->newVisitationsYesterday = MedicalHistory::whereDate('created_at', Carbon::yesterday())->count();
                 $this->newVisitationsLast30Days = MedicalHistory::whereBetween('created_at', [Carbon::now()->subDays(30), Carbon::now()])->count();
                 $this->newVisitationsLast30Days = $visitationsPerDay;
-        
                 Log::info('Visitations for the Last 30 Days: ', $this->newVisitationsLast30Days);
-        
                 $this->newVisitationsLast7Days = $visitationsPerDay;
-        
                 Log::info('Visitations for the Last 7 Days: ', $this->newVisitationsLast7Days);
-        
                 return [
                     'newVisitationsThisWeek' => $this->newVisitationsThisWeek,
                     'newVisitationsToday' => $this->newVisitationsToday,
@@ -168,7 +159,6 @@ class StatisticsTable extends Component
                     'newVisitationsLast30Days' => $this->newVisitationsLast30Days,
                     'newVisitationsLast7Days' => $this->newVisitationsLast7Days,
                 ];
-        
             } catch (\Exception $e) {
                 Log::error("Error calculating visitations: " . $e->getMessage());
                 return [];
