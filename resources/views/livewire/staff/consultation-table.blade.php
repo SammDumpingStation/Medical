@@ -94,10 +94,10 @@
                                         </td>
                                         <td
                                             class="p-4 space-x-2 text-sm text-gray-500 whitespace-nowrap dark:text-white">
-                                            <a href="/consultation/student/{{ $data->patient->full_id }}/create-form"
+                                            <a href="{{ $data->patient ? '/consultation/student/' . $data->patient->patient_id . '/create-form' : '#' }}"
                                                 class="hover:bg-blue-800 text-white bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
-                                                Create Form
-                                            </a>
+                                                 Create Form
+                                             </a>
                                         </td>
                                     </tr>
                                 @empty
