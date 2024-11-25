@@ -2,7 +2,7 @@
     <div class="p-4 bg-white block sm:flex items-center justify-between dark:bg-gray-800">
         <div class="w-full mb-1">
             <div class="mb-4">
-                <h1 class="text-xl font-semibold text-gray-900 sm:text-2xl dark:text-white">General Inventory</h1>
+                <h1 class="text-xl font-semibold text-gray-900 sm:text-2xl dark:text-white">Dispense History</h1>
             </div>
             <div class="sm:flex">
                 <form class=" w-full">
@@ -43,9 +43,9 @@
     </div>
     <div class="items-center px-4 justify-between lg:flex">
         <div class="mb-4 lg:mb-0">
-            <h3 class="mb-2 text-xl font-bold text-gray-900 dark:text-white">General Inventory</h3>
+            <h3 class="mb-2 text-xl font-bold text-gray-900 dark:text-white">Dispense History</h3>
             <span class="text-base font-normal text-gray-500 dark:text-gray-400">Check all the in and outs of the
-                the clinic's inventory here!</span>
+                medicine here!</span>
         </div>
     </div>
     {{-- table --}}

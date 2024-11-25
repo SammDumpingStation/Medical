@@ -53,7 +53,7 @@
                                 <path d="M17.4187 7.80734C17.4087 7.83998 17.398 7.87417 17.3866 7.90986C17.2772 8.25257 17.099 8.73396 16.8193 9.31437C16.2594 10.4761 15.2939 12.0316 13.6625 13.663C12.0312 15.2943 10.4757 16.2598 9.31411 16.8195C8.73375 17.0992 8.2524 17.2773 7.90973 17.3867C7.8741 17.3981 7.83996 17.4088 7.80737 17.4187L10.3981 20.0094C13.0522 22.6635 17.3553 22.6635 20.0094 20.0094C22.6635 17.3553 22.6635 13.0522 20.0094 10.3981L17.4187 7.80734Z" />
                                 </svg>' />
 
-                      <livewire:sidebar-list label="Inventory" :active="request()->is('inventory')" href="/inventory"  wire:click="navigate"
+                      <livewire:sidebar-list label="History" :active="request()->is('inventory')" href="/inventory"  wire:click="navigate"
                           icon='<svg class="w-6 h-6 fill-inherit transition duration-75 group-hover:text-gray-900 dark:text-gray-400 dark:group-hover:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
                                 <path fill-rule="evenodd" d="M4 4a2 2 0 1 0 0 4h16a2 2 0 1 0 0-4H4Zm0 6h16v8a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2v-8Zm10.707 5.707a1 1 0 0 0-1.414-1.414l-.293.293V12a1 1 0 1 0-2 0v2.586l-.293-.293a1 1 0 0 0-1.414 1.414l2 2a1 1 0 0 0 1.414 0l2-2Z" clip-rule="evenodd"/>
                                 </svg>' />

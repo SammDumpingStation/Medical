@@ -30,11 +30,11 @@ class InventoryTable extends Component
     public function mount()
     {
         $this->headers = [
-            'Name',
-            'Acquired at',
-            'No. of pieces',
-            'Status',
-            'Turn over to supply',
+            'Medicine Name',
+            'Received Date',
+            'Quantity',
+            'Current Status',
+            'Supplier Name',
             'Damaged?',
         ];
 
