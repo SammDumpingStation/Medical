@@ -4,13 +4,13 @@ namespace App\Livewire;
 
 use Illuminate\Support\Facades\Session;
 use Livewire\Component;
-use App\Models\PatientDetails; 
+use App\Models\PatientDetails;
 use Illuminate\Support\Facades\Log;
 
 class PersonalInfoHp extends Component
 {
     public $activeTab = 'profile';
-  
+
     public $patientID;
     public $full_name;
     public $age;
@@ -39,18 +39,18 @@ class PersonalInfoHp extends Component
          $this->saveToSession();
      }
 
-     
+
     public function switchToTab($tabId)
     {
         $this->saveToSession();
-        $this->dispatch('switch-tab', ['tabId' => $tabId]); 
+        $this->dispatch('switch-tab', ['tabId' => $tabId]);
         // Log the incoming data
-         Log::info('Saving to database', [
-        'emergencyContact' => $emergencyContact,
-        'additionalQuestions' => $additionalQuestions,
-        'disabilitySpecifics' => $disabilitySpecifics,
-        'patientID' => $this->patientID,
-    ]);
+    //      Log::info('Saving to database', [
+    //     'emergencyContact' => $emergencyContact,
+    //     'additionalQuestions' => $additionalQuestions,
+    //     'disabilitySpecifics' => $disabilitySpecifics,
+    //     'patientID' => $this->patientID,
+    // ]);
     }
 
     public function saveToSession()
@@ -84,12 +84,12 @@ class PersonalInfoHp extends Component
                 'registered' => $this->registered,
             ],
         ];
-    
+
         Session::put(['patient_information' => $formData]);
-    
+
         $this->saveToDatabase($formData['emergency_contact'], $formData['additional_questions'], $formData['disability_specifics']);
     }
-    
+
     public function saveToDatabase($emergencyContact, $additionalQuestions, $disabilitySpecifics)
     {
         Log::info('Saving to database', [
@@ -98,26 +98,26 @@ class PersonalInfoHp extends Component
             'disabilitySpecifics' => $disabilitySpecifics,
             'patientID' => $this->patientID,
         ]);
-    
+
         $personWithDisability = (bool) $additionalQuestions['person_with_disability'];
         $willingToDonateBlood = (bool) $additionalQuestions['willing_to_donate_blood'];
         $reg = (bool) $disabilitySpecifics['registered'];
-    
+
        $result = $personWithDisability ? "True" : "False";
         $resultDonate = $willingToDonateBlood ? "True" : "False";
         $regResult = $reg ? "Yes" : "No";
-    
+
          Log::info('Converted values', [
             'person_with_disability' => $result,
             'willing_to_donate_blood' => $resultDonate,
             'registered' => $regResult,
         ]);
-    
+
         $patientDetails = PatientDetails::where('patient_id', $this->patientID)->first();
-        
+
         if ($patientDetails) {
             Log::info('Updating existing PatientDetails', ['patient_id' => $this->patientID]);
-    
+
             $patientDetails->update([
                 'emergency_contact_name' => $emergencyContact['name'],
                 'emergency_contact_address' => $emergencyContact['address'],
@@ -128,13 +128,13 @@ class PersonalInfoHp extends Component
                 'specifics' => $disabilitySpecifics['specifics'],
                 'registered' => $regResult,
             ]);
-    
+
             Log::info('PatientDetails updated successfully', ['patient_id' => $this->patientID]);
         } else {
              Log::info('Creating new PatientDetails', ['patient_id' => $this->patientID]);
-    
+
             PatientDetails::create([
-                'patient_id' => $this->patientID, 
+                'patient_id' => $this->patientID,
                 'emergency_contact_name' => $emergencyContact['name'],
                 'emergency_contact_address' => $emergencyContact['address'],
                 'emergency_contact_phone' => $emergencyContact['phone'],
@@ -144,12 +144,12 @@ class PersonalInfoHp extends Component
                 'specifics' => $disabilitySpecifics['specifics'],
                 'registered' =>  $regResult,
             ]);
-    
+
              Log::info('PatientDetails created successfully', ['patient_id' => $this->patientID]);
         }
     }
-    
-    
+
+
 
     public function mount($patient)
 {
@@ -166,7 +166,7 @@ class PersonalInfoHp extends Component
     $this->civil_status = $patient->civil_status;
 
     $this->patientDetails = PatientDetails::where('patient_id', $this->patientID)->first();
-   
+
     Log::info('Patient ID PersonalINfo:', ['patient_id' => $this->patientDetails]);
 
 
@@ -198,7 +198,7 @@ class PersonalInfoHp extends Component
     }
 }
 
-    
+
 
 public function render()
 {

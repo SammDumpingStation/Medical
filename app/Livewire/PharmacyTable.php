@@ -15,7 +15,7 @@ class PharmacyTable extends Component
 
     public $headers = [];
     public $search;
-    
+
     public $name;
     public $brand_name;
     public $dosage;
@@ -72,7 +72,7 @@ class PharmacyTable extends Component
             'dosage' => 'required|string|max:100',
             'manufactured_date' => 'required|date',
             'expiry' => 'required|date|after:manufactured_date',
-            'turn_over_to_supply' => 'required|date', 
+            'turn_over_to_supply' => 'required|date',
             'stock_on_hand' => 'required|integer|min:0',
             'dispensed' => 'required|integer|min:0',
             'status' => 'required|string|max:100',
@@ -88,7 +88,7 @@ class PharmacyTable extends Component
 
         $this->resetFormFields();
 
-   
+
     } catch (\Exception $e) {
         Log::error('Error adding medicine: ' . $e->getMessage());
 
@@ -102,8 +102,8 @@ public function dispenseMedicine()
 {
     try {
         $this->validate([
-            'patient_id' => 'required|exists:patients,patient_id', 
-            'medicine_id' => 'required|exists:medicine_inventories,medicine_id', 
+            'patient_id' => 'required|exists:patients,patient_id',
+            'medicine_id' => 'required|exists:medicine_inventories,medicine_id',
             'quantity_dispensed' => 'required|integer|min:1',
             'amount_given' => 'required|numeric|min:0',
             'given_date' => 'required|date',
@@ -191,8 +191,8 @@ public function dispenseMedicine()
             ->orWhere('dosage', 'LIKE', "%{$this->search}%")
             ->orWhere('status', 'LIKE', "%{$this->search}%")
             ->paginate(10);
-    
+
         return view('livewire.pharmacy-table', ['datas' => $datas]);
     }
-    
+
 }

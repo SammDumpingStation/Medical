@@ -17,9 +17,9 @@ class Navbar extends Component
     public function mount()
     {
         $this->patientId = Auth::user()->patient_id;
-    
+
         $student = Patient::find($this->patientId);
-   
+
         session()->put('patient_information.personal_information.patient_id', $this->patientId);
 
         Log::info('Retrieved patient ID from authenticated user:', ['patient_id' => $this->patientId]);
@@ -31,7 +31,7 @@ class Navbar extends Component
         Log::info('User role retrieved:', ['role' => $this->role, 'isPatient' => $this->isPatient]);
 
     }
-    
+
     public function showSidebar()
     {
         $this->sidebar = !$this->sidebar;
@@ -41,7 +41,7 @@ class Navbar extends Component
     public function render()
     {
         return view('livewire.navbar', [
-            'patientId' => $this->patientId, 
+            'patientId' => $this->patientId,
             'isPatient' => $this->isPatient,
         ]);
     }

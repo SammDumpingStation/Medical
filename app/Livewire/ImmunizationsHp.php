@@ -6,12 +6,13 @@ use Illuminate\Support\Facades\Session;
 use Livewire\Attributes\On;
 use Livewire\Component;
 use App\Models\immunizations;
+use Illuminate\Support\Facades\Log;
 
 class ImmunizationsHp extends Component
 {
     public $patientID;
     public $patientGender;
-    public $newbornImmunization; 
+    public $newbornImmunization;
     public $tetanusToxoid, $tetanusDetails;
     public $pneumococcalVaccine;
     public $hpv, $hpvDetails;
@@ -28,7 +29,7 @@ class ImmunizationsHp extends Component
 
     public $first_dose_date;
     public $second_dose_date;
-    
+
 
     #[On('radioSelected')]
     public function radioSelected($name, $value)
@@ -39,7 +40,7 @@ class ImmunizationsHp extends Component
     }
 
     #[On('toggle-data')]
-    
+
     public function toggleData($title)
     {
         if ($title === 'HPV') {
@@ -97,14 +98,14 @@ class ImmunizationsHp extends Component
 
         $this->patientID = $patientID;
         $this->patientGender = Session::get('patient_information.personal_information.gender') ?? '';
-        $this->newbornImmunization = $patientInfo['newbornImmunization'] ?? false; 
+        $this->newbornImmunization = $patientInfo['newbornImmunization'] ?? false;
         $this->tetanusToxoid = $patientInfo['tetanusToxoid'] ?? false;
         $this->pneumococcalVaccine = $patientInfo['pneumococcalVaccine'] ?? false;
         $this->hpv = $patientInfo['hpv'] ?? false;
         $this->hpvDetails = $patientInfo['hpvDetails'] ?? '';
         $this->influenzaFlu = $patientInfo['influenzaFlu'] ?? false;
         $this->others = $patientInfo['others'] ?? false;
- 
+
         $this->covidVaccinated = $patientInfo['covidVaccinated'] ?? false;
         $this->firstDose = $patientInfo['firstDose'] ?? false;
         $this->secondDose = $patientInfo['secondDose'] ?? false;
@@ -124,7 +125,7 @@ class ImmunizationsHp extends Component
     $patient = Session::get('patient_information');
     $patient['immunizations'] = [
         'patientID' => $this->patientID,
-        'newbornImmunization' => $this->newbornImmunization, 
+        'newbornImmunization' => $this->newbornImmunization,
         'tetanusToxoid' => $this->tetanusToxoid,
         'pneumococcalVaccine' => $this->pneumococcalVaccine,
         'hpv' => $this->hpv,
@@ -146,7 +147,7 @@ class ImmunizationsHp extends Component
     Session::put('patient_information', $patient);
 
     $immunization = Immunizations::updateOrCreate(
-        ['patient_id' => $this->patientID], 
+        ['patient_id' => $this->patientID],
         [
             'newborn_immunization' => $this->newbornImmunization,
             'tetanus_toxoid' => $this->tetanusToxoid,
@@ -169,14 +170,14 @@ class ImmunizationsHp extends Component
         ]
     );
     Log::info('PatientDetails created successfully', ['patient_id' => $this->patientID]);
-     
+
 }
-    
+
 
     public function switchToTab($tabId)
     {
         $this->saveToSession();
-        $this->dispatch('switch-tab', ['tabId' => $tabId]); 
+        $this->dispatch('switch-tab', ['tabId' => $tabId]);
     }
     public function render()
     {

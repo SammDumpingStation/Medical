@@ -12,7 +12,7 @@ use App\Models\Admission;
 class MedicalHistoryHp extends Component
 {
     public $patientID;
-    
+
     public $allergy;
     public $foodAllergy, $foodDetails;
     public $drugAllergy, $drugDetails;
@@ -29,7 +29,7 @@ class MedicalHistoryHp extends Component
     public $tuberculosis, $tuberculosisDetails;
     public $psychologicalDisorder, $psychologicalDisorderDetails;
 
-  
+
     #[On('toggle-data')]
     public function toggle($title)
     {
@@ -50,12 +50,12 @@ class MedicalHistoryHp extends Component
             'Tuberculosis' => 'tuberculosis',
             'Psychological Disorder' => 'psychologicalDisorder',
         ];
-    
+
         if (array_key_exists($title, $fields)) {
             $this->{$fields[$title]} = !$this->{$fields[$title]};
         }
     }
-    
+
     public function mount()
 {
      $this->patientID = Session::get('patient_information.personal_information.patient_id', 0);
@@ -94,7 +94,7 @@ class MedicalHistoryHp extends Component
         $this->psychologicalDisorderDetails = $medicalHistory->psychological_disorder_details;
     } else {
         $patientInfo = Session::get('patient_information.medical_history', []);
-  
+
         Log::info('MEidcal HIstory Mount  NO DATA');
 
 
@@ -154,7 +154,7 @@ class MedicalHistoryHp extends Component
             'tuberculosisDetails' => $this->tuberculosisDetails,
             'psychologicalDisorder' => $this->psychologicalDisorder,
             'psychologicalDisorderDetails' => $this->psychologicalDisorderDetails,
-           
+
         ];
 
         $this->saveToDatabase();
@@ -176,9 +176,9 @@ class MedicalHistoryHp extends Component
 
         try {
             $medicalHistory = MedicalHistory::updateOrCreate(
-                ['patient_id' => $patientID], 
+                ['patient_id' => $patientID],
                 [
-                    'patient_id' => $patientID,  
+                    'patient_id' => $patientID,
                     'allergy' => $this->allergy,
                     'food_allergy' => $this->foodAllergy,
                     'food_details' => $this->foodDetails,
@@ -203,11 +203,11 @@ class MedicalHistoryHp extends Component
                     'tuberculosis_details' => $this->tuberculosisDetails,
                     'psychological_disorder' => $this->psychologicalDisorder,
                     'psychological_disorder_details' => $this->psychologicalDisorderDetails,
-                 
+
 
                 ]
             );
-          
+
             Log::info('Medical history saved successfully for Patient ID: ' . $patientID);
         } catch (Exception $e) {
             Log::error('Error saving medical history', ['error' => $e->getMessage()]);
@@ -215,12 +215,12 @@ class MedicalHistoryHp extends Component
         }
     }
 
-    
+
 
     public function switchToTab($tabId)
     {
-        $this->saveToSession(); 
-        $this->dispatch('switch-tab', ['tabId' => $tabId]); 
+        $this->saveToSession();
+        $this->dispatch('switch-tab', ['tabId' => $tabId]);
     }
 
     public function render()
