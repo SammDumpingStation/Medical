@@ -42,13 +42,11 @@ class DoctorCofirmationTable extends Component
     public function openModal($patientId)
     {
         $this->patient_id = $patientId;
-        session()->put('patient_id', $patientId); // Use Livewire's session management
+        session()->put('patient_id', $patientId); 
         Log::info('Opening modal for patient ID: ' . $patientId);
 
-               // Store the patient ID in the session
                session()->put('patient_information.personal_information.patient_id', $patientId);
     
-               // Log the patient ID to verify
                Log::info('Patient ID stored in session:', ['patient_id' => $patientId]);
  
                
@@ -103,11 +101,9 @@ class DoctorCofirmationTable extends Component
     
     public function setSession($patientId)
     {
-        // Store the patient ID in the session
         session()->put('patient_information.personal_information.patient_id', $patientId);
     
-        // Log the patient ID to verify
-        Log::info('Patient ID stored in session:', ['patient_id' => $patientId]);
+         Log::info('Patient ID stored in session:', ['patient_id' => $patientId]);
     }
     
 

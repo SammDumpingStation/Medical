@@ -31,7 +31,6 @@ class StatisticsTable extends Component
     
     public $newHealthProfilesThisWeek;
 
- // Statistics Variables
  public $dailyCount;
  public $weeklyCount;
  public $monthlyCount;
@@ -161,7 +160,7 @@ private function calculateDispenseMedicine()
     for ($day = 0; $day < 7; $day++) {
         $dayDate = $startOfWeek->copy()->addDays($day);
         $count = dispenseMedicineRecords::whereDate('created_at', $dayDate)->count();
-        $this->weeklyCountsByDay[$dayDate->format('l')] = $count; // Use day name (e.g., 'Monday')
+        $this->weeklyCountsByDay[$dayDate->format('l')] = $count;
 
         // Log daily count for the week
         Log::info('Weekly dispensed medicine count calculated for the week', [
@@ -176,7 +175,7 @@ private function calculateDispenseMedicine()
     for ($day = 1; $day <= $daysInMonth; $day++) {
         $dayDate = Carbon::now()->startOfMonth()->addDays($day - 1);
         $count = dispenseMedicineRecords::whereDate('created_at', $dayDate)->count();
-        $this->monthlyCountsByDay[$dayDate->format('d M')] = $count; // Use day and month (e.g., '01 Nov')
+        $this->monthlyCountsByDay[$dayDate->format('d M')] = $count;
 
         Log::info('Monthly dispensed medicine count calculated', [
             'day' => $dayDate->format('Y-m-d'),

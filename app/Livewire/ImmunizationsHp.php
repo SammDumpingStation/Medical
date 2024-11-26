@@ -97,7 +97,7 @@ class ImmunizationsHp extends Component
 
         $this->patientID = $patientID;
         $this->patientGender = Session::get('patient_information.personal_information.gender') ?? '';
-        $this->newbornImmunization = $patientInfo['newbornImmunization'] ?? false; // null, 'yes', 'no', or 'unknown'
+        $this->newbornImmunization = $patientInfo['newbornImmunization'] ?? false; 
         $this->tetanusToxoid = $patientInfo['tetanusToxoid'] ?? false;
         $this->pneumococcalVaccine = $patientInfo['pneumococcalVaccine'] ?? false;
         $this->hpv = $patientInfo['hpv'] ?? false;
