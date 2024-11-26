@@ -14,13 +14,14 @@ class DoctorCofirmationTable extends Component
     public $headers = [];
     public $search;
     public $selectedPatientId;
-    public $patient_id = null; 
-    public $isModalOpen = false; 
-    public $status = null; 
+    public $patient_id = null;
+    public $isModalOpen = false;
+    public $status = null;
 
     public function mount()
     {
-        $this->headers = ['Patient Id',
+        $this->headers = [
+            'Patient Id',
             'Patient Name',
             'age',
             'gender',
@@ -40,59 +41,43 @@ class DoctorCofirmationTable extends Component
 
     public function openModal($patientId)
     {
-        $this->patient_id = $patientId; 
-
-        session(['patient_id' => $patientId]);
-
+        $this->patient_id = $patientId;
+        session()->put('patient_id', $patientId); // Use Livewire's session management
         Log::info('Opening modal for patient ID: ' . $patientId);
-
-        $this->isModalOpen = true; 
+        $this->isModalOpen = true;
     }
 
     public function confirmProfile()
-{
-    $patientId = session('patient_id'); 
+    {
+        $patientId = session('patient_id');
+        Log::info('Confirmation for patient ID: ' . $patientId);
 
-    $this->patient_id = $patientId; 
-    Log::info('Confirmation for patient ID: ' . $patientId);
+        $consultation = ConsultationHistory::where('patient_id', $this->patient_id)->first();
 
-    $consultation = ConsultationHistory::where('patient_id', $this->patient_id)->first();
+        if ($consultation) {
+            $consultation->update(['status' => 'Completed']);
+            $this->status = 'Completed';
+        } else {
+            ConsultationHistory::updateOrCreate(
+                ['patient_id' => $this->patient_id],
+                [
+                    'status' => 'Completed',
+                    'date' => now()->toDateString(),
+                    'time' => now()->toTimeString(),
+                ]
+            );
+            $this->status = 'Confirmed';
+        }
 
-    if ($consultation) {
-        $consultation->update(['status' => 'Completed']);
-        $this->status = 'Completed';
-    } else {
-        ConsultationHistory::updateOrCreate(
-            ['patient_id' => $this->patient_id], 
-            [
-                'status' => 'Completed',
-                'date' => now()->toDateString(),
-                'time' => now()->toTimeString(),
-            ]
-        );
-        
-        $this->status = 'Confirmed';
+        $this->closeModal();
     }
-
-    $this->closeModal();
-}
-
 
     public function setPending()
     {
         $consultation = ConsultationHistory::where('patient_id', $this->patient_id)->first();
 
         if ($consultation) {
-            $consultation->update([
-                'status' => 'Pending',
-            ]);
-
-            Log::info('Health profile set to pending for patient.', [
-                'patient_id' => $this->patient_id,
-                'status' => 'Pending',
-                'updated_at' => now()->toDateTimeString(),
-            ]);
-
+            $consultation->update(['status' => 'Pending']);
             $this->status = 'Pending';
         } else {
             ConsultationHistory::create([
@@ -101,17 +86,10 @@ class DoctorCofirmationTable extends Component
                 'date' => now()->toDateString(),
                 'time' => now()->toTimeString(),
             ]);
-
-            Log::info('New health profile created and set to pending for patient.', [
-                'patient_id' => $this->patient_id,
-                'status' => 'Pending',
-                'created_at' => now()->toDateTimeString(),
-            ]);
-
             $this->status = 'Pending';
         }
 
-        $this->closeModal(); 
+        $this->closeModal();
     }
 
     public function render()
