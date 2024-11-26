@@ -158,8 +158,89 @@
                 </div>
                 <div id="traffic-channels-chart" class="w-full"></div>
             </div>
+
+            <div
+                class="p-4 bg-white border border-gray-200 rounded-lg shadow-sm dark:border-gray-700 sm:p-6 dark:bg-gray-800">
+                <div class="w-full">
+                    <h3 class="mb-2 text-base font-normal text-gray-500 dark:text-gray-400">Dispensed Medicine Stats
+                    </h3>
+                    <!-- Dropdown to select period -->
+                    <select id="periodSelector" class="mb-4 p-2 border rounded">
+                        <option value="daily">Daily (Current Week)</option>
+                        <option value="monthly">Monthly (Current Month)</option>
+                        <option value="yearly">Yearly (Current Year)</option>
+                    </select>
+
+                    <!-- Chart Canvas -->
+                    <canvas id="dispenseMedicineChart"></canvas>
+                </div>
+            </div>
+
+            <script>
+                document.addEventListener('DOMContentLoaded', function() {
+                    const ctx = document.getElementById('dispenseMedicineChart').getContext('2d');
+                    const periodSelector = document.getElementById('periodSelector');
+
+                    // Data from the server (example)
+                    const weeklyCountsByDay = @json($weeklyCountsByDay);
+                    const monthlyCountsByDay = @json($monthlyCountsByDay);
+                    const monthlyCounts = @json($monthlyCounts);
+
+                    // Function to update chart data
+                    function updateChartData(chart, dataLabels, dataCounts) {
+                        chart.data.labels = dataLabels;
+                        chart.data.datasets[0].data = dataCounts;
+                        chart.update();
+                    }
+
+                    // Initial chart setup
+                    const chart = new Chart(ctx, {
+                        type: 'bar',
+                        data: {
+                            labels: Object.keys(weeklyCountsByDay),
+                            datasets: [{
+                                label: 'Dispensed Medicine Count',
+                                data: Object.values(weeklyCountsByDay),
+                                backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                                borderColor: 'rgba(75, 192, 192, 1)',
+                                borderWidth: 1
+                            }]
+                        },
+                        options: {
+                            responsive: true,
+                            scales: {
+                                y: {
+                                    beginAtZero: true
+                                }
+                            }
+                        }
+                    });
+
+                    // Handle period change
+                    periodSelector.addEventListener('change', function() {
+                        const selectedPeriod = periodSelector.value;
+                        if (selectedPeriod === 'daily') {
+                            updateChartData(chart, Object.keys(weeklyCountsByDay), Object.values(
+                            weeklyCountsByDay));
+                        } else if (selectedPeriod === 'monthly') {
+                            updateChartData(chart, Object.keys(monthlyCountsByDay), Object.values(
+                                monthlyCountsByDay));
+                        } else if (selectedPeriod === 'yearly') {
+                            const monthLabels = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep',
+                                'Oct', 'Nov', 'Dec'
+                            ];
+                            updateChartData(chart, monthLabels, Object.values(monthlyCounts));
+                        }
+                    });
+                });
+            </script>
+
+
+
         </div>
     </div>
+
+
     <br>
     <div class="p-4 bg-white border border-gray-200 rounded-lg shadow-sm dark:border-gray-700 sm:p-6 dark:bg-gray-800">
 

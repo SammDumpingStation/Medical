@@ -60,58 +60,65 @@
                                     <th scope="col"
                                         class="p-3 border text-gray-900 font-bold text-sm dark:border-gray-700 text-left uppercase dark:text-gray-400">
                                         {{ $header }}
-
                                     </th>
                                 @endforeach
-
-
                             </tr>
                         </thead>
                         <tbody class="bg-white divide-y divide-gray-200 dark:bg-gray-800 dark:divide-gray-700">
-                            @forelse ($datas as $data)
-                                <tr class="hover:bg-gray-100 dark:hover:bg-gray-700" wire:key="{{ $data->id }}">
-                                    <td class="flex items-center p-4 space-x-6 whitespace-nowrap">
-                                        <div class="text-sm font-normal text-gray-500 dark:text-gray-400">
-                                            <div class="text-base text-gray-900 dark:text-white">
-                                                {{ $data->name }}
-                                            </div>
-                                        </div>
+                            @foreach ($datas as $data)
+                                <tr class="hover:bg-gray-100 dark:hover:bg-gray-700">
+                                    <td
+                                        class="p-4 border dark:border-gray-700 text-base font-medium text-gray-500 whitespace-nowrap dark:text-white">
+                                        {{ $data->patient_id }}
                                     </td>
                                     <td
                                         class="p-4 border dark:border-gray-700 text-base font-medium text-gray-500 whitespace-nowrap dark:text-white">
-                                        {{ $data->acquired_at }}
+                                        {{ $data->medicine ? $data->medicine->Name : 'Unknown' }}
+                                        <!-- Display Medicine Name -->
                                     </td>
                                     <td
                                         class="p-4 border dark:border-gray-700 text-base font-medium text-gray-500 whitespace-nowrap dark:text-white">
-                                        {{ $data->no_of_pieces }}
+                                        {{ $data->quantity_dispensed }}
                                     </td>
                                     <td
                                         class="p-4 border dark:border-gray-700 text-base font-medium text-gray-500 whitespace-nowrap dark:text-white">
-                                        {{ $data->status }}
+                                        {{ $data->amount_given }}
                                     </td>
                                     <td
                                         class="p-4 border dark:border-gray-700 text-base font-medium text-gray-500 whitespace-nowrap dark:text-white">
-                                        {{ $data->turn_over_to_supply }}
+                                        {{ $data->medicine_type }}
                                     </td>
                                     <td
                                         class="p-4 border dark:border-gray-700 text-base font-medium text-gray-500 whitespace-nowrap dark:text-white">
-                                        {{ $data->damaged }}
+                                        {{ $data->given_date }}
                                     </td>
-                                @empty
-                                <tr>
-                                    <td colspan="10" rowspan="10" class="text-center py-40 text-xl font-semibold">
-                                        No patient with that matching ID available
+                                    <td
+                                        class="p-4 border dark:border-gray-700 text-base font-medium text-gray-500 whitespace-nowrap dark:text-white">
+                                        {{ $data->expiration_date }}
                                     </td>
                                 </tr>
-                            @endforelse
+                            @endforeach
 
-
+                            @if ($datas->isEmpty())
+                                <tr>
+                                    <td colspan="7" class="text-center py-40 text-xl font-semibold">
+                                        No records found
+                                    </td>
+                                </tr>
+                            @endif
                         </tbody>
                     </table>
+
+                    <!-- Pagination Links -->
+                    <div class="mt-4">
+                        {{ $datas->links() }} <!-- Display pagination links -->
+                    </div>
                 </div>
             </div>
         </div>
     </div>
+
+
     <div
         class="sticky bottom-0 right-0 items-center justify-between w-full p-4 bg-white border-t border-gray-200 dark:bg-gray-800 dark:border-gray-700">
         {{ $datas->links() }}

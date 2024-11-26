@@ -2,6 +2,9 @@
 namespace App\Livewire;
 
 use App\Models\MedicineInventory;
+use App\Models\dispenseMedicineRecords;
+use App\Models\Patient;
+
 use Livewire\Component;
 use Livewire\WithPagination;
 use Illuminate\Support\Facades\Log;
@@ -23,6 +26,14 @@ class PharmacyTable extends Component
     public $dispensed;
     public $status;
 
+    public $patient_id;
+    public $medicine_id;
+    public $quantity_dispensed;
+    public $amount_given;
+    public $given_date;
+    public $medicine_type;
+
+
     public function mount()
     {
         $this->headers = [
@@ -39,7 +50,7 @@ class PharmacyTable extends Component
     }
 
    public function addMedicine()
-{
+    {
     try {
         $this->turn_over_to_supply = \Carbon\Carbon::parse($this->turn_over_to_supply)->format('Y-m-d');
 
@@ -55,7 +66,6 @@ class PharmacyTable extends Component
             'status' => $this->status,
         ]);
 
-        // Validate the data
         $validated = $this->validate([
             'name' => 'required|string|max:255',
             'brand_name' => 'required|string|max:255',
@@ -88,7 +98,77 @@ class PharmacyTable extends Component
     }
 }
 
-    // Helper method to reset form fields
+public function dispenseMedicine()
+{
+    try {
+        $this->validate([
+            'patient_id' => 'required|exists:patients,patient_id', 
+            'medicine_id' => 'required|exists:medicine_inventories,medicine_id', 
+            'quantity_dispensed' => 'required|integer|min:1',
+            'amount_given' => 'required|numeric|min:0',
+            'given_date' => 'required|date',
+            'medicine_type' => 'required|string',
+        ]);
+
+        Log::debug('Dispensing medicine data: ', [
+            'patient_id' => $this->patient_id,
+            'medicine_id' => $this->medicine_id,
+            'quantity_dispensed' => $this->quantity_dispensed,
+            'amount_given' => $this->amount_given,
+            'given_date' => $this->given_date,
+            'medicine_type' => $this->medicine_type,
+        ]);
+
+        $medicine = MedicineInventory::where('medicine_id', $this->medicine_id)->first();
+        if (!$medicine) {
+            session()->flash('error', 'Medicine not found.');
+            return;
+        }
+
+        $expirationDate = $medicine->expiry;
+
+        dispenseMedicineRecords::create([
+            'patient_id' => $this->patient_id,
+            'medicine_id' => $this->medicine_id,
+            'quantity_dispensed' => $this->quantity_dispensed,
+            'amount_given' => $this->amount_given,
+            'given_date' => $this->given_date,
+            'medicine_type' => $this->medicine_type,
+            'expiration_date' => $expirationDate,
+        ]);
+
+        Log::info('Medicine dispensed successfully.');
+
+        session()->flash('message', 'Medicine dispensed successfully.');
+        $this->resetFormFields();
+
+    } catch (\Exception $e) {
+        Log::error('Error dispensing medicine: ' . $e->getMessage());
+        session()->flash('error', 'Failed to dispense medicine.');
+        throw $e;
+    }
+}
+
+
+    public function loadMedicineData($medicineId)
+    {
+        $medicine = MedicineInventory::find($medicineId);
+
+        if ($medicine) {
+            $this->medicine_id = $medicine->name;
+            $this->brand_name = $medicine->brand_name;
+            $this->dosage = $medicine->dosage;
+            $this->manufactured_date = $medicine->manufactured_date;
+            $this->expiry = $medicine->expiry;
+            $this->turn_over_to_supply = $medicine->turn_over_to_supply;
+            $this->stock_on_hand = $medicine->stock_on_hand;
+            $this->dispensed = $medicine->dispensed;
+            $this->status = $medicine->status;
+        } else {
+            session()->flash('error', 'Invalid Medicine ID.');
+        }
+    }
+
     public function resetFormFields()
     {
         $this->name = '';
@@ -101,7 +181,6 @@ class PharmacyTable extends Component
         $this->dispensed = '';
         $this->status = '';
         $this->render();
-
     }
 
     public function render()

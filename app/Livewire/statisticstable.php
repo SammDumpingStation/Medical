@@ -6,10 +6,16 @@ use App\Models\User;
 use Carbon\Carbon;
 use Carbon\CarbonPeriod;
 use Livewire\Component;
+
+
 use App\Models\Patient;
 use App\Models\SocialHistory;
 use App\Models\AncillaryExaminationsModel;
 use App\Models\ConsultationHistory;
+use App\Models\dispenseMedicineRecords;
+
+
+
 use Illuminate\Support\Facades\Log;
 
 use App\Models\MedicalHistory;
@@ -24,6 +30,12 @@ class StatisticsTable extends Component
     public $newHealthProfilesThisMonth;
     
     public $newHealthProfilesThisWeek;
+
+ // Statistics Variables
+ public $dailyCount;
+ public $weeklyCount;
+ public $monthlyCount;
+ public $yearlyCount;
 
 
     public function mount()
@@ -45,6 +57,8 @@ class StatisticsTable extends Component
        
         // Calculate the number of Visitations
         $this->calculateVisitations();
+
+        $this->calculateDispenseMedicine();
     }
 
     private function generateChartData()
@@ -128,6 +142,66 @@ class StatisticsTable extends Component
                 \Log::error("Error calculating health profiles: " . $e->getMessage());
             }
         }
+
+          
+     
+private function calculateDispenseMedicine()
+{
+    $today = Carbon::today();
+    $startOfWeek = Carbon::now()->startOfWeek();
+    $endOfWeek = Carbon::now()->endOfWeek();
+    $startOfMonth = Carbon::now()->startOfMonth();
+    $endOfMonth = Carbon::now()->endOfMonth();
+    $startOfYear = Carbon::now()->startOfYear();
+
+    $this->dailyCount = dispenseMedicineRecords::whereDate('created_at', $today)->count();
+    Log::info('Daily dispensed medicine count calculated', ['dailyCount' => $this->dailyCount]);
+
+    $this->weeklyCountsByDay = [];
+    for ($day = 0; $day < 7; $day++) {
+        $dayDate = $startOfWeek->copy()->addDays($day);
+        $count = dispenseMedicineRecords::whereDate('created_at', $dayDate)->count();
+        $this->weeklyCountsByDay[$dayDate->format('l')] = $count; // Use day name (e.g., 'Monday')
+
+        // Log daily count for the week
+        Log::info('Weekly dispensed medicine count calculated for the week', [
+            'day' => $dayDate->format('l'),
+            'date' => $dayDate->format('Y-m-d'),
+            'count' => $count,
+        ]);
+    }
+
+    $this->monthlyCountsByDay = [];
+    $daysInMonth = $endOfMonth->day;
+    for ($day = 1; $day <= $daysInMonth; $day++) {
+        $dayDate = Carbon::now()->startOfMonth()->addDays($day - 1);
+        $count = dispenseMedicineRecords::whereDate('created_at', $dayDate)->count();
+        $this->monthlyCountsByDay[$dayDate->format('d M')] = $count; // Use day and month (e.g., '01 Nov')
+
+        Log::info('Monthly dispensed medicine count calculated', [
+            'day' => $dayDate->format('Y-m-d'),
+            'count' => $count,
+        ]);
+    }
+
+    $this->monthlyCounts = [];
+    for ($month = 1; $month <= 12; $month++) {
+        $startOfMonth = Carbon::create(null, $month, 1)->startOfMonth();
+        $endOfMonth = Carbon::create(null, $month, 1)->endOfMonth();
+
+        $count = dispenseMedicineRecords::whereBetween('created_at', [$startOfMonth, $endOfMonth])->count();
+        $this->monthlyCounts[$month] = $count;
+
+        // Log monthly count
+        Log::info('Monthly dispensed medicine count calculated', [
+            'month' => $startOfMonth->format('F'),
+            'count' => $count,
+        ]);
+    }
+
+    $this->yearlyCount = dispenseMedicineRecords::whereBetween('created_at', [$startOfYear, Carbon::now()])->count();
+    Log::info('Yearly dispensed medicine count calculated', ['yearlyCount' => $this->yearlyCount]);
+}
 
        
         private function calculateVisitations()
@@ -226,6 +300,11 @@ class StatisticsTable extends Component
             'newVisitationsLast7Days' => $this->newVisitationsLast7Days,
             'newVisitationsLast30Days' => $this->newVisitationsLast30Days,
             'chartData' => $this->chartData,
+
+           'weeklyCountsByDay' => $this->weeklyCountsByDay,       
+        'monthlyCountsByDay' => $this->monthlyCountsByDay,     
+        'monthlyCounts' => $this->monthlyCounts,               
+        'yearlyCount' => $this->yearlyCount,   
         ]);
     }
 }
