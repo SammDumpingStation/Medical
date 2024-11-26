@@ -27,6 +27,8 @@ class Navbar extends Component
         $this->student = $student ? $student->full_name : null;
         $this->role = Auth::user()->role;
 
+        session()->put('user.role', $this->role);
+        
         $this->isPatient = $this->role === 'patient';
         Log::info('User role retrieved:', ['role' => $this->role, 'isPatient' => $this->isPatient]);
 
