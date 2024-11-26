@@ -5,6 +5,7 @@ namespace App\Livewire;
 use App\Models\StudentClassificationModel;
 use Illuminate\Support\Facades\Session;
 use Livewire\Component;
+use Illuminate\Support\Facades\Log;
 
 class StudentClassification extends Component
 {
@@ -42,6 +43,8 @@ class StudentClassification extends Component
 
     public function saveToDatabase()
     {
+        Log::info('saveToDatabase method started for patient ID: ' . $this->patientID);
+
         try {
             $data = [
                 'patient_id' => $this->patientID,

@@ -5,6 +5,7 @@ namespace App\Livewire;
 use App\Models\Patient;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
+use Illuminate\Support\Facades\Log;
 
 class Navbar extends Component
 {
@@ -15,12 +16,22 @@ class Navbar extends Component
 
     public function mount()
     {
-        $userId = Auth::user()->patient_id;
-        $student = Patient::find($userId)->full_name;
-        $this->student = $student;
-        $this->role = Auth::user()->role;
-    }
+        $this->patientId = Auth::user()->patient_id;
+    
+        $student = Patient::find($this->patientId);
+   
+        session()->put('patient_information.personal_information.patient_id', $this->patientId);
 
+        Log::info('Retrieved patient ID from authenticated user:', ['patient_id' => $this->patientId]);
+
+        $this->student = $student ? $student->full_name : null;
+        $this->role = Auth::user()->role;
+
+        $this->isPatient = $this->role === 'patient';
+        Log::info('User role retrieved:', ['role' => $this->role, 'isPatient' => $this->isPatient]);
+
+    }
+    
     public function showSidebar()
     {
         $this->sidebar = !$this->sidebar;
@@ -29,6 +40,9 @@ class Navbar extends Component
 
     public function render()
     {
-        return view('livewire.navbar');
+        return view('livewire.navbar', [
+            'patientId' => $this->patientId, 
+            'isPatient' => $this->isPatient,
+        ]);
     }
 }

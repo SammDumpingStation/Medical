@@ -137,8 +137,8 @@ public function saveToDatabase()
 
         $this->saveToSession();
 
-        Log::info('Redirecting to the next tab.', ['next_tab' => 'physical-examination']);
-        $this->dispatch('switch-tab-form2', ['tabId' => 'physical-examination']);
+        // Log::info('Redirecting to the next tab.', ['next_tab' => 'physical-examination']);
+        // $this->dispatch('switch-tab-form2', ['tabId' => 'physical-examination']);
     } catch (\Exception $e) {
         Log::error('Error saving Physical Screening Data', [
             'error_message' => $e->getMessage(),

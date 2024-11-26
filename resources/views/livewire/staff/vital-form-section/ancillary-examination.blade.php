@@ -63,8 +63,10 @@
                 <label for="pregnancy" class="block mb-3 font-medium text-gray-900 dark:text-white">Pregnancy Test
                 </label>
                 <div class="flex ml-4 gap-6">
-                    <livewire:radio title="Positive" id="pregnancy-positive" :default="$pregnancy" value="Positive" name="pregnancy" />
-                    <livewire:radio title="Negative" id="pregnancy-negative" value="Negative" :default="$pregnancy" name="pregnancy" />
+                    <livewire:radio title="Positive" id="pregnancy-positive" :default="$pregnancy" value="Positive"
+                        name="pregnancy" />
+                    <livewire:radio title="Negative" id="pregnancy-negative" value="Negative" :default="$pregnancy"
+                        name="pregnancy" />
                 </div>
             </div>
             <div>
@@ -73,7 +75,8 @@
                 </label>
                 <div class="flex ml-4 gap-6">
                     <livewire:radio title="Reactive" id="reactive" :default="$hepb" value="Reactive" name="hepb" />
-                    <livewire:radio title="Non-reactive" id="non-reactive" :default="$hepb" value="Non-reactive" name="hepb" />
+                    <livewire:radio title="Non-reactive" id="non-reactive" :default="$hepb" value="Non-reactive"
+                        name="hepb" />
                 </div>
             </div>
             <div>
@@ -94,10 +97,8 @@
             </div>
         </div>
     </div>
-    {{--<div class="flex items-center justify-between w-full">
-        <button id="medical-prev" wire:click="switchToTab('physical-examination')"
-            class="mt-5 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Previous</button>
-        <button id="medical-next" wire:click="switchToTab('student-classification')"
-            class="mt-5 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Next</button>
-    </div>--}}
+    <button type="button" wire:click="saveToDatabase"
+        class="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-700">
+        Save
+    </button>
 </div>

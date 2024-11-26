@@ -34,10 +34,23 @@ class PersonalInfoHp extends Component
     public $specifics;
     public $registered;
 
+    public function updated($propertyName)
+     {
+         $this->saveToSession();
+     }
+
+     
     public function switchToTab($tabId)
     {
         $this->saveToSession();
         $this->dispatch('switch-tab', ['tabId' => $tabId]); 
+        // Log the incoming data
+         Log::info('Saving to database', [
+        'emergencyContact' => $emergencyContact,
+        'additionalQuestions' => $additionalQuestions,
+        'disabilitySpecifics' => $disabilitySpecifics,
+        'patientID' => $this->patientID,
+    ]);
     }
 
     public function saveToSession()
@@ -79,35 +92,38 @@ class PersonalInfoHp extends Component
     
     public function saveToDatabase($emergencyContact, $additionalQuestions, $disabilitySpecifics)
     {
+        // Log the incoming data
+        Log::info('Saving to database', [
+            'emergencyContact' => $emergencyContact,
+            'additionalQuestions' => $additionalQuestions,
+            'disabilitySpecifics' => $disabilitySpecifics,
+            'patientID' => $this->patientID,
+        ]);
+    
+        // Convert the boolean values to readable strings
         $personWithDisability = (bool) $additionalQuestions['person_with_disability'];
         $willingToDonateBlood = (bool) $additionalQuestions['willing_to_donate_blood'];
         $reg = (bool) $disabilitySpecifics['registered'];
-        
-        $regResult = "";
-        $result = "";
-        $resultDonate = "";
-
-        if($personWithDisability){
-            $result = "True";
-        }else{
-            $result = "False";
-        }
-
-        if($willingToDonateBlood){
-            $resultDonate = "True";
-        }else{
-            $resultDonate = "False";
-        }
-
-        if($reg == 1){
-            $regResult = "Yes";
-        }else{
-            $regResult = "No";
-        }
-
-        $patientDetails = PatientDetails::where('patient_id', $this->patientID)->first();
     
+        // Determine result strings for database storage
+        $result = $personWithDisability ? "True" : "False";
+        $resultDonate = $willingToDonateBlood ? "True" : "False";
+        $regResult = $reg ? "Yes" : "No";
+    
+        // Log the conversion results
+        Log::info('Converted values', [
+            'person_with_disability' => $result,
+            'willing_to_donate_blood' => $resultDonate,
+            'registered' => $regResult,
+        ]);
+    
+        // Find existing patient details
+        $patientDetails = PatientDetails::where('patient_id', $this->patientID)->first();
+        
         if ($patientDetails) {
+            // Log the update action
+            Log::info('Updating existing PatientDetails', ['patient_id' => $this->patientID]);
+    
             $patientDetails->update([
                 'emergency_contact_name' => $emergencyContact['name'],
                 'emergency_contact_address' => $emergencyContact['address'],
@@ -118,7 +134,13 @@ class PersonalInfoHp extends Component
                 'specifics' => $disabilitySpecifics['specifics'],
                 'registered' => $regResult,
             ]);
+    
+            // Log success of update
+            Log::info('PatientDetails updated successfully', ['patient_id' => $this->patientID]);
         } else {
+            // Log the creation action
+            Log::info('Creating new PatientDetails', ['patient_id' => $this->patientID]);
+    
             PatientDetails::create([
                 'patient_id' => $this->patientID, // Ensure the patient_id is set
                 'emergency_contact_name' => $emergencyContact['name'],
@@ -130,8 +152,12 @@ class PersonalInfoHp extends Component
                 'specifics' => $disabilitySpecifics['specifics'],
                 'registered' =>  $regResult,
             ]);
+    
+            // Log success of creation
+            Log::info('PatientDetails created successfully', ['patient_id' => $this->patientID]);
         }
     }
+    
     
 
     public function mount($patient)

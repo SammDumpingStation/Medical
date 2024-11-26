@@ -30,7 +30,7 @@ class HealthProfileForm2 extends Component
         $this->physical_screening = PhysicalScreeningModel::where('patient_id', $this->patientID)->first();
         $this->physical_examination = PhysicalExaminationModel::where('patient_id', $this->patientID)->first();
         $this->ancillary_examinations = AncillaryExaminationsModel::where('patient_id', $this->patientID)->first();
-        $this->StudentClassificationModel = StudentClassificationModel::where('patient_id', $this->patientID)->first() ?? new PastSurgicalHistory();
+        $this->StudentClassificationModel = StudentClassificationModel::where('patient_id', $this->patientID)->first();
         $this->PersonalRemarksModel = PersonalRemarksModel::where('patient_id', $this->patientID)->first();
    
     }

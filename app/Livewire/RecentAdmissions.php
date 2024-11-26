@@ -55,35 +55,62 @@ class RecentAdmissions extends Component
     }
 
     public function saveAdmission()
-    {
-        try {
-            foreach ($this->admissions as $admission) {
-                if (isset($admission['id'])) {
-                    Admission::where('id', $admission['id'])
-                        ->where('patient_id', $this->patientID)
-                        ->update([
-                            'diagnosis' => $admission['diagnosis'],
-                            'admission_date' => $admission['admission_date'],
-                        ]);
-                } else {
-                    Admission::create([
-                        'patient_id' => $this->patientID,
+{
+    try {
+        Log::info('Saving admissions started', ['patient_id' => $this->patientID, 'admissions' => $this->admissions]);
+
+        foreach ($this->admissions as $admission) {
+            // Validate each admission
+            if (empty($admission['diagnosis']) || empty($admission['admission_date'])) {
+                Log::warning('Skipping invalid admission', ['admission_data' => $admission]);
+                continue;
+            }
+
+            // Log each admission data before processing
+            Log::info('Processing admission', ['admission_data' => $admission]);
+
+            if (isset($admission['id'])) {
+                // If the admission already exists, update it
+                Log::info('Updating existing admission', ['admission_id' => $admission['id']]);
+                Admission::where('id', $admission['id'])
+                    ->where('patient_id', $this->patientID)
+                    ->update([
                         'diagnosis' => $admission['diagnosis'],
                         'admission_date' => $admission['admission_date'],
                     ]);
-                }
+            } else {
+                // If the admission is new, create it
+                Log::info('Creating new admission', ['diagnosis' => $admission['diagnosis'], 'admission_date' => $admission['admission_date']]);
+                Admission::create([
+                    'patient_id' => $this->patientID,
+                    'diagnosis' => $admission['diagnosis'],
+                    'admission_date' => $admission['admission_date'],
+                ]);
             }
-
-            session()->flash('message', 'Admissions saved successfully!');
-
-            Session::forget('patient_information.medical_history.admissions');
-            $this->admissions = [['diagnosis' => '', 'admission_date' => '']];
-
-        } catch (\Exception $e) {
-            Log::error('Error saving admissions to the database', ['error' => $e->getMessage()]);
-            session()->flash('error', 'An error occurred while saving admissions. Please try again.');
         }
+
+        // Success message logging
+        Log::info('Admissions saved successfully', ['patient_id' => $this->patientID]);
+
+        session()->flash('message', 'Admissions saved successfully!');
+
+        // Clear session data and reset the admissions array
+        Session::forget('patient_information.medical_history.admissions');
+      
+
+    } catch (\Exception $e) {
+        // Log the error details
+        Log::error('Error saving admissions to the database', [
+            'patient_id' => $this->patientID,
+            'error' => $e->getMessage(),
+            'trace' => $e->getTraceAsString(),
+        ]);
+
+        session()->flash('error', 'An error occurred while saving admissions. Please try again.');
     }
+}
+
+
 
     protected function saveToSession()
     {

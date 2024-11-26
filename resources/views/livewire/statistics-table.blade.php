@@ -130,7 +130,7 @@
                 @endforeach
             </div>
 
-
+            <br>
 
             <div
                 class="p-4 bg-white border border-gray-200 rounded-lg shadow-sm dark:border-gray-700 sm:p-6 dark:bg-gray-800">
@@ -221,7 +221,7 @@
                         const selectedPeriod = periodSelector.value;
                         if (selectedPeriod === 'daily') {
                             updateChartData(chart, Object.keys(weeklyCountsByDay), Object.values(
-                            weeklyCountsByDay));
+                                weeklyCountsByDay));
                         } else if (selectedPeriod === 'monthly') {
                             updateChartData(chart, Object.keys(monthlyCountsByDay), Object.values(
                                 monthlyCountsByDay));

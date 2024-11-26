@@ -168,8 +168,10 @@ class ImmunizationsHp extends Component
             'unvaccinated_reason' => $this->unvaccinatedReason,
         ]
     );
+    Log::info('PatientDetails created successfully', ['patient_id' => $this->patientID]);
+     
 }
-
+    
 
     public function switchToTab($tabId)
     {

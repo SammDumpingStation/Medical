@@ -59,7 +59,7 @@ class SurgicalHistoryHp extends Component
 
         $this->saveToSession();
 
-        $this->operations = [['type' => '', 'date' => '']];
+        // $this->operations = [['type' => '', 'date' => '']];
         session()->flash('message', 'Operations saved successfully.');
     }
 

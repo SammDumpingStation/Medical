@@ -20,7 +20,8 @@
                 <div>
                     <label for="blood-pressure"
                         class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Blood Pressure</label>
-                    <input type="text" wire:model="blood_pressure" id="blood-pressure" aria-describedby="helper-text-explanation"
+                    <input type="text" wire:model="blood_pressure" id="blood-pressure"
+                        aria-describedby="helper-text-explanation"
                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                         placeholder="" required />
                 </div>
@@ -29,7 +30,8 @@
                 <div>
                     <label for="pulse-rate" class="block  mb-2 text-sm font-medium text-gray-900 dark:text-white">Pulse
                         Rate</label>
-                    <input type="number" wire:model="pulse_rate" id="pulse-rate" aria-describedby="helper-text-explanation"
+                    <input type="number" wire:model="pulse_rate" id="pulse-rate"
+                        aria-describedby="helper-text-explanation"
                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                         placeholder="" required />
                 </div>
@@ -37,7 +39,8 @@
                     <label for="respirations"
                         class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Respiration
                     </label>
-                    <input type="number" id="respirations" wire:model="respiration" aria-describedby="helper-text-explanation"
+                    <input type="number" id="respirations" wire:model="respiration"
+                        aria-describedby="helper-text-explanation"
                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                         placeholder="" required />
                 </div>
@@ -61,7 +64,8 @@
                     <label for="bmi-class" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">BMI
                         Class
                     </label>
-                    <input type="text" id="bmi-class" aria-describedby="helper-text-explanation" wire:model="bmi_class"
+                    <input type="text" id="bmi-class" aria-describedby="helper-text-explanation"
+                        wire:model="bmi_class"
                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                         placeholder="" required />
                 </div>
@@ -71,7 +75,8 @@
                     <label for="right-vision"
                         class="block  mb-2 text-sm font-medium text-gray-900 dark:text-white">Right Vision
                     </label>
-                    <input type="text" id="right-vision" aria-describedby="helper-text-explanation" wire:model="right_vision"
+                    <input type="text" id="right-vision" aria-describedby="helper-text-explanation"
+                        wire:model="right_vision"
                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                         placeholder="" required />
                 </div>
@@ -79,7 +84,8 @@
                     <label for="left-vision" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Left
                         Vision
                     </label>
-                    <input type="text" id="left-vision" aria-describedby="helper-text-explanation" wire:model="left_vision"
+                    <input type="text" id="left-vision" aria-describedby="helper-text-explanation"
+                        wire:model="left_vision"
                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                         placeholder="" required />
                 </div>
@@ -91,8 +97,8 @@
                 <div class="flex ml-4 gap-6">
                     <livewire:radio title="Corrected" :default="$visual_acuity" id="visual-acuity-corrected" value="corrected"
                         name="visual-acuity" />
-                    <livewire:radio title="Uncorrected" :default="$visual_acuity" id="visual-acuity-uncorrected" value="uncorrected"
-                        name="visual-acuity" />
+                    <livewire:radio title="Uncorrected" :default="$visual_acuity" id="visual-acuity-uncorrected"
+                        value="uncorrected" name="visual-acuity" />
                 </div>
             </div>
             <div>
@@ -113,35 +119,41 @@
                 <div class="flex ml-4 gap-6 items-center mb-4">
                     <label for="" class="block text-sm font-medium text-gray-900 dark:text-white">AD:
                     </label>
-                    <livewire:radio title="Adequate" id="adequate-ad" :default="$hearing_ad" value="Adequate" name="AD" />
-                    <livewire:radio title="Inadequate" id="inadequate-ad" :default="$hearing_ad" value="Inadequate" name="AD" />
+                    <livewire:radio title="Adequate" id="adequate-ad" :default="$hearing_ad" value="Adequate"
+                        name="AD" />
+                    <livewire:radio title="Inadequate" id="inadequate-ad" :default="$hearing_ad" value="Inadequate"
+                        name="AD" />
                 </div>
                 <div class="flex ml-4 gap-6 items-center">
                     <label for="" class="block  text-sm font-medium text-gray-900 dark:text-white">AS:
                     </label>
-                    <livewire:radio title="Adequate" id="adeqaute-as"  :default="$hearing_as" value="Adequate" name="AS" />
-                    <livewire:radio title="Inadequate" id="inadequate-as" :default="$hearing_as" value="Inadequate" name="AS" />
+                    <livewire:radio title="Adequate" id="adeqaute-as" :default="$hearing_as" value="Adequate"
+                        name="AS" />
+                    <livewire:radio title="Inadequate" id="inadequate-as" :default="$hearing_as" value="Inadequate"
+                        name="AS" />
                 </div>
             </div>
             <div>
                 <label for="" class="block  mb-2 text-sm font-medium text-gray-900 dark:text-white">Speech
                 </label>
                 <div class="flex ml-4 gap-6">
-                    <livewire:radio title="Clear" id="clear-speech" :default="$speech" value="Clear" name="speech" />
-                    <livewire:radio title="Unclear" id="unclear-speech" :default="$speech" value="Unclear" name="speech" />
+                    <livewire:radio title="Clear" id="clear-speech" :default="$speech" value="Clear"
+                        name="speech" />
+                    <livewire:radio title="Unclear" id="unclear-speech" :default="$speech" value="Unclear"
+                        name="speech" />
                 </div>
             </div>
         </div>
     </div>
     <div class="flex items-center justify-between w-full">
-    <a href="/health-profile/create-form-1/{{ $patientID }}"
-        class="mt-5 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
-        Go Back to Previous Form
-    </a>
-    {{--<button id="medical-next" wire:click="saveToDatabase"
-        class="mt-5 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
-        Next
-    </button>--}}
-</div>
+        <a href="/health-profile/create-form-1/{{ $patientID }}"
+            class="mt-5 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+            Go Back to Previous Form
+        </a>
+        <button type="button" wire:click="saveToDatabase"
+            class="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-700">
+            Save
+        </button>
+    </div>
 
 </div>

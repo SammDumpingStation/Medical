@@ -4,7 +4,7 @@
             <div class="p-4 bg-white block sm:flex items-center justify-between dark:bg-gray-800">
                 <div class="w-full mb-1">
                     <div class="mb-4">
-                        <h1 class="text-xl font-semibold text-gray-900 sm:text-2xl dark:text-white">Health Profile</h1>
+                        <h1 class="text-xl font-semibold text-gray-900 sm:text-2xl dark:text-white">Health Profiles</h1>
                     </div>
                     <div class="sm:flex">
                         <form wire:submit.prevent="confirmProfile" class="max-w-md w-full">
@@ -45,7 +45,6 @@
                                 aria-controls="confirmation" aria-selected="false">Confirm Health Profile
                                 Creation</button>
                         </li>
-
                     </ul>
                 </div>
                 <div id="default-tab-content">

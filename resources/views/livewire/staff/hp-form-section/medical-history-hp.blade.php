@@ -56,7 +56,7 @@
                     </label>
                     <input type="text" id="hypertension-specifics" wire:model="hypertensionDetails"
                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                        required placeholder="Input details here" value="{{ $hypertensionDetails ?? '' }}" />
+                        placeholder="Input details here" value="{{ $hypertensionDetails ?? '' }}" />
                 @endif
             </div>
             <div>
@@ -121,10 +121,9 @@
 
     <livewire:recent-admissions />
 
-    {{--<div class="flex items-center justify-between w-full">
-        <button id="medical-prev" wire:click="switchToTab('social')"
-            class="mt-5 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Previous</button>
-        <button id="medical-next" wire:click="switchToTab('surgical')"
-            class="mt-5 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Next</button>
-    </div>--}}
+    <button type="button" wire:click="saveToSession"
+        class="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-700">
+        Save
+    </button>
+
 </form>
