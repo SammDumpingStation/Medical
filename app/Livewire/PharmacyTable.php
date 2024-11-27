@@ -32,11 +32,14 @@ class PharmacyTable extends Component
     public $amount_given;
     public $given_date;
     public $medicine_type;
-
+    public $lowStockModalVisible = false;
+    public $lowStockMedicinesList = [];
+    
 
     public function mount()
     {
         $this->headers = [
+            'Medicine ID',
             'Name',
             'Brand Name',
             'Dosage',
@@ -44,11 +47,46 @@ class PharmacyTable extends Component
             'Expiry',
             'Turn Over to Supply',
             'Stock on Hand',
-            'Dispensed',
             'Status',
         ];
+
+    $this->updateLowStockStatus();
     }
 
+    protected function updateLowStockStatus()
+{
+    try {
+        $lowStockMedicines = MedicineInventory::where('stock_on_hand', '<', 30)->get();
+        
+        foreach ($lowStockMedicines as $medicine) {
+            if ($medicine->status !== 'Low stock') {
+                $medicine->status = 'Low stock';
+                $medicine->save();
+            }
+        }
+
+        if ($lowStockMedicines->isNotEmpty()) {
+            $this->lowStockMedicinesList = $lowStockMedicines;
+            $this->lowStockModalVisible = true; 
+            Log::info('Modal For Stock');
+        }
+
+        Log::info('Updated and fetched low stock medicines.');
+    } catch (\Exception $e) {
+        Log::error('Error updating low stock status: ' . $e->getMessage());
+        session()->flash('error', 'Failed to update low stock status.');
+    }
+}
+
+
+
+    public function closeLowStockModal()
+{
+    $this->lowStockModalVisible = false;
+}
+
+
+    
    public function addMedicine()
     {
     try {
@@ -119,25 +157,21 @@ public function dispenseMedicine()
             'medicine_type' => $this->medicine_type,
         ]);
 
-        // Retrieve the medicine inventory
         $medicine = MedicineInventory::where('medicine_id', $this->medicine_id)->first();
         if (!$medicine) {
             session()->flash('error', 'Medicine not found.');
             return;
         }
 
-        // Check if there is sufficient stock on hand
         if ($medicine->stock_on_hand < $this->quantity_dispensed) {
             session()->flash('error', 'Insufficient stock on hand.');
             return;
         }
 
-        // Update stock_on_hand and dispensed columns
-        $medicine->stock_on_hand -= $this->quantity_dispensed;
+         $medicine->stock_on_hand -= $this->quantity_dispensed;
         $medicine->dispensed += $this->quantity_dispensed;
         $medicine->save();
 
-        // Record the dispensing action
         dispenseMedicineRecords::create([
             'patient_id' => $this->patient_id,
             'medicine_id' => $this->medicine_id,
