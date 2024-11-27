@@ -119,14 +119,25 @@ public function dispenseMedicine()
             'medicine_type' => $this->medicine_type,
         ]);
 
+        // Retrieve the medicine inventory
         $medicine = MedicineInventory::where('medicine_id', $this->medicine_id)->first();
         if (!$medicine) {
             session()->flash('error', 'Medicine not found.');
             return;
         }
 
-        $expirationDate = $medicine->expiry;
+        // Check if there is sufficient stock on hand
+        if ($medicine->stock_on_hand < $this->quantity_dispensed) {
+            session()->flash('error', 'Insufficient stock on hand.');
+            return;
+        }
 
+        // Update stock_on_hand and dispensed columns
+        $medicine->stock_on_hand -= $this->quantity_dispensed;
+        $medicine->dispensed += $this->quantity_dispensed;
+        $medicine->save();
+
+        // Record the dispensing action
         dispenseMedicineRecords::create([
             'patient_id' => $this->patient_id,
             'medicine_id' => $this->medicine_id,
@@ -134,7 +145,7 @@ public function dispenseMedicine()
             'amount_given' => $this->amount_given,
             'given_date' => $this->given_date,
             'medicine_type' => $this->medicine_type,
-            'expiration_date' => $expirationDate,
+            'expiration_date' => $medicine->expiry,
         ]);
 
         Log::info('Medicine dispensed successfully.');
@@ -148,6 +159,8 @@ public function dispenseMedicine()
         throw $e;
     }
 }
+
+
 
 
     public function loadMedicineData($medicineId)

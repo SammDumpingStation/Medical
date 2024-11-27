@@ -10,8 +10,9 @@ class MedicineInventory extends Model
     use HasFactory;
     
     protected $table = 'medicine_inventories';
-
+    protected $primaryKey = 'medicine_id';
     protected $fillable = [
+       
         'name', 
         'brand_name', 
         'dosage', 
