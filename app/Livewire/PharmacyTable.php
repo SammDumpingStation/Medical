@@ -13,6 +13,8 @@ class PharmacyTable extends Component
 {
     use WithPagination;
 
+    public $medicines = [];
+
     public $headers = [];
     public $search;
 
@@ -34,7 +36,9 @@ class PharmacyTable extends Component
     public $medicine_type;
     public $lowStockModalVisible = false;
     public $lowStockMedicinesList = [];
-    
+
+
+
 
     public function mount()
     {
@@ -49,35 +53,41 @@ class PharmacyTable extends Component
             'Stock on Hand',
             'Status',
         ];
-
+        $this->medicines = MedicineInventory::all();
     $this->updateLowStockStatus();
+ 
+
     }
 
     protected function updateLowStockStatus()
-{
-    try {
-        $lowStockMedicines = MedicineInventory::where('stock_on_hand', '<', 30)->get();
-        
-        foreach ($lowStockMedicines as $medicine) {
-            if ($medicine->status !== 'Low stock') {
-                $medicine->status = 'Low stock';
-                $medicine->save();
+    {
+        try {
+            $lowStockMedicines = MedicineInventory::where('stock_on_hand', '<', 30)->get();
+            
+            foreach ($lowStockMedicines as $medicine) {
+               if ($medicine->stock_on_hand == 0) {
+                    $medicine->delete();  
+                    Log::info('Deleted medicine with 0 stock: ' . $medicine->name);
+                } elseif ($medicine->status !== 'Low stock') {
+                    $medicine->status = 'Low stock';
+                    $medicine->save();
+                    Log::info('Updated status for low stock medicine: ' . $medicine->name);
+                }
             }
+    
+            if ($lowStockMedicines->isNotEmpty()) {
+                $this->lowStockMedicinesList = $lowStockMedicines;
+                $this->lowStockModalVisible = true; 
+                Log::info('Modal For Stock');
+            }
+    
+            Log::info('Updated and fetched low stock medicines.');
+        } catch (\Exception $e) {
+            Log::error('Error updating low stock status: ' . $e->getMessage());
+            session()->flash('error', 'Failed to update low stock status.');
         }
-
-        if ($lowStockMedicines->isNotEmpty()) {
-            $this->lowStockMedicinesList = $lowStockMedicines;
-            $this->lowStockModalVisible = true; 
-            Log::info('Modal For Stock');
-        }
-
-        Log::info('Updated and fetched low stock medicines.');
-    } catch (\Exception $e) {
-        Log::error('Error updating low stock status: ' . $e->getMessage());
-        session()->flash('error', 'Failed to update low stock status.');
     }
-}
-
+    
 
 
     public function closeLowStockModal()

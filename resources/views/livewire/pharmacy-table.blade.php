@@ -344,13 +344,21 @@
                                 <label for="medicine_id"
                                     class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Medicine
                                     Name</label>
-                                <input type="text" wire:model="medicine_id" id="medicine_id"
+
+                                <select wire:model="medicine_id" id="medicine_id"
                                     class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                                    placeholder="Enter Medicine ID" required>
+                                    required>
+                                    <option value="">Select Medicine</option>
+                                    @foreach ($this->medicines as $medicine)
+                                        <option value="{{ $medicine->medicine_id }}">{{ $medicine->Name }}</option>
+                                    @endforeach
+                                </select>
+
                                 @error('medicine_id')
                                     <span class="text-red-600 text-sm">{{ $message }}</span>
                                 @enderror
                             </div>
+
                             <!-- Quantity -->
                             <div class="col-span-6 sm:col-span-3">
                                 <label for="quantity_dispensed"
