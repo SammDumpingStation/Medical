@@ -80,10 +80,7 @@
                                         class="p-4 border dark:border-gray-700 text-base font-medium text-gray-500 whitespace-nowrap dark:text-white">
                                         {{ $data->quantity_dispensed }}
                                     </td>
-                                    <td
-                                        class="p-4 border dark:border-gray-700 text-base font-medium text-gray-500 whitespace-nowrap dark:text-white">
-                                        {{ $data->amount_given }}
-                                    </td>
+
                                     <td
                                         class="p-4 border dark:border-gray-700 text-base font-medium text-gray-500 whitespace-nowrap dark:text-white">
                                         {{ $data->medicine_type }}

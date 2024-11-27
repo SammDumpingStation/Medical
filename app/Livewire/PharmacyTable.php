@@ -143,7 +143,6 @@ public function dispenseMedicine()
             'patient_id' => 'required|exists:patients,patient_id',
             'medicine_id' => 'required|exists:medicine_inventories,medicine_id',
             'quantity_dispensed' => 'required|integer|min:1',
-            'amount_given' => 'required|numeric|min:0',
             'given_date' => 'required|date',
             'medicine_type' => 'required|string',
         ]);
@@ -152,7 +151,6 @@ public function dispenseMedicine()
             'patient_id' => $this->patient_id,
             'medicine_id' => $this->medicine_id,
             'quantity_dispensed' => $this->quantity_dispensed,
-            'amount_given' => $this->amount_given,
             'given_date' => $this->given_date,
             'medicine_type' => $this->medicine_type,
         ]);
@@ -176,7 +174,6 @@ public function dispenseMedicine()
             'patient_id' => $this->patient_id,
             'medicine_id' => $this->medicine_id,
             'quantity_dispensed' => $this->quantity_dispensed,
-            'amount_given' => $this->amount_given,
             'given_date' => $this->given_date,
             'medicine_type' => $this->medicine_type,
             'expiration_date' => $medicine->expiry,

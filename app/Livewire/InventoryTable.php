@@ -18,7 +18,7 @@ class InventoryTable extends Component
             'Patient ID',
             'Medicine Name', 
             'Quantity Dispensed',
-            'Amount Given',
+           
             'Medicine Type',
             'Given Date',
             'Expiration Date',
