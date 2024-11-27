@@ -52,24 +52,29 @@
                         placeholder="" required />
                 </div>
             </div>
-            <div class="flex gap-7">
-                <div>
-                    <label for="bmi" class="block  mb-2 text-sm font-medium text-gray-900 dark:text-white">BMI
+            <div class="flex flex-wrap gap-7">
+                <!-- BMI Input -->
+                <div class="w-full sm:w-auto">
+                    <label for="bmi" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                        BMI
                     </label>
-                    <input type="number" id="bmi" aria-describedby="helper-text-explanation" wire:model="bmi"
-                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                        placeholder="" required />
+                    <input type="number" id="bmi" aria-describedby="bmi-helper-text" wire:model="bmi" readonly
+                        class="bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-800 dark:border-gray-600 dark:placeholder-gray-500 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                        placeholder="Calculated BMI" />
                 </div>
+
+                <!-- BMI Class Input -->
                 <div class="flex-1">
-                    <label for="bmi-class" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">BMI
-                        Class
+                    <label for="bmi-class" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                        BMI Class
                     </label>
-                    <input type="text" id="bmi-class" aria-describedby="helper-text-explanation"
-                        wire:model="bmi_class"
-                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                        placeholder="" required />
+                    <input type="text" id="bmi-class" aria-describedby="bmi-class-helper-text" wire:model="bmi_class"
+                        readonly
+                        class="bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-800 dark:border-gray-600 dark:placeholder-gray-500 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                        placeholder="BMI Category" />
                 </div>
             </div>
+
             <div class="grid grid-cols-2 gap-6">
                 <div>
                     <label for="right-vision"

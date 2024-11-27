@@ -44,13 +44,7 @@
             </div>
 
             <div class="flex gap-6">
-                <div class="flex-1">
-                    <label for="bmi"
-                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">BMI</label>
-                    <input type="number" id="bmi" wire:model="bmi"
-                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                        required />
-                </div>
+
                 <div class="flex-1">
                     <label for="nutritional-status"
                         class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nutritional Status</label>
@@ -62,18 +56,27 @@
 
             <div class="grid grid-cols-2 gap-6">
                 <div>
-                    <label for="Height" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Height
-                        (cm)</label>
-                    <input type="text" id="Height" wire:model="height"
+                    <label for="Height" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                        Height (cm)
+                    </label>
+                    <input type="number" id="Height" wire:model="height"
                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                         required />
                 </div>
                 <div>
-                    <label for="Weight" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Weight
-                        (kg)</label>
-                    <input type="text" id="Weight" wire:model="weight"
+                    <label for="Weight" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                        Weight (kg)
+                    </label>
+                    <input type="number" id="Weight" wire:model="weight"
                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                         required />
+                </div>
+                <div>
+                    <label for="BMI" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                        BMI
+                    </label>
+                    <input type="number" id="BMI" wire:model="bmi" readonly
+                        class="bg-gray-200 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-800 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" />
                 </div>
             </div>
         </div>

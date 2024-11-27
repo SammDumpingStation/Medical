@@ -48,6 +48,8 @@ class TeachingVitalSigns extends Component
 
     public function submitForm()
     {
+         $this->calculateBMI();
+    
         Log::info('Vital Signs Submitted:', [
             'patient_id' => $this->patient_id,
             'temperature' => $this->temperature,
@@ -61,7 +63,7 @@ class TeachingVitalSigns extends Component
             'weight' => $this->weight,
             'chiefComplaints' => $this->chiefComplaints,
         ]);
-
+    
         try {
             PhysicalScreeningModel::updateOrCreate(
                 ['patient_id' => $this->patient_id],
@@ -77,7 +79,7 @@ class TeachingVitalSigns extends Component
                     'chief_complaints' => $this->chiefComplaints, 
                 ]
             );
-
+    
             session()->flash('message', 'Vital signs data saved successfully!');
             Log::info('Vital signs data saved successfully for patient: ' . $this->patient_id);
         } catch (\Exception $e) {
@@ -85,6 +87,27 @@ class TeachingVitalSigns extends Component
             session()->flash('error_message', 'An error occurred while saving the data.');
         }
     }
+
+    public function calculateBMI()
+{
+    if ($this->height > 0 && $this->weight > 0) {
+        $heightInMeters = $this->height / 100;
+        $this->bmi = round($this->weight / ($heightInMeters ** 2), 2); 
+
+        if ($this->bmi < 18.5) {
+            $this->nutritionalStatus = 'Underweight';
+        } elseif ($this->bmi >= 18.5 && $this->bmi <= 24.9) {
+            $this->nutritionalStatus = 'Normal weight';
+        } elseif ($this->bmi >= 25 && $this->bmi <= 29.9) {
+            $this->nutritionalStatus = 'Overweight';
+        } else {
+            $this->nutritionalStatus = 'Obesity';
+        }
+    } else {
+        $this->bmi = null;
+        $this->nutritionalStatus = null;
+    }
+}
 
     public function render()
     {
