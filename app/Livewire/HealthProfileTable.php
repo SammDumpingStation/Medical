@@ -22,8 +22,6 @@ class HealthProfileTable extends Component
             'gender',
             'year level',
             'department',
-            'BMI',
-            'BMI Status',
             'Options',
         ];
     }
