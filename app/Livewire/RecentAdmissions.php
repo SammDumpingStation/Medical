@@ -6,6 +6,8 @@ use Illuminate\Support\Facades\Session;
 use Livewire\Component;
 use Illuminate\Support\Facades\Log;
 use App\Models\Admission;
+use Illuminate\Support\Facades\Validator;
+
 
 class RecentAdmissions extends Component
 {
@@ -60,17 +62,19 @@ class RecentAdmissions extends Component
         Log::info('Saving admissions started', ['patient_id' => $this->patientID, 'admissions' => $this->admissions]);
 
         foreach ($this->admissions as $admission) {
-            // Validate each admission
-            if (empty($admission['diagnosis']) || empty($admission['admission_date'])) {
-                Log::warning('Skipping invalid admission', ['admission_data' => $admission]);
+            $validated = Validator::make($admission, [
+                'diagnosis' => 'required|string|max:255',
+                'admission_date' => 'required|date',
+            ]);
+            if ($validated->fails()) {
+                Log::warning('Skipping invalid admission', ['errors' => $validated->errors(), 'admission_data' => $admission]);
                 continue;
             }
+            
 
-            // Log each admission data before processing
-            Log::info('Processing admission', ['admission_data' => $admission]);
+           Log::info('Processing admission', ['admission_data' => $admission]);
 
             if (isset($admission['id'])) {
-                // If the admission already exists, update it
                 Log::info('Updating existing admission', ['admission_id' => $admission['id']]);
                 Admission::where('id', $admission['id'])
                     ->where('patient_id', $this->patientID)
@@ -79,7 +83,6 @@ class RecentAdmissions extends Component
                         'admission_date' => $admission['admission_date'],
                     ]);
             } else {
-                // If the admission is new, create it
                 Log::info('Creating new admission', ['diagnosis' => $admission['diagnosis'], 'admission_date' => $admission['admission_date']]);
                 Admission::create([
                     'patient_id' => $this->patientID,
@@ -89,17 +92,14 @@ class RecentAdmissions extends Component
             }
         }
 
-        // Success message logging
         Log::info('Admissions saved successfully', ['patient_id' => $this->patientID]);
 
         session()->flash('message', 'Admissions saved successfully!');
 
-        // Clear session data and reset the admissions array
         Session::forget('patient_information.medical_history.admissions');
       
 
     } catch (\Exception $e) {
-        // Log the error details
         Log::error('Error saving admissions to the database', [
             'patient_id' => $this->patientID,
             'error' => $e->getMessage(),

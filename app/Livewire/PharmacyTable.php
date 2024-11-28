@@ -122,8 +122,7 @@ class PharmacyTable extends Component
             'expiry' => 'required|date|after:manufactured_date',
             'turn_over_to_supply' => 'required|date',
             'stock_on_hand' => 'required|integer|min:0',
-            'dispensed' => 'required|integer|min:0',
-            'status' => 'required|string|max:100',
+           
         ]);
 
         Log::debug('Validated data: ', $validated);
