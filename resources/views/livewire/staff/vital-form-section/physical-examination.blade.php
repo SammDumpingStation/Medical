@@ -41,7 +41,11 @@
                                                 <input type="text" wire:model.live="findings.{{ $part }}"
                                                     @disabled(in_array($part, $checkedBodyPart))
                                                     class="block w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 focus:border-blue-600 dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:ring-0 disabled:opacity-50 disabled:cursor-not-allowed"
-                                                    placeholder="{{ in_array($part, $checkedBodyPart) ? 'Uncheck Normal first' : 'Enter findings' }}" />
+                                                    placeholder="{{ in_array($part, $checkedBodyPart) ? 'Uncheck Normal first' : 'Enter findings' }}"
+                                                    pattern="[A-Za-z ]*"
+                                                    title="Only alphabetic characters and spaces are allowed."
+                                                    oninput="this.value = this.value.replace(/[^A-Za-z ]/g, '')" />
+
                                             </td>
                                         </tr>
                                     @endforeach
