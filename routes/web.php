@@ -36,6 +36,7 @@ Route::view('/prescriptions', 'staff.prescriptions')->middleware('is_staff');
 Route::view('/dental-records', 'staff.dental-records')->middleware('is_staff');
 Route::view('/pharmacy', view: 'staff.pharmacy')->middleware('is_staff');
 Route::view('/statistics', 'staff.statistics')->middleware('is_staff');
+Route::view('/report', 'staff.report')->middleware('is_staff');
 
 
 Route::view('/inventory', 'staff.inventory')->middleware('is_staff');
