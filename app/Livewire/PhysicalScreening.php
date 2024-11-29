@@ -93,7 +93,7 @@ public function calculateBMI()
     ]);
 
     if ($this->height > 0 && $this->weight > 0) {
-        $heightInMeters = $this->height / 100; 
+        $heightInMeters = $this->height / 100;
         $this->bmi = $this->weight / ($heightInMeters ** 2);
 
         Log::info('BMI calculated.', [
@@ -137,7 +137,7 @@ public function saveToDatabase()
     try {
         // Calculate BMI
         if ($this->height > 0 && $this->weight > 0) {
-            $heightInMeters = $this->height / 100; 
+            $heightInMeters = $this->height / 100;
             $this->bmi = $this->weight / ($heightInMeters ** 2);
 
             // Determine BMI category
@@ -152,7 +152,7 @@ public function saveToDatabase()
             }
         } else {
             $this->bmi = null;
-            $this->bmi_class = 'Invalid data'; 
+            $this->bmi_class = 'Invalid data';
         }
 
         Log::info('Saving Physical Screening Data', [
@@ -243,7 +243,9 @@ public function saveToDatabase()
             'speech' => $this->speech,
         ];
         Session::put('patient_information', $patientInfo);
+        session()->flash('message', 'Saved Successfully!.');
     }
+
 
     public function render()
     {

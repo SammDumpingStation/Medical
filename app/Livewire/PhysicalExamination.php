@@ -13,25 +13,25 @@ class PhysicalExamination extends Component
     public $patientID;
 
     public $bodyPart = [
-        'Skin', 
-        'Head, Neck, Scalp', 
-        'Eyes (External)', 
-        'Pupils Opthalmoscopic', 
-        'Ears, Nose, Sinuses', 
-        'Mouth, Throat', 
-        'Neck, Lymphnodes, Throid', 
-        'Chest, Breast, Axilla', 
-        'Lungs', 
-        'Heart and Valvular', 
-        'Back, Abdomen, Spine', 
-        'Genitalia', 
-        'Anus, Rectum', 
+        'Skin',
+        'Head, Neck, Scalp',
+        'Eyes (External)',
+        'Pupils Opthalmoscopic',
+        'Ears, Nose, Sinuses',
+        'Mouth, Throat',
+        'Neck, Lymphnodes, Throid',
+        'Chest, Breast, Axilla',
+        'Lungs',
+        'Heart and Valvular',
+        'Back, Abdomen, Spine',
+        'Genitalia',
+        'Anus, Rectum',
         'Extremities'
     ];
     public $checkedBodyPart = [];
     public $findings = [];
 
-    
+
 
     public function mount()
 {
@@ -107,7 +107,7 @@ class PhysicalExamination extends Component
     }
 }
 
-    
+
 
     #[On('checkbox')]
     public function getCheckbox($data)
@@ -132,9 +132,9 @@ class PhysicalExamination extends Component
     public function saveExamination()
     {
         $validCheckedParts = array_values(array_intersect($this->checkedBodyPart, $this->bodyPart));
-    
+
         $validFindings = [];
-    
+
         foreach ($this->bodyPart as $part) {
             if (in_array($part, $validCheckedParts)) {
                 $validFindings[$part] = 'NORMAL';
@@ -142,13 +142,13 @@ class PhysicalExamination extends Component
                 $validFindings[$part] = $this->findings[$part];
             }
         }
-    
+
         return [
             'normal' => $validCheckedParts,
             'findings' => $validFindings,
         ];
     }
-    
+
 
     public function saveToDatabase()
 {
@@ -162,7 +162,7 @@ class PhysicalExamination extends Component
     }
 
     $examinationData = $this->saveExamination();
-    $patientID = $this->patientID; 
+    $patientID = $this->patientID;
 
     $dbData = [
         'patient_id' => $patientID,
@@ -185,12 +185,15 @@ class PhysicalExamination extends Component
     $existingRecord = PhysicalExaminationModel::where('patient_id', $patientID)->first();
 
     if ($existingRecord) {
-         $existingRecord->update($dbData);
+        $existingRecord->update($dbData);
         Log::info('Updated existing physical examination data for patient ID:', ['patient_id' => $patientID]);
     } else {
         PhysicalExaminationModel::create($dbData);
         Log::info('Created new physical examination data for patient ID:', ['patient_id' => $patientID]);
     }
+
+    // Flash success message
+    session()->flash('message', 'Saved Successfully!');
 }
 
 

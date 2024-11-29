@@ -170,5 +170,11 @@
             Save
         </button>
     </div>
-
+    <!-- Flash Messages -->
+    @if (session()->has('message'))
+        <div class="text-green-600 font-medium">{{ session('message') }}</div>
+    @endif
+    @if (session()->has('error'))
+        <div class="text-red-600 font-medium">{{ session('error') }}</div>
+    @endif
 </div>

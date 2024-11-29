@@ -88,6 +88,8 @@ class PersonalInfoHp extends Component
         Session::put(['patient_information' => $formData]);
 
         $this->saveToDatabase($formData['emergency_contact'], $formData['additional_questions'], $formData['disability_specifics']);
+         // Flash a success message
+         session()->flash('message', 'Saved Successfully!.');
     }
 
     public function saveToDatabase($emergencyContact, $additionalQuestions, $disabilitySpecifics)

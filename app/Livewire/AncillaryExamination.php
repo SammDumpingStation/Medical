@@ -43,7 +43,7 @@ class AncillaryExamination extends Component
             foreach ($this->examinations as $exam) {
                 $this->findings[$exam] = '';
             }
-            $this->checkedExamination = $this->examinations; 
+            $this->checkedExamination = $this->examinations;
         }
     }
 
@@ -90,9 +90,10 @@ class AncillaryExamination extends Component
             'hepb' => $this->hepb,
             'blood_type' => $this->blood_type,
         ];
+
     }
 
-   
+
 public function saveToDatabase()
 {
     // Log that the saveToDatabase method has been called
@@ -138,6 +139,8 @@ public function saveToDatabase()
 
     // Log that the method has completed
     Log::info('saveToDatabase method completed for patient ID: ' . $this->patientID);
+
+    session()->flash('message', 'Saved Successfully!.');
 }
 
     public function switchToTab($tabId)
