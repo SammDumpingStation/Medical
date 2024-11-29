@@ -17,22 +17,26 @@ class Navbar extends Component
     public function mount()
     {
         $this->patientId = Auth::user()->patient_id;
-
-        $student = Patient::find($this->patientId);
-
-        session()->put('patient_information.personal_information.patient_id', $this->patientId);
-
-        Log::info('Retrieved patient ID from authenticated user:', ['patient_id' => $this->patientId]);
-
-        $this->student = $student ? $student->full_name : null;
-        $this->role = Auth::user()->role;
-
-        session()->put('user.role', $this->role);
         
+        $this->role = Auth::user()->role;
+    
+        if ($this->role === 'patient') {
+            session()->put('patient_information.personal_information.patient_id', $this->patientId);
+    
+            $student = Patient::find($this->patientId);
+            $this->student = $student ? $student->full_name : null;
+    
+            Log::info('Patient ID stored in session:', ['patient_id' => $this->patientId]);
+        }
+    
+        session()->put('user.role', $this->role);
+        $student = Patient::find($this->patientId);
+        $this->student = $student ? $student->full_name : null;
         $this->isPatient = $this->role === 'patient';
+    
         Log::info('User role retrieved:', ['role' => $this->role, 'isPatient' => $this->isPatient]);
-
     }
+    
 
     public function showSidebar()
     {

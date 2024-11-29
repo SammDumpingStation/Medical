@@ -2,6 +2,7 @@
 
 namespace App\Livewire;
 
+use Illuminate\Support\Facades\Session;
 use Livewire\Component;
 use App\Models\ConsultationHistory;
 use Illuminate\Support\Facades\Log;
@@ -10,6 +11,15 @@ class DoctorCofirmation extends Component
 {
     public $patient_id;
     public $status;
+
+    public function mount(){
+      
+        // Session::forget('patient_information.personal_information.patient_id');
+
+        // // // Log the session flushing action for debugging purposes
+        // Log::info('All session patient ID cleared upon arrival.');
+    
+    }
 
     public function confirmProfile()
     {

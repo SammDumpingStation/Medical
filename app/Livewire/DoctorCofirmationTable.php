@@ -2,6 +2,7 @@
 
 namespace App\Livewire;
 
+use Illuminate\Support\Facades\Session;
 use App\Models\ConsultationHistory;
 use Livewire\Component;
 use Livewire\WithPagination;
@@ -20,6 +21,13 @@ class DoctorCofirmationTable extends Component
 
     public function mount()
     {
+        
+    
+        Session::forget('patient_information.personal_information.patient_id');
+
+    // // Log the session flushing action for debugging purposes
+    Log::info('All session patient ID cleared upon arrival.');
+
         $this->headers = [
             'Patient Id',
             'Patient Name',
@@ -101,6 +109,7 @@ class DoctorCofirmationTable extends Component
     
     public function setSession($patientId)
     {
+  
         session()->put('patient_information.personal_information.patient_id', $patientId);
     
          Log::info('Patient ID stored in session:', ['patient_id' => $patientId]);

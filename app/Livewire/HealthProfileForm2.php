@@ -25,7 +25,7 @@ class HealthProfileForm2 extends Component
     {
         $this->patientID = Session::get('patient_information.personal_information.patient_id') ?? 0;
     
-        Log::info('Patient ID:', ['patient_id' => $this->patientID]);
+        Log::info('Patient ID for FORM 2:', ['patient_id' => $this->patientID]);
 
         $this->physical_screening = PhysicalScreeningModel::where('patient_id', $this->patientID)->first();
         $this->physical_examination = PhysicalExaminationModel::where('patient_id', $this->patientID)->first();

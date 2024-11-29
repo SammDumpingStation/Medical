@@ -22,28 +22,23 @@ class HealthProfileForm1 extends Component
     public function mount()
     {
         $this->patientID = Session::get('patient_information.personal_information.patient_id') ?? 0;
-    
-        Log::info('Patient ID:', ['patient_id' => $this->patientID]);
+        
+        Log::info('Patient ID on FORM 1:', ['patient_id' => $this->patientID]);
 
          $this->personal_information = Patient::where('patient_id', $this->patientID)->first();
         $this->social_history = SocialHistory::where('patient_id', $this->patientID)->first();
         $this->medical_history = MedicalHistory::where('patient_id', $this->patientID)->first();
              
-              Log::info('Fetched Medical History data for Patient ID:', ['medical_history' => $this->medical_history]);
- 
+     
         $this->surgical_history = PastSurgicalHistory::where('patient_id', $this->patientID)->first() ?? new PastSurgicalHistory();
-       
         $this->immunizations = immunizations::where('patient_id', $this->patientID)->first();
-        Log::info('Fetched immunizations:', ['immunizations' => $this->immunizations]);
-
         $this->emergency_contact = PatientDetails::where('patient_id', $this->patientID)->first();
-       
         $this->recentAdmissions = Admission::where('patient_id', $this->patientID)->get();
-        Log::info('Fetched recentAdmissions:', ['recentAdmissions' => $this->recentAdmissions]);
-
         $this->parent_conditions = ParentCondition::where('patient_id', $this->patientID)->first() ?? new ParentCondition();
-
-       Log::info('Fetched health profile data for Patient ID:', ['patient_id' => $this->patientID]);
+    //    //   Log::info('Fetched Medical History data for Patient ID:', ['medical_history' => $this->medical_history]);
+    //    Log::info('Fetched immunizations:', ['immunizations' => $this->immunizations]);
+    //    Log::info('Fetched recentAdmissions:', ['recentAdmissions' => $this->recentAdmissions]);
+    //    Log::info('Fetched health profile data for Patient ID:', ['patient_id' => $this->patientID]);
     }
 
     public function render()
