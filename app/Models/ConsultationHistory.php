@@ -22,4 +22,5 @@ class ConsultationHistory extends Model
 {
         return $this->hasOne(Patient::class, 'patient_id', 'patient_id');
     }
+    
 }

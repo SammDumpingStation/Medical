@@ -26,5 +26,17 @@ class dispenseMedicineRecords extends Model
     {
         return $this->belongsTo(MedicineInventory::class, 'medicine_id', 'medicine_id');
     }
+
+    public function patient()
+    {
+        return $this->belongsTo(Patient::class, 'patient_id', 'patient_id');
+    }
+
+  
+    // public function getYearFromPatientAttribute()
+    // {
+    //     return $this->patient ? $this->patient->year : null;
+    // }
+
     
 }
