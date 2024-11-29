@@ -11,7 +11,8 @@
                         name</label>
                     <input type="text" id="full_name" wire:model="full_name"
                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                        placeholder="John Doe" required />
+                        placeholder="John Doe" required oninput="this.value=this.value.replace(/[^a-zA-Z\s]/g, '');"
+                        title="Only letters and spaces are allowed" />
                 </div>
                 <!-- Employee ID -->
                 <div>
@@ -19,7 +20,8 @@
                         ID</label>
                     <input type="text" id="emp_id" name="emp_id" wire:model="emp_id"
                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                        placeholder="Enter Employee ID" required />
+                        placeholder="Enter Employee ID" required title="Only numbers are allowed"
+                        oninput="this.value=this.value.replace(/[^0-9]/g, '')" />
                 </div>
                 <!-- Age and Gender -->
                 <div class="grid gap-3 grid-cols-2">
@@ -29,7 +31,8 @@
                                 class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Age</label>
                             <input type="number" id="age" wire:model="age"
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                placeholder="21" required />
+                                placeholder="21" required title="Only numbers are allowed"
+                                oninput="this.value=this.value.replace(/[^0-9]/g, '')" />
                         </div>
                         <div class="flex-1">
                             <label for="gender"
@@ -92,7 +95,8 @@
                         name)</label>
                     <input type="text" id="emergency_contact_full_name" wire:model="emergency_contact_full_name"
                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                        placeholder="John Doe" required />
+                        placeholder="John Doe" required oninput="this.value=this.value.replace(/[^a-zA-Z\s]/g, '');"
+                        title="Only letters and spaces are allowed" />
                 </div>
                 <!-- Emergency Contact Address -->
                 <div>
@@ -109,7 +113,8 @@
                         number</label>
                     <input type="tel" id="emergency_phone" wire:model="emergency_phone"
                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                        placeholder="123-45-678" pattern="[0-9]{3}-[0-9]{2}-[0-9]{3}" required />
+                        placeholder="123-45-678" pattern="[0-9]{3}-[0-9]{2}-[0-9]{3}" required
+                        title="Only numbers are allowed" oninput="this.value=this.value.replace(/[^0-9]/g, '')" />
                 </div>
                 <!-- Emergency Contact Relationship -->
                 <div>

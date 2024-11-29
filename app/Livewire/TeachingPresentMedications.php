@@ -55,12 +55,13 @@ class TeachingPresentMedications extends Component
     public function submit()
     {
         $this->validate();
-
+    
         if (!$this->patient_id) {
             session()->flash('error', 'Patient ID is missing.');
             return;
         }
-  $data = [
+    
+        $data = [
             'patient_id' => $this->patient_id,
             'antibiotics' => $this->presentMedications['antibiotics'],
             'birth_control_pill' => $this->presentMedications['birthControlPill'],
@@ -72,19 +73,22 @@ class TeachingPresentMedications extends Component
             'procedures_operations' => $this->proceduresOperations,
             'record_date' => $this->recordDate,
         ];
-
+    
         Log::info('Present Medications Data Submitted', $data);
-
-        $existingRecord = MedicalHistory::where('patient_id', $this->patient_id)->first();
-
-        if ($existingRecord) {
-            $existingRecord->update($data);
-            session()->flash('message', 'Medical history has been successfully updated.');
-        } else {
-            MedicalHistory::create($data);
+    
+        // Use updateOrCreate to either update an existing record or create a new one
+        $existingRecord = MedicalHistory::updateOrCreate(
+            ['patient_id' => $this->patient_id], // Match condition based on patient_id
+            $data // Data to be updated or created
+        );
+    
+        if ($existingRecord->wasRecentlyCreated) {
             session()->flash('message', 'Medical history has been successfully saved.');
+        } else {
+            session()->flash('message', 'Medical history has been successfully updated.');
         }
     }
+    
 
     public function render()
     {

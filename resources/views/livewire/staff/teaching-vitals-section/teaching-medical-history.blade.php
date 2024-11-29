@@ -72,7 +72,8 @@
             <!-- Text Input for Additional Conditions -->
             <input type="text" wire:model="additional_conditions"
                 class="border-b border-gray-400 focus:border-indigo-600 focus:outline-none p-1 col-span-2 bg-transparent text-gray-800 dark:text-gray-300 dark:border-gray-600 dark:focus:border-indigo-500"
-                placeholder="Please specify">
+                placeholder="Please specify" oninput="this.value=this.value.replace(/[^a-zA-Z\s]/g, '');"
+                title="Only letters and spaces are allowed">
             <label class="flex items-center space-x-2">
                 <input type="checkbox" wire:model="hiv_aids" class="form-checkbox text-indigo-600">
                 <span class="text-gray-800 dark:text-gray-300">HIV/AIDS</span>
@@ -91,7 +92,8 @@
         </label>
         <input type="text" wire:model="other_conditions"
             class="border-b border-gray-400 focus:border-indigo-600 focus:outline-none p-1 w-full bg-transparent text-gray-800 dark:text-gray-300 dark:border-gray-600 dark:focus:border-indigo-500"
-            placeholder="Enter details">
+            placeholder="Enter details" oninput="this.value=this.value.replace(/[^a-zA-Z\s]/g, '');"
+            title="Only letters and spaces are allowed">
     </div>
 
     <div class="flex justify-right mt-6">

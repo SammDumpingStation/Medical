@@ -40,9 +40,15 @@ class TeachingPersonalInfo extends Component
             'relationship' => $this->relationship,
         ]);
 
-        session(['patient_id' => $this->emp_id]); 
-     
+        // Save patient_id to the session
+    session(['patient_id' => $this->emp_id]);
 
+    // Retrieve the patient_id from the session and assign it to the component
+    $this->patient_id = session('patient_id');
+
+    Log::info('Patient ID stored and retrieved from session', [
+        'patient_id' => $this->patient_id,
+    ]);
         Log::info('Form data validated successfully.');
 
         try {

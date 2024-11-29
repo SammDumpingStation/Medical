@@ -28,13 +28,17 @@
                                     <input type="text" name="additionalQuestions[{{ $index }}][question]"
                                         wire:model="additionalQuestions.{{ $index }}.question"
                                         class="block px-4 w-full text-sm text-gray-900 bg-transparent border-0 focus:border dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-negativene focus:ring-0 focus:border-blue-600 peer"
-                                        placeholder="Enter additional question" required />
+                                        placeholder="Enter additional question" required
+                                        oninput="this.value=this.value.replace(/[^a-zA-Z\s]/g, '');"
+                                        title="Only letters and spaces are allowed" />
                                 </td>
                                 <td class="flex items-center p-4">
                                     <input type="text" name="additionalQuestions[{{ $index }}][response]"
                                         wire:model="additionalQuestions.{{ $index }}.response"
                                         class="block px-4 w-full text-sm text-gray-900 bg-transparent border-0 focus:border dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-negativene focus:ring-0 focus:border-blue-600 peer"
-                                        placeholder="Enter response" required />
+                                        placeholder="Enter response" required
+                                        oninput="this.value=this.value.replace(/[^a-zA-Z\s]/g, '');"
+                                        title="Only letters and spaces are allowed" />
                                 </td>
                                 <td class="text-center p-4">
                                     <button type="button" wire:click="removeQuestion({{ $index }})"

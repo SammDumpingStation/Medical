@@ -6,16 +6,19 @@
                 <div>
                     <label for="height" class="block  mb-2 text-sm font-medium text-gray-900 dark:text-white">Height
                         (cm)</label>
-                    <input type="number" wire:model="height" id="height" aria-describedby="helper-text-explanation"
+                    <input type="text" wire:model="height" id="height" aria-describedby="helper-text-explanation"
                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                        placeholder="" required />
+                        placeholder="" required pattern="^[0-9]*$" title="Only numbers are allowed"
+                        oninput="this.value=this.value.replace(/[^0-9]/g,'');" />
+
                 </div>
                 <div>
                     <label for="weight" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Weight
                         (kg)</label>
                     <input type="number" wire:model="weight" id="weight" aria-describedby="helper-text-explanation"
                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                        placeholder="" required />
+                        placeholder="" required pattern="^[0-9]*$" title="Only numbers are allowed"
+                        oninput="this.value=this.value.replace(/[^0-9]/g,'');" />
                 </div>
                 <div>
                     <label for="blood-pressure"
@@ -23,7 +26,8 @@
                     <input type="text" wire:model="blood_pressure" id="blood-pressure"
                         aria-describedby="helper-text-explanation"
                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                        placeholder="" required />
+                        placeholder="" required pattern="^[0-9]*$" title="Only numbers are allowed"
+                        oninput="this.value=this.value.replace(/[^0-9]/g,'');" />
                 </div>
             </div>
             <div class="flex justify-between">
@@ -33,7 +37,8 @@
                     <input type="number" wire:model="pulse_rate" id="pulse-rate"
                         aria-describedby="helper-text-explanation"
                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                        placeholder="" required />
+                        placeholder="" required pattern="^[0-9]*$" title="Only numbers are allowed"
+                        oninput="this.value=this.value.replace(/[^0-9]/g,'');" />
                 </div>
                 <div>
                     <label for="respirations"
@@ -42,14 +47,16 @@
                     <input type="number" id="respirations" wire:model="respiration"
                         aria-describedby="helper-text-explanation"
                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                        placeholder="" required />
+                        placeholder="" required pattern="^[0-9]*$" title="Only numbers are allowed"
+                        oninput="this.value=this.value.replace(/[^0-9]/g,'');" />
                 </div>
                 <div>
                     <label for="spo2"
                         class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">SpO2</label>
                     <input type="text" id="spo2" aria-describedby="helper-text-explanation" wire:model="spo2"
                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                        placeholder="" required />
+                        placeholder="" required pattern="^[0-9]*$" title="Only numbers are allowed"
+                        oninput="this.value=this.value.replace(/[^0-9]/g,'');" />
                 </div>
             </div>
             <div class="flex flex-wrap gap-7">
@@ -83,7 +90,8 @@
                     <input type="text" id="right-vision" aria-describedby="helper-text-explanation"
                         wire:model="right_vision"
                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                        placeholder="" required />
+                        placeholder="" required pattern="^[0-9]*$" title="Only numbers are allowed"
+                        oninput="this.value=this.value.replace(/[^0-9]/g,'');" />
                 </div>
                 <div class="">
                     <label for="left-vision" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Left
@@ -92,16 +100,18 @@
                     <input type="text" id="left-vision" aria-describedby="helper-text-explanation"
                         wire:model="left_vision"
                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                        placeholder="" required />
+                        placeholder="" required pattern="^[0-9]*$" title="Only numbers are allowed"
+                        oninput="this.value=this.value.replace(/[^0-9]/g,'');" />
                 </div>
             </div>
             <div>
-                <label for="visual-acuity" class="block  mb-2 text-sm font-medium text-gray-900 dark:text-white">Visual
+                <label for="visual-acuity"
+                    class="block  mb-2 text-sm font-medium text-gray-900 dark:text-white">Visual
                     Acuity
                 </label>
                 <div class="flex ml-4 gap-6">
-                    <livewire:radio title="Corrected" :default="$visual_acuity" id="visual-acuity-corrected" value="corrected"
-                        name="visual-acuity" />
+                    <livewire:radio title="Corrected" :default="$visual_acuity" id="visual-acuity-corrected"
+                        value="corrected" name="visual-acuity" />
                     <livewire:radio title="Uncorrected" :default="$visual_acuity" id="visual-acuity-uncorrected"
                         value="uncorrected" name="visual-acuity" />
                 </div>

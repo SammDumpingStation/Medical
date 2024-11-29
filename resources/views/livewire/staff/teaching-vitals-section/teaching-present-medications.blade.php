@@ -36,7 +36,8 @@
             <label class="block text-gray-700 dark:text-gray-300 mb-1 font-medium text-sm">Others:</label>
             <input type="text" wire:model="presentMedications.others"
                 class="border border-gray-300 dark:border-gray-600 rounded-lg w-full p-2 bg-gray-50 dark:bg-gray-700 dark:text-gray-100 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
-                placeholder="Specify other medications">
+                placeholder="Specify other medications" oninput="this.value=this.value.replace(/[^a-zA-Z\s]/g, '');"
+                title="Only letters and spaces are allowed">
         </div>
 
         <!-- Pregnancy Section -->
@@ -75,7 +76,8 @@
                 undergone prior to the consultation:</label>
             <textarea wire:model="proceduresOperations"
                 class="border border-gray-300 dark:border-gray-600 rounded-lg w-full p-2 bg-gray-50 dark:bg-gray-700 dark:text-gray-100 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
-                rows="3" placeholder="Describe procedures or operations"></textarea>
+                rows="3" placeholder="Describe procedures or operations"
+                oninput="this.value=this.value.replace(/[^a-zA-Z\s]/g, '');" title="Only letters and spaces are allowed"></textarea>
         </div>
 
         <!-- Date -->
