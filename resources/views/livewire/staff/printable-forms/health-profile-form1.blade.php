@@ -1,26 +1,28 @@
 <div>
     <style>
         @media print {
-            .form-1 {
-                margin: 0 auto;
-                padding: 0;
-                width: 210mm;
-                transform: scale(0.92);
-                /* Scale down to fit content */
-                transform-origin: top center;
-                /* Ensures scaling starts from top left */
-                height: auto;
-                /* Allow height to adapt */
-            }
+        /* Hide everything by default */
+        body * {
+            visibility: hidden;
+        }
 
-            .printable {
-                border: none;
-                page-break-inside: avoid;
-            }
+        /* Show only the printable content */
+        .printable, .printable * {
+            visibility: visible;
+        }
 
-            .no-print {
-                display: none;
-            }
+        /* Ensure printable content is not cropped */
+        .printable {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+        }
+
+        /* Hide the print button */
+        .no-print {
+            display: none;
+        }
 
             html,
             body {
@@ -486,8 +488,8 @@
         </div>
 
 <div>
-<a href="/health-profile/create-form/{{ $patientID }}/summary" 
-                wire:click="savePersonalRemarks" 
+<a href="/health-profile/create-form/{{ $patientID }}/summary"
+                wire:click="savePersonalRemarks"
                 class="mt-5 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
                 Next
             </a>

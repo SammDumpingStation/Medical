@@ -16,7 +16,7 @@ use Carbon\CarbonPeriod;
 
 
 
-class Report extends Component
+class report extends Component
 {
     public $completeConsultations;
     public $dispensedMedicineRecords;
@@ -24,7 +24,7 @@ class Report extends Component
     public $weeklyConsultations;
     public $monthlyConsultations;
     public $yearlyConsultations;
-    
+
     public $yearLevel = 'All';
     public $course = 'All';
     public $frequency = 'Weekly';
@@ -38,7 +38,7 @@ class Report extends Component
     public $newUsersByYearLevel = [];
     public $newHealthProfilesThisMonth;
 
-    
+
 
 
     public $weeklyCount;
@@ -53,7 +53,7 @@ class Report extends Component
 
         $this->dispensedMedicineRecords = DispenseMedicineRecords::all();
         Log::info('Dispensed medicine records retrieved', ['data' => $this->dispensedMedicineRecords]);
-    
+
           // Generate chart data for user registrations
           $this->generateChartData();
 
@@ -91,43 +91,43 @@ class Report extends Component
         ]);
     }
 
-    
+
     private function calculateVisitations()
     {
         try {
-            $startOfWeek = Carbon::now()->startOfWeek(Carbon::MONDAY); 
-            $endOfWeek = Carbon::now(); 
+            $startOfWeek = Carbon::now()->startOfWeek(Carbon::MONDAY);
+            $endOfWeek = Carbon::now();
             $visitationsPerDay = [];
-    
+
             Log::info('Start calculating visitations for the week.');
-    
+
             // Loop through the days of the week to calculate daily visitations
             foreach (range(0, 6) as $dayOffset) {
-                $date = Carbon::now()->startOfWeek()->addDays($dayOffset); 
+                $date = Carbon::now()->startOfWeek()->addDays($dayOffset);
                 $visitationsCount = MedicalHistory::whereDate('created_at', $date)->count();
                 $visitationsPerDay[] = [
-                    'day' => $date->format('l'), 
-                    'count' => $visitationsCount 
+                    'day' => $date->format('l'),
+                    'count' => $visitationsCount
                 ];
                 Log::info("Visitation count for {$date->format('l')} ({$date->format('Y-m-d')}): $visitationsCount");
             }
-    
+
             // Calculate visitations for various time periods
             $this->newVisitationsThisWeek = MedicalHistory::whereBetween('created_at', [$startOfWeek, $endOfWeek])->count();
             Log::info("New visitations this week: {$this->newVisitationsThisWeek}");
-    
+
             $this->newVisitationsToday = MedicalHistory::whereDate('created_at', Carbon::today())->count();
             Log::info("New visitations today: {$this->newVisitationsToday}");
-    
+
             $this->newVisitationsYesterday = MedicalHistory::whereDate('created_at', Carbon::yesterday())->count();
             Log::info("New visitations yesterday: {$this->newVisitationsYesterday}");
-    
+
             $this->newVisitationsLast30Days = MedicalHistory::whereBetween('created_at', [Carbon::now()->subDays(30), Carbon::now()])->count();
             Log::info("New visitations in the last 30 days: {$this->newVisitationsLast30Days}");
-    
+
             $this->newVisitationsLast7Days = $visitationsPerDay;
             Log::info('Visitations for the last 7 days:', $this->newVisitationsLast7Days);
-            
+
             // Return the calculated data
             return [
                 'newVisitationsThisWeek' => $this->newVisitationsThisWeek,
@@ -141,9 +141,9 @@ class Report extends Component
             return [];
         }
     }
-    
 
-       
+
+
 private function calculateDispenseMedicine()
 {
     $today = Carbon::today();
@@ -183,7 +183,7 @@ private function calculateDispenseMedicine()
     Log::info('Yearly dispensed medicine count calculated', ['yearlyCount' => $this->yearlyCount]);
 }
 
-       
+
 
 public function render()
 {
@@ -197,10 +197,10 @@ public function render()
         'yearlyConsultations' => $this->yearlyConsultations,
         'consultationHistories' => ConsultationHistory::with('patient')->get(),
         'chartData' => $this->chartData,
-        'weeklyCountsByDay' => $this->weeklyCountsByDay,       
-        'monthlyCountsByDay' => $this->monthlyCountsByDay,     
-        'monthlyCounts' => $this->monthlyCounts,               
-        'yearlyCount' => $this->yearlyCount,   
+        'weeklyCountsByDay' => $this->weeklyCountsByDay,
+        'monthlyCountsByDay' => $this->monthlyCountsByDay,
+        'monthlyCounts' => $this->monthlyCounts,
+        'yearlyCount' => $this->yearlyCount,
         'dailyCount' => $this->dailyCount,
         'newVisitationsThisWeek' => $visitations['newVisitationsThisWeek'],
         'newVisitationsToday' => $visitations['newVisitationsToday'],

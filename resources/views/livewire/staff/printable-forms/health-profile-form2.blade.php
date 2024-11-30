@@ -2,26 +2,28 @@
 
     <style>
         @media print {
-            .form-1 {
-                margin: 0 auto;
-                padding: 0;
-                width: 210mm;
-                transform: scale(0.92);
-                /* Scale down to fit content */
-                transform-origin: top center;
-                /* Ensures scaling starts from top left */
-                height: auto;
-                /* Allow height to adapt */
-            }
+        /* Hide everything by default */
+        body * {
+            visibility: hidden;
+        }
 
-            .printable {
-                border: none;
-                page-break-inside: avoid;
-            }
+        /* Show only the printable content */
+        .printable, .printable * {
+            visibility: visible;
+        }
 
-            .no-print {
-                display: none;
-            }
+        /* Ensure printable content is not cropped */
+        .printable {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+        }
+
+        /* Hide the print button */
+        .no-print {
+            display: none;
+        }
 
             html,
             body {
@@ -82,7 +84,7 @@
         }
     </style>
 
-
+<div class="bg-white p-8 form-2 printable">
     <button class="print-button bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mb-4"
         onclick="window.print()">
         Print this form
@@ -597,7 +599,7 @@
                 <td>Normal</td>
 
                 <td class="checkbox">
-             
+
                     <input type="checkbox"
                         {{ isset($ancillary_examinations['urinalysis']) && $ancillary_examinations['urinalysis'] !== 'NORMAL' ? 'checked' : '' }} disabled>
                 </td>
@@ -738,16 +740,16 @@
                         <tr>
                             <td>
                                 <textarea rows="4" cols="50">
-                                   
+
                                         {{ isset($PersonalRemarksModel['diagnosis']) ? $PersonalRemarksModel['diagnosis'] : 'N/A' }}
-                                   
+
                                 </textarea>
                             </td>
                             <td>
                                 <textarea rows="4" cols="50">
-                                  
+
                                         {{ isset($PersonalRemarksModel['remarks']) ? $PersonalRemarksModel['remarks'] : 'N/A' }}
-                                   
+
                                 </textarea>
                             </td>
                         </tr>

@@ -1,9 +1,39 @@
+<div>
+    <script>
+        // JavaScript to print only the desired content
+        function printContent() {
+            window.print();
+        }
+    </script>
+    <style>
+        /* Print-specific styles */
+        @media print {
+            /* Hide everything by default */
+            body * {
+                visibility: hidden;
+            }
+
+            /* Show the printable content */
+            .printable, .printable * {
+                visibility: visible;
+            }
+
+            /* Ensure printable content takes up the full page */
+            .printable {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+            }
+        }
+    </style>
 <body class="bg-gray-50 dark:bg-gray-900">
-    <div class="container mx-auto p-6">
+    <div class="bg-white p-8 report printable">
         <!-- Header -->
-        <div class="flex justify-between items-center mb-6">
+        <div class="flex justify-between items-center mb-6 no-print">
             <h1 class="text-3xl font-extrabold text-gray-800 dark:text-gray-100">Generate Analytics</h1>
             <button
+                onclick="printContent()"
                 class="flex items-center gap-2 bg-gray-300 dark:bg-gray-700 text-gray-800 dark:text-gray-200 px-5 py-2 rounded-lg shadow hover:bg-gray-400 dark:hover:bg-gray-600 transition">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
                     <path
@@ -539,3 +569,4 @@
 
 
         </body>
+    </div>
