@@ -28,8 +28,9 @@ class report extends Component
     public $yearLevel = 'All';
     public $course = 'All';
     public $frequency = 'Weekly';
+    public $period = 'daily';
 
-    public $dailyCount, $weeklyCountsByDay, $monthlyCountsByDay, $monthlyCounts, $yearlyCount;
+    public $dailyCount, $weeklyCountsByDay, $monthlyCountsByDay, $monthlyCounts, $yearlyCounts;
 
     public $chartData;
 
@@ -38,7 +39,7 @@ class report extends Component
     public $newUsersByYearLevel = [];
     public $newHealthProfilesThisMonth;
 
-
+    public $chartDataConsultation = ['labels' => [], 'counts' => []]; 
 
 
     public $weeklyCount;
@@ -47,22 +48,23 @@ class report extends Component
 
     public function mount()
     {
-        // Retrieve consultations and dispensed medicine records
         $this->completeConsultations = ConsultationHistory::where('status', 'Completed')->get();
         Log::info('Complete consultations retrieved', ['data' => $this->completeConsultations]);
 
         $this->dispensedMedicineRecords = DispenseMedicineRecords::all();
         Log::info('Dispensed medicine records retrieved', ['data' => $this->dispensedMedicineRecords]);
 
-          // Generate chart data for user registrations
           $this->generateChartData();
+       
 
-          $this->calculateVisitations();
           $this->calculateDispenseMedicine();
+
+    $this->countCompletedConsultationsByPeriod();
+
 
     }
 
-
+ 
     private function generateChartData()
     {
         $start = Carbon::parse(User::min("created_at"));
@@ -92,121 +94,173 @@ class report extends Component
     }
 
 
-    private function calculateVisitations()
+   
+    public function calculateDispenseMedicine()
     {
-        try {
-            $startOfWeek = Carbon::now()->startOfWeek(Carbon::MONDAY);
-            $endOfWeek = Carbon::now();
-            $visitationsPerDay = [];
-
-            Log::info('Start calculating visitations for the week.');
-
-            // Loop through the days of the week to calculate daily visitations
-            foreach (range(0, 6) as $dayOffset) {
-                $date = Carbon::now()->startOfWeek()->addDays($dayOffset);
-                $visitationsCount = MedicalHistory::whereDate('created_at', $date)->count();
-                $visitationsPerDay[] = [
-                    'day' => $date->format('l'),
-                    'count' => $visitationsCount
-                ];
-                Log::info("Visitation count for {$date->format('l')} ({$date->format('Y-m-d')}): $visitationsCount");
-            }
-
-            // Calculate visitations for various time periods
-            $this->newVisitationsThisWeek = MedicalHistory::whereBetween('created_at', [$startOfWeek, $endOfWeek])->count();
-            Log::info("New visitations this week: {$this->newVisitationsThisWeek}");
-
-            $this->newVisitationsToday = MedicalHistory::whereDate('created_at', Carbon::today())->count();
-            Log::info("New visitations today: {$this->newVisitationsToday}");
-
-            $this->newVisitationsYesterday = MedicalHistory::whereDate('created_at', Carbon::yesterday())->count();
-            Log::info("New visitations yesterday: {$this->newVisitationsYesterday}");
-
-            $this->newVisitationsLast30Days = MedicalHistory::whereBetween('created_at', [Carbon::now()->subDays(30), Carbon::now()])->count();
-            Log::info("New visitations in the last 30 days: {$this->newVisitationsLast30Days}");
-
-            $this->newVisitationsLast7Days = $visitationsPerDay;
-            Log::info('Visitations for the last 7 days:', $this->newVisitationsLast7Days);
-
-            // Return the calculated data
-            return [
-                'newVisitationsThisWeek' => $this->newVisitationsThisWeek,
-                'newVisitationsToday' => $this->newVisitationsToday,
-                'newVisitationsYesterday' => $this->newVisitationsYesterday,
-                'newVisitationsLast30Days' => $this->newVisitationsLast30Days,
-                'newVisitationsLast7Days' => $this->newVisitationsLast7Days,
-            ];
-        } catch (\Exception $e) {
-            Log::error("Error calculating visitations: " . $e->getMessage());
-            return [];
+        $today = Carbon::today();
+        $startOfWeek = Carbon::now()->startOfWeek(Carbon::MONDAY); 
+        $endOfWeek = $startOfWeek->copy()->addDays(6);
+        $startOfMonth = Carbon::now()->startOfMonth();
+        $endOfMonth = Carbon::now()->endOfMonth();
+        $startOfYear = Carbon::now()->startOfYear();
+    
+        Log::info('Starting dispense medicine calculations', [
+            'today' => $today->toDateString(),
+            'startOfWeek' => $startOfWeek->toDateString(),
+            'endOfWeek' => $endOfWeek->toDateString(),
+            'startOfMonth' => $startOfMonth->toDateString(),
+            'endOfMonth' => $endOfMonth->toDateString(),
+            'startOfYear' => $startOfYear->toDateString(),
+        ]);
+    
+        $this->dailyCount = dispenseMedicineRecords::whereDate('created_at', $today)->count();
+        Log::info('Daily dispensed medicine count calculated', ['dailyCount' => $this->dailyCount]);
+    
+        $this->weeklyCountsByDay = [];
+        for ($day = 0; $day < 7; $day++) {
+            $dayDate = $startOfWeek->copy()->addDays($day);
+            $count = dispenseMedicineRecords::whereDate('created_at', $dayDate)->count();
+            $this->weeklyCountsByDay[$dayDate->format('l')] = $count;
+            
+            Log::info('Weekly dispensed medicine count calculated for day', [
+                'day' => $dayDate->format('l'),
+                'date' => $dayDate->toDateString(),
+                'count' => $count
+            ]);
         }
+    
+        $this->monthlyCounts = [];
+        for ($month = 1; $month <= 12; $month++) {
+            $startOfMonth = Carbon::create(null, $month, 1)->startOfMonth();
+            $endOfMonth = Carbon::create(null, $month, 1)->endOfMonth();
+            $count = dispenseMedicineRecords::whereBetween('created_at', [$startOfMonth, $endOfMonth])->count();
+            $this->monthlyCounts[$month] = $count;  
+
+            Log::info('Monthly dispensed medicine count calculated for month', [
+                'month' => $startOfMonth->format('F'),
+                'count' => $count
+            ]);
+        }
+
+        $this->monthlyCountsLabels = [
+            1 => 'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
+            'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'
+        ];
+    
+        $this->yearlyCounts = [];
+        $years = dispenseMedicineRecords::selectRaw('YEAR(created_at) as year')
+                    ->distinct()
+                    ->orderBy('year')
+                    ->pluck('year'); 
+    
+        Log::info('Found distinct years for yearly counts', ['years' => $years]);
+    
+        foreach ($years as $year) {
+            $startOfYear = Carbon::create($year, 1, 1)->startOfYear();
+            $endOfYear = Carbon::create($year, 12, 31)->endOfYear();
+            $count = dispenseMedicineRecords::whereBetween('created_at', [$startOfYear, $endOfYear])->count();
+            $this->yearlyCounts[$year] = $count;
+    
+            Log::info('Yearly dispensed medicine count calculated for year', [
+                'year' => $year,
+                'count' => $count
+            ]);
+        }
+    
+        Log::info('Finished dispense medicine calculations', [
+            'weeklyCountsByDay' => $this->weeklyCountsByDay,
+            'monthlyCounts' => $this->monthlyCounts,
+            'yearlyCounts' => $this->yearlyCounts,
+        ]);
     }
 
+    
 
 
-private function calculateDispenseMedicine()
+private function countCompletedConsultationsByPeriod()
 {
-    $today = Carbon::today();
-    $startOfWeek = Carbon::now()->startOfWeek();
+    $startOfWeek = Carbon::now()->startOfWeek(); 
     $endOfWeek = Carbon::now()->endOfWeek();
-    $startOfMonth = Carbon::now()->startOfMonth();
-    $endOfMonth = Carbon::now()->endOfMonth();
-    $startOfYear = Carbon::now()->startOfYear();
 
-    $this->dailyCount = dispenseMedicineRecords::whereDate('created_at', $today)->count();
-    Log::info('Daily dispensed medicine count calculated', ['dailyCount' => $this->dailyCount]);
+    $currentYear = Carbon::now()->year;
 
-    $this->weeklyCountsByDay = [];
-    for ($day = 0; $day < 7; $day++) {
-        $dayDate = $startOfWeek->copy()->addDays($day);
-        $count = dispenseMedicineRecords::whereDate('created_at', $dayDate)->count();
-        $this->weeklyCountsByDay[$dayDate->format('l')] = $count;
-    }
+    $this->weeklyConsultations = ConsultationHistory::where('status', 'Completed')
+        ->whereBetween('updated_at', [$startOfWeek, $endOfWeek])
+        ->whereRaw('DAYOFWEEK(updated_at) BETWEEN 2 AND 7') 
+        ->get()
+        ->groupBy(function ($date) {
+            return Carbon::parse($date->updated_at)->dayOfWeekIso; 
+        })
+        ->mapWithKeys(function ($group, $day) {
+            return [$day => $group->count()];
+        });
 
-    $this->monthlyCountsByDay = [];
-    $daysInMonth = $endOfMonth->day;
-    for ($day = 1; $day <= $daysInMonth; $day++) {
-        $dayDate = Carbon::now()->startOfMonth()->addDays($day - 1);
-        $count = dispenseMedicineRecords::whereDate('created_at', $dayDate)->count();
-        $this->monthlyCountsByDay[$dayDate->format('d M')] = $count;
-    }
+    $this->weeklyConsultations = collect(range(1, 6)) 
+        ->mapWithKeys(function ($day) {
+            return [$day => $this->weeklyConsultations->get($day, 0)];
+        })
+        ->toArray();
 
-    $this->monthlyCounts = [];
-    for ($month = 1; $month <= 12; $month++) {
-        $startOfMonth = Carbon::create(null, $month, 1)->startOfMonth();
-        $endOfMonth = Carbon::create(null, $month, 1)->endOfMonth();
-        $count = dispenseMedicineRecords::whereBetween('created_at', [$startOfMonth, $endOfMonth])->count();
-        $this->monthlyCounts[$month] = $count;
-    }
+    Log::info('Weekly consultations count calculated', [
+        'startOfWeek' => $startOfWeek,
+        'endOfWeek' => $endOfWeek,
+        'weeklyConsultations' => $this->weeklyConsultations,
+    ]);
 
-    $this->yearlyCount = dispenseMedicineRecords::whereBetween('created_at', [$startOfYear, Carbon::now()])->count();
-    Log::info('Yearly dispensed medicine count calculated', ['yearlyCount' => $this->yearlyCount]);
+    $monthlyConsultationsData = ConsultationHistory::where('status', 'Completed')
+        ->whereYear('updated_at', $currentYear)
+        ->get()
+        ->groupBy(function ($date) {
+            return Carbon::parse($date->updated_at)->format('F');
+        })
+        ->map(function ($group) {
+            return $group->count(); 
+        });
+
+    $this->monthlyConsultations = $monthlyConsultationsData;
+    Log::info('Monthly consultations count calculated', [
+        'monthlyConsultations' => $this->monthlyConsultations,
+    ]);
+
+    $this->yearlyConsultations = ConsultationHistory::where('status', 'Completed')
+        ->whereYear('updated_at', $currentYear)
+        ->count();
+
+    Log::info('Yearly consultations count calculated', [
+        'currentYear' => $currentYear,
+        'yearlyConsultations' => $this->yearlyConsultations,
+    ]);
 }
+
 
 
 
 public function render()
 {
-    $visitations = $this->calculateVisitations(); // Get the visitations data
 
     return view('livewire.report', [
         'completeConsultations' => $this->completeConsultations,
         'dispensedMedicineRecords' => DispenseMedicineRecords::with('medicine')->get(),
+
         'weeklyConsultations' => $this->weeklyConsultations,
         'monthlyConsultations' => $this->monthlyConsultations,
         'yearlyConsultations' => $this->yearlyConsultations,
+
         'consultationHistories' => ConsultationHistory::with('patient')->get(),
         'chartData' => $this->chartData,
         'weeklyCountsByDay' => $this->weeklyCountsByDay,
         'monthlyCountsByDay' => $this->monthlyCountsByDay,
         'monthlyCounts' => $this->monthlyCounts,
-        'yearlyCount' => $this->yearlyCount,
+        'yearlyCounts' => $this->yearlyCounts,
         'dailyCount' => $this->dailyCount,
-        'newVisitationsThisWeek' => $visitations['newVisitationsThisWeek'],
-        'newVisitationsToday' => $visitations['newVisitationsToday'],
-        'newVisitationsYesterday' => $visitations['newVisitationsYesterday'],
-        'newVisitationsLast7Days' => $visitations['newVisitationsLast7Days'],
-        'newVisitationsLast30Days' => $visitations['newVisitationsLast30Days'],
+
+        'chartDataConsultation' => $this->chartDataConsultation
+
+        // 'newVisitationsThisWeek' => $visitations['newVisitationsThisWeek'],
+        // 'newVisitationsToday' => $visitations['newVisitationsToday'],
+        // 'newVisitationsYesterday' => $visitations['newVisitationsYesterday'],
+        // 'newVisitationsLast7Days' => $visitations['newVisitationsLast7Days'],
+        // 'newVisitationsLast30Days' => $visitations['newVisitationsLast30Days'],
     ]);
 }
 }

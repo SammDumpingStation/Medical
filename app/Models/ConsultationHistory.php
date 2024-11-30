@@ -16,6 +16,7 @@ class ConsultationHistory extends Model
         'status',
         'date',
         'time',
+        'updated_at',
     ];
 
     public function patient()
