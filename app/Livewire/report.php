@@ -54,12 +54,12 @@ class report extends Component
         $this->dispensedMedicineRecords = DispenseMedicineRecords::all();
         Log::info('Dispensed medicine records retrieved', ['data' => $this->dispensedMedicineRecords]);
 
-          $this->generateChartData();
+        $this->generateChartData();
        
 
-          $this->calculateDispenseMedicine();
+        $this->calculateDispenseMedicine();
 
-    $this->countCompletedConsultationsByPeriod();
+        $this->countCompletedConsultationsByPeriod();
 
 
     }

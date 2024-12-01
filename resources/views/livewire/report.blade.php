@@ -1,4 +1,5 @@
 <div>
+
     <script>
         function printContent() {
             window.print();
@@ -8,18 +9,23 @@
             document.getElementById('printButton').style.display = 'none';
             document.getElementById('health-tab').style.display = 'none';
             document.getElementById('pharmacy-tab').style.display = 'none';
+
+
+            document.getElementById('header').style.display = 'block';
         };
 
         window.onafterprint = function() {
             document.getElementById('printButton').style.display = 'block';
             document.getElementById('health-tab').style.display = 'inline-block';
             document.getElementById('pharmacy-tab').style.display = 'inline-block';
+
+
+            document.getElementById('header').style.display = 'none';
         };
     </script>
 
     <style>
         @media print {
-
             body * {
                 visibility: hidden;
             }
@@ -39,8 +45,16 @@
             #printButton,
             #health-tab,
             #pharmacy-tab {
-                display: none;
+                display: none !important;
             }
+
+            #header {
+                display: block !important;
+            }
+        }
+
+        #header {
+            display: none;
         }
     </style>
 
@@ -48,7 +62,13 @@
 
 
     <body class="bg-gray-50 dark:bg-gray-900">
+
         <div class="bg-white p-8 report printable">
+
+            {{-- MAO ning image ninyo diri ibutang tas kaning iyang ID dapat header --}}
+            <img src="https://scontent.fmnl14-1.fna.fbcdn.net/v/t39.30808-6/430133814_781537230661696_1934982201105139709_n.jpg?_nc_cat=111&ccb=1-7&_nc_sid=6ee11a&_nc_eui2=AeGAwLnjQuEAxSbIKzk4MUGBA_9BfxaOpuUD_0F_Fo6m5WgTLXy0kgXBnV8JjcxzPmWTFpazySYVGlQLMIaR1waK&_nc_ohc=QsrQNt1yE40Q7kNvgGKSegd&_nc_zt=23&_nc_ht=scontent.fmnl14-1.fna&_nc_gid=A6jhNoFFEHnIY2259Gkbh9f&oh=00_AYB9Tg4xbily0LfpwKjI9q50bGt69iX5QllL1MFk4kISTQ&oe=6751BF90"
+                id="header" alt="Image Description" style="max-width:150px; height:150px; display:none;">
+
             <!-- Header -->
             <div class="flex justify-between items-center mb-6 no-print">
                 <h1 class="text-3xl font-extrabold text-gray-800 dark:text-gray-100">Generate Analytics</h1>
