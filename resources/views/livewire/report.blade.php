@@ -1,4 +1,5 @@
 <div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.4/xlsx.full.min.js"></script>
 
     <script>
         function printContent() {
@@ -67,7 +68,7 @@
 
             {{-- MAO ning image ninyo diri ibutang tas kaning iyang ID dapat header --}}
             <img src="/images/image__2_-removebg-preview.png" id="header" alt="Image Description"
-                  style="width:100%; height:auto; max-height:150px; display:none;">
+                style="width:100%; height:auto; max-height:150px; display:none;">
 
 
             <!-- Header -->
@@ -183,11 +184,15 @@
                         </div>
                     </div>
                 </div>
-
+                <button id="exportButton" class="px-4 py-2 bg-blue-500 text-white rounded-lg">Export to
+                    Excel</button>
                 <div class="overflow-x-auto bg-white dark:bg-gray-800 shadow rounded-lg">
-                    <table class="min-w-full border-collapse border border-gray-300 dark:border-gray-700">
+                    <table id="consultationTable"
+                        class="min-w-full border-collapse border border-gray-300 dark:border-gray-700">
                         <thead>
                             <h2>Complete Vital Profiles Record</h2>
+
+
                             <tr class="bg-gray-200 dark:bg-gray-700">
                                 <th
                                     class="border border-gray-300 dark:border-gray-600 px-6 py-3 text-left text-gray-800 dark:text-gray-200">
@@ -284,7 +289,11 @@
 
                 <div class="overflow-x-auto bg-white dark:bg-gray-800 shadow rounded-lg">
                     <h2>Dispensed Medicine Records</h2>
-                    <table class="min-w-full border-collapse border border-gray-300 dark:border-gray-700">
+                    <button id="export-medicine-records" class="px-4 py-2 bg-blue-500 text-white rounded-lg">Export to
+                        Excel</button>
+
+                    <table
+                        id="dispenseMedicine"class="min-w-full border-collapse border border-gray-300 dark:border-gray-700">
                         <thead>
                             <tr class="bg-gray-200 dark:bg-gray-700">
                                 <th
@@ -355,6 +364,148 @@
 
 
 
+            {{-- Export Consultaion --}}
+            <script>
+                document.getElementById('exportButton').addEventListener('click', function() {
+                    var table = document.getElementById('consultationTable');
+
+                    if (table) {
+                        var data = [];
+                        var headers = [];
+                        var rows = table.querySelectorAll('tr');
+
+                        rows[0].querySelectorAll('th').forEach(function(header) {
+                            headers.push(header.innerText.trim());
+                        });
+                        data.push(headers);
+
+                        rows.forEach(function(row, index) {
+                            if (index > 0) {
+                                var rowData = [];
+                                row.querySelectorAll('td').forEach(function(cell, cellIndex) {
+                                    var cellValue = cell.innerText.trim();
+                                    if (cellIndex ===
+                                        4) {
+                                        var date = new Date(cellValue);
+                                        if (!isNaN(date.getTime())) {
+                                            rowData.push(XLSX.SSF.parse_date_code(date));
+                                        } else {
+                                            rowData.push(cellValue);
+                                        }
+                                    } else {
+                                        rowData.push(cellValue);
+                                    }
+                                });
+                                data.push(rowData);
+                            }
+                        });
+
+                        var ws = XLSX.utils.aoa_to_sheet(data);
+
+                        ws['!cols'] = [{
+                                width: 15
+                            },
+                            {
+                                width: 25
+                            },
+                            {
+                                width: 20
+                            },
+                            {
+                                width: 25
+                            },
+                            {
+                                width: 15
+                            },
+                        ];
+
+                        var wb = XLSX.utils.book_new();
+                        XLSX.utils.book_append_sheet(wb, ws, "Consultation History");
+                        XLSX.writeFile(wb, "consultation_history.xlsx");
+                    } else {
+                        console.error('Table with ID "consultationTable" not found!');
+                    }
+                });
+            </script>
+
+
+
+            {{-- Export Medicine --}}
+
+            <script>
+                document.getElementById('export-medicine-records').addEventListener('click', function() {
+                    var table = document.querySelector('#dispenseMedicine');
+                    if (table) {
+                        var rows = table.querySelectorAll('tr');
+                        var data = [];
+
+                        var headers = [
+                            "Patient ID",
+                            "Medicine Name",
+                            "Quantity Dispensed",
+                            "Medicine Type",
+                            "Given Date",
+                            "Expiration Date"
+                        ];
+                        data.push(headers);
+
+                        rows.forEach(function(row, index) {
+                            if (index > 0) {
+                                var rowData = [];
+                                row.querySelectorAll('td').forEach(function(cell, cellIndex) {
+                                    if (cellIndex === 5) {
+                                        var date = cell.innerText.trim();
+                                        var formattedDate = new Date(date);
+                                        if (!isNaN(formattedDate.getTime())) {
+                                            rowData.push(formattedDate);
+                                        } else {
+                                            rowData.push(
+                                                date);
+                                        }
+                                    } else {
+                                        rowData.push(cell.innerText.trim());
+                                    }
+                                });
+                                data.push(rowData);
+                            }
+                        });
+
+                        var ws = XLSX.utils.aoa_to_sheet(data);
+
+                        ws['!cols'] = [{
+                                width: 15
+                            },
+                            {
+                                width: 25
+                            },
+                            {
+                                width: 20
+                            },
+                            {
+                                width: 25
+                            },
+                            {
+                                width: 15
+                            },
+                            {
+                                width: 15,
+                                raw: true,
+                                dateNF: 'm/d/yyyy'
+                            }
+                        ];
+
+                        var wb = XLSX.utils.book_new();
+                        XLSX.utils.book_append_sheet(wb, ws, "Dispensed Medicine Records");
+                        XLSX.writeFile(wb, "dispensed_medicine_records.xlsx");
+                    } else {
+                        console.error('Table not found!');
+                    }
+                });
+            </script>
+
+
+
+
 
             <script>
                 const tabs = document.querySelectorAll('.tab-btn');
@@ -377,10 +528,6 @@
                     });
                 });
             </script>
-
-
-
-
 
 
 
