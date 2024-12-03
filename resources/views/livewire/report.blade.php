@@ -361,9 +361,6 @@
                 </div>
             </div>
 
-
-
-
             {{-- Export Consultaion --}}
             <script>
                 document.getElementById('exportButton').addEventListener('click', function() {
@@ -382,19 +379,9 @@
                         rows.forEach(function(row, index) {
                             if (index > 0) {
                                 var rowData = [];
-                                row.querySelectorAll('td').forEach(function(cell, cellIndex) {
+                                row.querySelectorAll('td').forEach(function(cell) {
                                     var cellValue = cell.innerText.trim();
-                                    if (cellIndex ===
-                                        4) {
-                                        var date = new Date(cellValue);
-                                        if (!isNaN(date.getTime())) {
-                                            rowData.push(XLSX.SSF.parse_date_code(date));
-                                        } else {
-                                            rowData.push(cellValue);
-                                        }
-                                    } else {
-                                        rowData.push(cellValue);
-                                    }
+                                    rowData.push(cellValue);
                                 });
                                 data.push(rowData);
                             }
@@ -402,22 +389,9 @@
 
                         var ws = XLSX.utils.aoa_to_sheet(data);
 
-                        ws['!cols'] = [{
-                                width: 15
-                            },
-                            {
-                                width: 25
-                            },
-                            {
-                                width: 20
-                            },
-                            {
-                                width: 25
-                            },
-                            {
-                                width: 15
-                            },
-                        ];
+                        ws['!cols'] = headers.map(() => ({
+                            width: 20
+                        }));
 
                         var wb = XLSX.utils.book_new();
                         XLSX.utils.book_append_sheet(wb, ws, "Consultation History");
