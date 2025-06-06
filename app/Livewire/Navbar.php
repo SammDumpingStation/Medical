@@ -13,6 +13,8 @@ class Navbar extends Component
     public $sidebar = true;
     public $student;
     public $role;
+    public $patientId;
+    public $isPatient = false;
 
     public function mount()
     {

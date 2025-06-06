@@ -12,6 +12,7 @@ class Sidebar extends Component
 {
     public $sidebar = true;
     public $role;
+    public $userRole;
 
     #[On('toggle-sidebar')]
     public function toggleSidebar($sidebar)

@@ -14,21 +14,19 @@ class MedicalHistory extends Model
 
     protected $fillable = [
         'patient_id',
-        'allergy', 'food_allergy', 'food_details', 'drug_allergy', 'drug_details', 
-        'asthma', 'coronary_artery_disease', 'peptic_ulcer', 'hypertension', 
-        'hypertension_details', 'skin_disorder', 'skin_disorder_details', 'hepatitis', 
-        'hepatitis_details', 'cancer', 'cancer_details', 'thyroid_disease', 'pcos', 
-        'epilepsy', 'epilepsy_details', 'tuberculosis', 'tuberculosis_details', 
-        'psychological_disorder', 'psychological_disorder_details', 'created_at',
-        
-        'under_care', 'last_appointment_date', 
-        'diabetes', 'high_blood_pressure', 'coronary_artery_disease', 
-        'seizure_disorder', 'arthritis', 'urinary_tract_infection', 'hepatitis', 
-        'thyroid_h_imbalance', 'allergies', 'hiv_aids', 'any_infection', 
-        'additional_conditions', 'other_conditions',
-
-         'present_medications', 'pregnant', 'lmp_date', 
-         'procedures_operations', 'record_date'
+        'allergy',
+        'asthma',
+        'cancer',
+        'coronary_artery_disease',
+        'thyroid_disease',
+        'peptic_ulcer',
+        'pcos',
+        'hypertension',
+        'epilepsy',
+        'skin_disorder',
+        'tuberculosis',
+        'hepatitis',
+        'psychological_disorder'
     ];
     
 

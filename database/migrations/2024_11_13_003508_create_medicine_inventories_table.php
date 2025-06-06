@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('medicine_inventories', function (Blueprint $table) {
             $table->id();
-            $table->string('Name');
+            $table->string('name');
             $table->string('brand_name');
             $table->string('dosage');
             $table->date('manufactured_date');
@@ -21,7 +21,7 @@ return new class extends Migration
             $table->date('turn_over_to_supply');
             $table->integer('stock_on_hand');
             $table->integer('dispensed');
-            $table->string('status');
+            $table->string('status')->default('Normal');
             $table->timestamps();
         });
     }

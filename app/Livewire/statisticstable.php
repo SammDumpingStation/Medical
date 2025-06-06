@@ -25,17 +25,25 @@ class StatisticsTable extends Component
 {
     public $chartData;
     public $smokersByYearLevel = [];
-    public $pregnanciesByYearLevel = []; 
+    public $pregnanciesByYearLevel = [];
     public $newUsersByYearLevel = [];
-    public $newHealthProfilesThisMonth;
-    
-    public $newHealthProfilesThisWeek;
+    public $newHealthProfilesThisMonth = 0;
+    public $newHealthProfilesLastMonth = 0;
+    public $percentageChange = 0;
+    public $newHealthProfilesThisWeek = 0;
+    public $weeklyCountsByDay = [];
+    public $monthlyCountsByDay = [];
+    public $monthlyCounts = [];
+    public $yearlyCount = 0;
+    public $newVisitationsThisWeek = 0;
+    public $newVisitationsToday = 0;
+    public $newVisitationsYesterday = 0;
+    public $newVisitationsLast30Days = [];
+    public $newVisitationsLast7Days = [];
 
- public $dailyCount;
- public $weeklyCount;
- public $monthlyCount;
- public $yearlyCount;
-
+    public $dailyCount = 0;
+    public $weeklyCount = 0;
+    public $monthlyCount = 0;
 
     public function mount()
     {
@@ -47,13 +55,13 @@ class StatisticsTable extends Component
 
         // Calculate the number of pregnancies by year level
         $this->calculatePregnanciesByYearLevel();
-   
+
         // Calculate the number of new uers by year level
         $this->calculateNewUsersByYearLevel();
 
         // Calculate the number of new Health Profile
         $this->calculateNewHealthProfiles();
-       
+
         // Calculate the number of Visitations
         $this->calculateVisitations();
 
@@ -87,7 +95,7 @@ class StatisticsTable extends Component
             ],
         ]);
     }
-            
+
         private function calculateNewUsersByYearLevel()
         {
             $yearLevels = [1 => '1', 2 => '2', 3 => '3', 4 => '4'];
@@ -96,12 +104,12 @@ class StatisticsTable extends Component
 
             foreach ($yearLevels as $level => $label) {
                 try {
-                    $startOfWeek = Carbon::now()->startOfWeek(); 
-                    $endOfWeek = Carbon::now()->endOfWeek(); 
+                    $startOfWeek = Carbon::now()->startOfWeek();
+                    $endOfWeek = Carbon::now()->endOfWeek();
 
                     $count = Patient::whereBetween('created_at', [$startOfWeek, $endOfWeek])
-                        ->whereHas('user', function ($query) use ($level) { 
-                            $query->where('year', $level); 
+                        ->whereHas('user', function ($query) use ($level) {
+                            $query->where('year', $level);
                         })
                         ->count();
 
@@ -117,33 +125,33 @@ class StatisticsTable extends Component
             Log::info('Completed calculation of new users by year level for this week.');
         }
 
-     
+
         private function calculateNewHealthProfiles()
         {
             try {
                 $startOfMonth = Carbon::now()->startOfMonth();
                 $endOfMonth = Carbon::now()->endOfMonth();
-    
+
                 $startOfLastMonth = Carbon::now()->subMonth()->startOfMonth();
                 $endOfLastMonth = Carbon::now()->subMonth()->endOfMonth();
-    
+
                 $this->newHealthProfilesThisMonth = ConsultationHistory::whereBetween('date', [$startOfMonth, $endOfMonth])->count();
-    
+
                 $this->newHealthProfilesLastMonth = ConsultationHistory::whereBetween('date', [$startOfLastMonth, $endOfLastMonth])->count();
-    
+
                 if ($this->newHealthProfilesLastMonth > 0) {
                     $this->percentageChange = (($this->newHealthProfilesThisMonth - $this->newHealthProfilesLastMonth) / $this->newHealthProfilesLastMonth) * 100;
                 } else {
                     $this->percentageChange = 0;
                 }
-    
+
             } catch (\Exception $e) {
-                \Log::error("Error calculating health profiles: " . $e->getMessage());
+                Log::error("Error calculating health profiles: " . $e->getMessage());
             }
         }
 
-          
-     
+
+
 private function calculateDispenseMedicine()
 {
     $today = Carbon::today();
@@ -202,19 +210,19 @@ private function calculateDispenseMedicine()
     Log::info('Yearly dispensed medicine count calculated', ['yearlyCount' => $this->yearlyCount]);
 }
 
-       
+
         private function calculateVisitations()
         {
             try {
-                $startOfWeek = Carbon::now()->startOfWeek(Carbon::MONDAY); 
-                $endOfWeek = Carbon::now(); 
+                $startOfWeek = Carbon::now()->startOfWeek(Carbon::MONDAY);
+                $endOfWeek = Carbon::now();
                 $visitationsPerDay = [];
                 foreach (range(0, 6) as $dayOffset) {
-                    $date = Carbon::now()->startOfWeek()->addDays($dayOffset); 
-                    $visitationsCount = MedicalHistory::whereDate('created_at', $date)->count();    
+                    $date = Carbon::now()->startOfWeek()->addDays($dayOffset);
+                    $visitationsCount = MedicalHistory::whereDate('created_at', $date)->count();
                     $visitationsPerDay[] = [
-                        'day' => $date->format('l'), 
-                        'count' => $visitationsCount 
+                        'day' => $date->format('l'),
+                        'count' => $visitationsCount
                     ];
                 }
                 $this->newVisitationsThisWeek = MedicalHistory::whereBetween('created_at', [$startOfWeek, $endOfWeek])->count();
@@ -237,10 +245,10 @@ private function calculateDispenseMedicine()
                 return [];
             }
         }
-        
 
-        
-        
+
+
+
 
     private function calculateSmokersByYearLevel()
     {
@@ -267,22 +275,38 @@ private function calculateDispenseMedicine()
     {
         $yearLevels = [1 => '1', 2 => '2', 3 => '3', 4 => '4'];
 
+        // Initialize the array with default values
+        $this->pregnanciesByYearLevel = array_fill_keys($yearLevels, 0);
+
         Log::info('Starting calculation of pregnancies by year level.');
 
-        foreach ($yearLevels as $level => $label) {
-            try {
-                $count = AncillaryExaminationsModel::where('pregnancy_test', 'Positive')
-                    ->whereHas('patient', function ($query) use ($level) {
-                        $query->where('year', $level);
-                    })
-                    ->count();
+        try {
+            $pregnancies = AncillaryExaminationsModel::where('pregnancy_test', 'Positive')
+                ->with(['patient' => function($query) {
+                    $query->select('patient_id', 'year');
+                }])
+                ->get();
 
-                $this->pregnanciesByYearLevel[$label] = $count;
-                Log::info("Year Level: {$label}, Pregnancy Count: {$count}");
-            } catch (\Exception $e) {
-                Log::error("Error calculating pregnancies for Year Level: {$label}. Error: " . $e->getMessage());
+            // Group by year level
+            $grouped = $pregnancies->groupBy(function($item) {
+                return $item->patient->year ?? null;
+            })->map->count();
+
+            // Update the counts for each year level
+            foreach ($yearLevels as $level) {
+                if (isset($grouped[$level])) {
+                    $this->pregnanciesByYearLevel[$level] = $grouped[$level];
+                }
+                Log::info("Year Level: {$level}, Pregnancy Count: " . $this->pregnanciesByYearLevel[$level]);
+            }
+        } catch (\Exception $e) {
+            Log::error("Error calculating pregnancies: " . $e->getMessage());
+            // Ensure all year levels have a default value
+            foreach ($yearLevels as $level) {
+                $this->pregnanciesByYearLevel[$level] = $this->pregnanciesByYearLevel[$level] ?? 0;
             }
         }
+
         Log::info('Completed calculation of pregnancies by year level.');
     }
 
@@ -300,10 +324,10 @@ private function calculateDispenseMedicine()
             'newVisitationsLast30Days' => $this->newVisitationsLast30Days,
             'chartData' => $this->chartData,
 
-           'weeklyCountsByDay' => $this->weeklyCountsByDay,       
-        'monthlyCountsByDay' => $this->monthlyCountsByDay,     
-        'monthlyCounts' => $this->monthlyCounts,               
-        'yearlyCount' => $this->yearlyCount,   
+           'weeklyCountsByDay' => $this->weeklyCountsByDay,
+        'monthlyCountsByDay' => $this->monthlyCountsByDay,
+        'monthlyCounts' => $this->monthlyCounts,
+        'yearlyCount' => $this->yearlyCount,
         ]);
     }
 }

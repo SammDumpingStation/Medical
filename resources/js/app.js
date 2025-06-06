@@ -5,3 +5,5 @@ import "./dark-mode";
 import "./charts";
 import "./constants";
 import "./sidebar";
+import "./pharmacy";
+

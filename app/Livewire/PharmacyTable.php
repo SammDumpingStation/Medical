@@ -26,7 +26,7 @@ class PharmacyTable extends Component
     public $turn_over_to_supply;
     public $stock_on_hand;
     public $dispensed;
-    public $status;
+    public $status = "Normal";
 
     public $patient_id;
     public $medicine_id;
@@ -55,7 +55,7 @@ class PharmacyTable extends Component
         ];
         $this->medicines = MedicineInventory::all();
     $this->updateLowStockStatus();
- 
+
 
     }
 
@@ -63,10 +63,10 @@ class PharmacyTable extends Component
     {
         try {
             $lowStockMedicines = MedicineInventory::where('stock_on_hand', '<', 30)->get();
-            
+
             foreach ($lowStockMedicines as $medicine) {
                if ($medicine->stock_on_hand == 0) {
-                    $medicine->delete();  
+                    $medicine->delete();
                     Log::info('Deleted medicine with 0 stock: ' . $medicine->name);
                 } elseif ($medicine->status !== 'Low stock') {
                     $medicine->status = 'Low stock';
@@ -74,20 +74,20 @@ class PharmacyTable extends Component
                     Log::info('Updated status for low stock medicine: ' . $medicine->name);
                 }
             }
-    
+
             if ($lowStockMedicines->isNotEmpty()) {
                 $this->lowStockMedicinesList = $lowStockMedicines;
-                $this->lowStockModalVisible = true; 
+                $this->lowStockModalVisible = true;
                 Log::info('Modal For Stock');
             }
-    
+
             Log::info('Updated and fetched low stock medicines.');
         } catch (\Exception $e) {
             Log::error('Error updating low stock status: ' . $e->getMessage());
             session()->flash('error', 'Failed to update low stock status.');
         }
     }
-    
+
 
 
     public function closeLowStockModal()
@@ -96,7 +96,7 @@ class PharmacyTable extends Component
 }
 
 
-    
+
    public function addMedicine()
     {
     try {
@@ -122,7 +122,7 @@ class PharmacyTable extends Component
             'expiry' => 'required|date|after:manufactured_date',
             'turn_over_to_supply' => 'required|date',
             'stock_on_hand' => 'required|integer|min:0',
-           
+
         ]);
 
         Log::debug('Validated data: ', $validated);
