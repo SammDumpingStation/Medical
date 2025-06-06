@@ -46,23 +46,23 @@
                                     <tr class="hover:bg-gray-100 dark:hover:bg-gray-700 ">
                                         <td
                                             class="max-w-sm p-4 border dark:border-gray-700 overflow-hidden text-gray-900 text-base font-normal truncate xl:max-w-xs dark:text-gray-400">
-                                            Samm Caagbay</td>
+                                           </td>
                                         <td
                                             class="p-4 border dark:border-gray-700 text-base font-medium text-gray-500 whitespace-nowrap dark:text-white">
-                                            21</td>
+                                            </td>
                                         <td
                                             class="p-4 border dark:border-gray-700 text-base font-medium text-gray-500 whitespace-nowrap dark:text-white">
-                                            Male</td>
+                                            </td>
                                         <td
                                             class="p-4 border dark:border-gray-700 text-base font-normal text-gray-500 whitespace-nowrap dark:text-white">
 
-                                            Health Profile Creation
+                                            
                                         </td>
                                         <td class="p-4 border dark:border-gray-700 text-gray-900 font-semibold whitespace-nowrap dark:text-white">
-                                            Fever
+                                            
                                         </td>
                                         <td class="p-4 border dark:border-gray-700 space-x-2 text-gray-500 whitespace-nowrap dark:text-white">
-                                            2024-30-31
+                                            
                                         </td>
                                     </tr>
                                 @endfor

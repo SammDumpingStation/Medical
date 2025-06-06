@@ -79,21 +79,11 @@
                                         </td>
                                         <td
                                             class="p-4 border dark:border-gray-700 text-base font-medium text-gray-500 whitespace-nowrap dark:text-white">
-                                            {{ $data->patient->year_level ?? '3rd year' }}
+                                            {{ $data->patient->year_level ?? '4th Year' }}
                                         </td>
                                         <td
                                             class="p-4 border dark:border-gray-700 text-base font-medium text-gray-500 whitespace-nowrap dark:text-white">
-                                            {{ $data->patient->department ?? 'CITC' }}
-                                        </td>
-                                        <td
-                                            class="p-4 border dark:border-gray-700 text-base font-medium text-gray-500 whitespace-nowrap dark:text-white">
-                                            {{ $data->primary_diagnosis }}
-                                        </td>
-                                        <td class="p-4 border whitespace-nowrap dark:text-white">
-                                            <span
-                                                class="p-4 space-x-2 text-sm text-gray-500 whitespace-nowrap dark:text-white">
-                                                {{ $data->status }}
-                                            </span>
+                                            {{ $data->patient->department ?? 'BSIT' }}
                                         </td>
                                         <td
                                             class="p-4 space-x-2 text-sm text-gray-500 whitespace-nowrap dark:text-white">

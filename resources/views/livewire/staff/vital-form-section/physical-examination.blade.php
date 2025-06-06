@@ -41,7 +41,11 @@
                                                 <input type="text" wire:model.live="findings.{{ $part }}"
                                                     @disabled(in_array($part, $checkedBodyPart))
                                                     class="block w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 focus:border-blue-600 dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:ring-0 disabled:opacity-50 disabled:cursor-not-allowed"
-                                                    placeholder="{{ in_array($part, $checkedBodyPart) ? 'Uncheck Normal first' : 'Enter findings' }}" />
+                                                    placeholder="{{ in_array($part, $checkedBodyPart) ? 'Uncheck Normal first' : 'Enter findings' }}"
+                                                    pattern="[A-Za-z ]*"
+                                                    title="Only alphabetic characters and spaces are allowed."
+                                                    oninput="this.value = this.value.replace(/[^A-Za-z ]/g, '')" />
+
                                             </td>
                                         </tr>
                                     @endforeach
@@ -54,14 +58,16 @@
         </main>
     </div>
 
-    <div class="flex items-center justify-between w-full">
-        <button wire:click="switchToTab('physical-screening')" type="button"
-            class="mt-5 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
-            Previous
-        </button>
-        <button wire:click="switchToTab('ancillary-examination')" type="button"
-            class="mt-5 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
-            Next
-        </button>
-    </div>
+    <button type="button" wire:click="saveToDatabase"
+        class="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-700">
+        Save
+    </button>
+    @if (session()->has('message'))
+<div class="text-green-600 font-medium">{{ session('message') }}</div>
+@endif
+@if (session()->has('error'))
+<div class="text-red-600 font-medium">{{ session('error') }}</div>
+@endif
+
 </div>
+

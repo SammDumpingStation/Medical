@@ -6,7 +6,6 @@
                     made in the clinic</span>
             </div>
         </div>
-        {{-- table --}}
         <div class="flex flex-col">
             <div class="overflow-x-auto rounded-lg">
                 <div class="inline-block min-w-full align-middle">
@@ -31,7 +30,7 @@
                                         <td class="flex items-center p-4 space-x-6 whitespace-nowrap">
                                             <div class="text-sm font-normal text-gray-500 dark:text-gray-400">
                                                 <div class="text-base text-gray-900 dark:text-white">
-                                                    {{ $data->patient->patient_id }}
+                                                    {{ $data->patient_id }}
                                                 </div>
                                             </div>
                                         </td>
@@ -49,21 +48,11 @@
                                         </td>
                                         <td
                                             class="p-4 border dark:border-gray-700 text-base font-medium text-gray-500 whitespace-nowrap dark:text-white">
-                                            {{ $data->patient->year_level }}
+                                            {{ $data->patient->year_level ?? '4th Year' }}
                                         </td>
                                         <td
                                             class="p-4 border dark:border-gray-700 text-base font-medium text-gray-500 whitespace-nowrap dark:text-white">
-                                            {{ $data->patient->department }}
-                                        </td>
-                                        <td
-                                            class="p-4 border dark:border-gray-700 text-base font-medium text-gray-500 whitespace-nowrap dark:text-white">
-                                            {{ $data->primary_diagnosis }}
-                                        </td>
-                                        <td class="p-4 border whitespace-nowrap dark:text-white">
-                                            <span
-                                                class="p-4 space-x-2 text-sm text-gray-500 whitespace-nowrap dark:text-white">
-                                                {{ $data->status }}
-                                            </span>
+                                            {{ $data->patient->department ?? 'BSIT' }}
                                         </td>
                                     </tr>
                                 @empty

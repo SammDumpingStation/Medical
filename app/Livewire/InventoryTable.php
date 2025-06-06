@@ -1,9 +1,7 @@
 <?php
-
 namespace App\Livewire;
 
-use App\Models\ConsultationHistory;
-use App\Models\Inventory;
+use App\Models\dispenseMedicineRecords;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -17,19 +15,27 @@ class InventoryTable extends Component
     public function mount()
     {
         $this->headers = [
-            'Name',
-            'Acquired at',
-            'No. of pieces',
-            'Status',
-            'Turn over to supply',
-            'Damaged?',
+            'Patient ID',
+            'Medicine Name', 
+            'Quantity Dispensed',
+           
+            'Medicine Type',
+            'Given Date',
+            'Expiration Date',
         ];
     }
 
     public function render()
     {
-        $datas = Inventory::where('name', 'LIKE', "%{$this->search}%")->paginate(10);
-        return view('livewire.inventory-table', ['datas' => $datas]
-        );
+        $datas = dispenseMedicineRecords::with('medicine') 
+            ->whereHas('medicine', function($query) {
+                $query->where('name', 'LIKE', "%{$this->search}%");
+            })
+            ->orWhere('patient_id', 'LIKE', "%{$this->search}%")
+            ->paginate(10); 
+
+        return view('livewire.inventory-table', [
+            'datas' => $datas,
+        ]);
     }
 }

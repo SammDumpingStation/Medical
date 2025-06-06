@@ -121,7 +121,7 @@ class SocialHistoryHp extends Component
                 Log::debug('Saving social history for Patient ID:', ['patient_id' => $patientID]);
 
                 $socialHistory = SocialHistory::updateOrCreate(
-                    ['patient_id' => $patientID], 
+                    ['patient_id' => $patientID],
                     [
                         'smoking' => $this->smoking,
                         'pack_per_day' => $this->packPerDay,
@@ -139,8 +139,8 @@ class SocialHistoryHp extends Component
                 );
 
                  Log::info('Social History saved for Patient ID ' . $patientID, ['social_history' => $socialHistory]);
-
-                return $socialHistory; 
+                 session()->flash('message', 'Saved Successfully!.');
+                return $socialHistory;
             } catch (\Exception $e) {
                 Log::error('Error saving social history for Patient ID ' . $patientID, [
                     'error' => $e->getMessage(),
@@ -150,7 +150,7 @@ class SocialHistoryHp extends Component
                  throw $e;
             }
         } else {
-          
+
             Log::info('No changes in social history data, skipping save.');
         }
     }
@@ -158,7 +158,7 @@ class SocialHistoryHp extends Component
     public function switchToTab($tabId)
     {
         $this->saveToSession();
-        $this->dispatch('switch-tab', ['tabId' => $tabId]); 
+        $this->dispatch('switch-tab', ['tabId' => $tabId]);
     }
 
     public function render()

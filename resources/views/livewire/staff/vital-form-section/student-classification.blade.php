@@ -2,7 +2,8 @@
     <h4 class="text-xl mb-4 font-bold dark:text-white">Student Classification</h4>
     <ul class="flex flex-col w-full gap-6">
         <li>
-            <input type="radio" wire:click="typeSelect('A')" @checked($default === 'A') id="type-a" name="classification" value="type-a" class="hidden peer" required />
+            <input type="radio" wire:click="typeSelect('A')" @checked($default === 'A') id="type-a"
+                name="classification" value="type-a" class="hidden peer" required />
             <label for="type-a"
                 class="inline-flex items-center justify-between w-full p-5 text-gray-700 bg-white border border-gray-200 rounded-lg cursor-pointer dark:hover:text-gray-300 dark:border-gray-700 dark:peer-checked:text-blue-500 peer-checked:border-blue-600 peer-checked:text-blue-600 hover:text-gray-600 hover:bg-gray-100 dark:text-gray-400 dark:bg-gray-800 dark:hover:bg-gray-700">
                 <div class="block">
@@ -17,7 +18,8 @@
             </label>
         </li>
         <li>
-            <input type="radio" wire:click="typeSelect('B')" @checked($default === 'B') id="type-b" name="classification" value="type-b" class="hidden peer">
+            <input type="radio" wire:click="typeSelect('B')" @checked($default === 'B') id="type-b"
+                name="classification" value="type-b" class="hidden peer">
             <label for="type-b"
                 class="inline-flex items-center justify-between w-full p-5 text-gray-700 bg-white border border-gray-200 rounded-lg cursor-pointer dark:hover:text-gray-300 dark:border-gray-700 dark:peer-checked:text-blue-500 peer-checked:border-blue-600 peer-checked:text-blue-600 hover:text-gray-600 hover:bg-gray-100 dark:text-gray-400 dark:bg-gray-800 dark:hover:bg-gray-700">
                 <div class="block">
@@ -33,7 +35,8 @@
             </label>
         </li>
         <li>
-            <input type="radio" wire:click="typeSelect('C')" @checked($default === 'C') id="type-c" name="classification" value="type-c" class="hidden peer" required />
+            <input type="radio" wire:click="typeSelect('C')" @checked($default === 'C') id="type-c"
+                name="classification" value="type-c" class="hidden peer" required />
             <label for="type-c"
                 class="inline-flex items-center justify-between w-full p-5 text-gray-700 bg-white border border-gray-200 rounded-lg cursor-pointer dark:hover:text-gray-300 dark:border-gray-700 dark:peer-checked:text-blue-500 peer-checked:border-blue-600 peer-checked:text-blue-600 hover:text-gray-600 hover:bg-gray-100 dark:text-gray-400 dark:bg-gray-800 dark:hover:bg-gray-700">
                 <div class="block">
@@ -50,11 +53,15 @@
             </label>
         </li>
     </ul>
-    <div class="flex items-center justify-between w-full">
-        <button id="medical-prev" wire:click="switchToTab('ancillary-examination')"
-            class="mt-5 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Previous</button>
-        <button id="medical-next" wire:click="switchToTab('personal-remarks')"
-            class="mt-5 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Next</button>
-    </div>
-
+    <button type="button" wire:click="saveToDatabase"
+        class="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-700">
+        Save
+    </button>
+    <!-- Flash Messages -->
+    @if (session()->has('message'))
+        <div class="text-green-600 font-medium">{{ session('message') }}</div>
+    @endif
+    @if (session()->has('error'))
+        <div class="text-red-600 font-medium">{{ session('error') }}</div>
+    @endif
 </div>

@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Livewire;
-
+use Illuminate\Support\Facades\Log;
 use App\Models\AncillaryExaminationsModel;
 use Illuminate\Support\Facades\Session;
 use Livewire\Attributes\On;
@@ -43,7 +43,7 @@ class AncillaryExamination extends Component
             foreach ($this->examinations as $exam) {
                 $this->findings[$exam] = '';
             }
-            $this->checkedExamination = $this->examinations; 
+            $this->checkedExamination = $this->examinations;
         }
     }
 
@@ -90,33 +90,58 @@ class AncillaryExamination extends Component
             'hepb' => $this->hepb,
             'blood_type' => $this->blood_type,
         ];
+
     }
 
-    public function saveToDatabase()
-    {
-        $examinationData = $this->saveExamination();
-        $patientID = $this->patientID;
 
-        $dbData = [
-            'patient_id' => $patientID,
-            'complete_blood_count' => in_array('Complete Blood Count', $this->checkedExamination) ? 'Normal' : ($examinationData['findings']['Complete Blood Count'] ?? null),
-            'fecalysis' => in_array('Fecalysis/Stool Exam', $this->checkedExamination) ? 'Normal' : ($examinationData['findings']['Fecalysis/Stool Exam'] ?? null),
-            'urinalysis' => in_array('Urinalysis', $this->checkedExamination) ? 'Normal' : ($examinationData['findings']['Urinalysis'] ?? null),
-            'chest_xray' => in_array('Chest X-RAY', $this->checkedExamination) ? 'Normal' : ($examinationData['findings']['Chest X-RAY'] ?? null),
-            'mmse_score' => in_array('MMSE Score', $this->checkedExamination) ? 'Normal' : ($examinationData['findings']['MMSE Score'] ?? null),
-            'pregnancy_test' => $examinationData['pregnancy_test'],
-            'hep_b' => $examinationData['hepb'],
-            'blood_type' => $examinationData['blood_type'],
-        ];
+public function saveToDatabase()
+{
+    // Log that the saveToDatabase method has been called
+    Log::info('saveToDatabase method started for patient ID: ' . $this->patientID);
 
-        $existingRecord = AncillaryExaminationsModel::where('patient_id', $patientID)->first();
+    // Save examination data
+    $examinationData = $this->saveExamination();
+    Log::info('Examination data saved for patient ID: ' . $this->patientID, ['examinationData' => $examinationData]);
 
-        if ($existingRecord) {
-            $existingRecord->update($dbData);
-        } else {
-            AncillaryExaminationsModel::create($dbData);
-        }
+    // Set patient ID
+    $patientID = $this->patientID;
+
+    // Prepare data for insertion or update
+    $dbData = [
+        'patient_id' => $patientID,
+        'complete_blood_count' => in_array('Complete Blood Count', $this->checkedExamination) ? 'Normal' : ($examinationData['findings']['Complete Blood Count'] ?? null),
+        'fecalysis' => in_array('Fecalysis/Stool Exam', $this->checkedExamination) ? 'Normal' : ($examinationData['findings']['Fecalysis/Stool Exam'] ?? null),
+        'urinalysis' => in_array('Urinalysis', $this->checkedExamination) ? 'Normal' : ($examinationData['findings']['Urinalysis'] ?? null),
+        'chest_xray' => in_array('Chest X-RAY', $this->checkedExamination) ? 'Normal' : ($examinationData['findings']['Chest X-RAY'] ?? null),
+        'mmse_score' => in_array('MMSE Score', $this->checkedExamination) ? 'Normal' : ($examinationData['findings']['MMSE Score'] ?? null),
+        'pregnancy_test' => $examinationData['pregnancy_test'],
+        'hep_b' => $examinationData['hepb'],
+        'blood_type' => $examinationData['blood_type'],
+    ];
+
+    // Log the prepared data
+    Log::info('Prepared data for database', ['dbData' => $dbData]);
+
+    // Check if there's an existing record for this patient
+    $existingRecord = AncillaryExaminationsModel::where('patient_id', $patientID)->first();
+
+    if ($existingRecord) {
+        // Log the update action
+        Log::info('Updating existing record for patient ID: ' . $patientID);
+        $existingRecord->update($dbData);
+        Log::info('Record updated successfully for patient ID: ' . $patientID);
+    } else {
+        // Log the creation action
+        Log::info('Creating new record for patient ID: ' . $patientID);
+        AncillaryExaminationsModel::create($dbData);
+        Log::info('Record created successfully for patient ID: ' . $patientID);
     }
+
+    // Log that the method has completed
+    Log::info('saveToDatabase method completed for patient ID: ' . $this->patientID);
+
+    session()->flash('message', 'Saved Successfully!.');
+}
 
     public function switchToTab($tabId)
     {

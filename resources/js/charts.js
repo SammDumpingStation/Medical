@@ -116,7 +116,7 @@ const getMainChartOptions = () => {
                     fontWeight: 500,
                 },
                 formatter: function (value) {
-                    return  value;
+                    return value;
                 },
             },
         },
@@ -658,3 +658,5 @@ if (document.getElementById("traffic-by-device")) {
         chart.updateOptions(getTrafficChannelsChartOptions());
     });
 }
+
+

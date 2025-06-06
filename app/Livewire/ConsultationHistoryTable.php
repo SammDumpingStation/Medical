@@ -21,8 +21,6 @@ class ConsultationHistoryTable extends Component
             'gender',
             'year level',
             'department',
-            'BMI',
-            'Status',
         ];
     }
 

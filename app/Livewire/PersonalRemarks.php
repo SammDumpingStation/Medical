@@ -33,7 +33,7 @@ class PersonalRemarks extends Component
     {
          $this->savePersonalRemarks();
         $this->savePatientInformation();
-        $this->dispatch('switch-tab-form2', ['tabId' => $tabId]); // Trigger JavaScript event to change tab
+        $this->dispatch('switch-tab-form2', ['tabId' => $tabId]); 
     }
 
     public function savePersonalRemarks()

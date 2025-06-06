@@ -11,57 +11,83 @@ use Illuminate\Support\Facades\Log;
 class SurgicalHistoryHp extends Component
 {
     public $patientID;
-    public $operations = [];
-    public $type;
-    public $date;
+    public $operationType;
+    public $operationDate;
 
+    // public $type;
+    // public $date;
+    public $operations = [];
     public function mount()
     {
         $this->patientID = Session::get('patient_information.personal_information.patient_id', 0);
-        Log::info('Patient ID for MedicalHistory:', ['patient_id' => $this->patientID]);
-
-         $this->operations = PastSurgicalHistory::where('patient_id', $this->patientID)
+        
+       Log::info('Patient ID for MedicalHistory:', ['patient_id' => $this->patientID]);
+        
+        $this->operations = PastSurgicalHistory::where('patient_id', $this->patientID)
             ->get()
             ->map(function ($operation) {
+                // Log the operation being processed
+                Log::info('Processing operation:', ['operation_type' => $operation->operation_type, 'operation_time' => $operation->operation_time]);
+    
                 return [
                     'type' => $operation->operation_type,
-                    'date' => Carbon::parse($operation->operation_time)->format('Y-m-d'),
+                    'date' => $operation->operation_time
+                        ? Carbon::parse($operation->operation_time)->format('Y-m-d') // Format the operation time
+                        : null, 
                 ];
             })
             ->toArray();
-
-        if (empty($this->operations)) {
+        
+        Log::info('Retrieved operations:', ['operations' => $this->operations]);
+    
+       if (empty($this->operations)) {
             $this->operations = [['type' => '', 'date' => '']];
+            Log::info('No past surgical history found. Initialized with empty row.');
+        } else {
+            Log::info('Existing operations found. Added an empty row for new data entry.');
         }
     }
+    
+    
+    
 
     public function addOperation()
     {
         $this->operations[] = ['type' => '', 'date' => ''];
     }
 
-    public function saveOperations()
+    public function saveOperation()
     {
         $patientID = $this->patientID;
-
+    
+        // Validate the individual operation fields
         $this->validate([
-            'operations.*.type' => 'required|string|max:255',
-            'operations.*.date' => 'required|date',
+            'operationType' => 'required|string|max:255',
+            'operationDate' => 'required|date',
         ]);
-
-         foreach ($this->operations as $operation) {
-            PastSurgicalHistory::create([
+    
+        // Save the operation to the database
+        PastSurgicalHistory::updateOrCreate(
+            [
                 'patient_id' => $patientID,
-                'operation_type' => $operation['type'],
-                'operation_time' => Carbon::parse($operation['date']),
-            ]);
-        }
-
-        $this->saveToSession();
-
-        $this->operations = [['type' => '', 'date' => '']];
-        session()->flash('message', 'Operations saved successfully.');
+                'operation_type' => $this->operationType,
+                'operation_time' => Carbon::parse($this->operationDate),
+            ],
+            [
+                'operation_type' => $this->operationType,
+                'operation_time' => Carbon::parse($this->operationDate),
+            ]
+        );
+    
+        // Flash a success message
+        session()->flash('message', 'Operation saved successfully.');
+    
+        // Reset the form fields
+        $this->operationType = '';
+        $this->operationDate = '';
+        $this->mount();
     }
+    
 
     public function removeOperation($index)
     {

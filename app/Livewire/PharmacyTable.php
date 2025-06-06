@@ -2,6 +2,9 @@
 namespace App\Livewire;
 
 use App\Models\MedicineInventory;
+use App\Models\dispenseMedicineRecords;
+use App\Models\Patient;
+
 use Livewire\Component;
 use Livewire\WithPagination;
 use Illuminate\Support\Facades\Log;
@@ -10,9 +13,11 @@ class PharmacyTable extends Component
 {
     use WithPagination;
 
+    public $medicines = [];
+
     public $headers = [];
     public $search;
-    
+
     public $name;
     public $brand_name;
     public $dosage;
@@ -23,9 +28,22 @@ class PharmacyTable extends Component
     public $dispensed;
     public $status;
 
+    public $patient_id;
+    public $medicine_id;
+    public $quantity_dispensed;
+    public $amount_given;
+    public $given_date;
+    public $medicine_type;
+    public $lowStockModalVisible = false;
+    public $lowStockMedicinesList = [];
+
+
+
+
     public function mount()
     {
         $this->headers = [
+            'Medicine ID',
             'Name',
             'Brand Name',
             'Dosage',
@@ -33,13 +51,54 @@ class PharmacyTable extends Component
             'Expiry',
             'Turn Over to Supply',
             'Stock on Hand',
-            'Dispensed',
             'Status',
         ];
+        $this->medicines = MedicineInventory::all();
+    $this->updateLowStockStatus();
+ 
+
     }
 
-   public function addMedicine()
+    protected function updateLowStockStatus()
+    {
+        try {
+            $lowStockMedicines = MedicineInventory::where('stock_on_hand', '<', 30)->get();
+            
+            foreach ($lowStockMedicines as $medicine) {
+               if ($medicine->stock_on_hand == 0) {
+                    $medicine->delete();  
+                    Log::info('Deleted medicine with 0 stock: ' . $medicine->name);
+                } elseif ($medicine->status !== 'Low stock') {
+                    $medicine->status = 'Low stock';
+                    $medicine->save();
+                    Log::info('Updated status for low stock medicine: ' . $medicine->name);
+                }
+            }
+    
+            if ($lowStockMedicines->isNotEmpty()) {
+                $this->lowStockMedicinesList = $lowStockMedicines;
+                $this->lowStockModalVisible = true; 
+                Log::info('Modal For Stock');
+            }
+    
+            Log::info('Updated and fetched low stock medicines.');
+        } catch (\Exception $e) {
+            Log::error('Error updating low stock status: ' . $e->getMessage());
+            session()->flash('error', 'Failed to update low stock status.');
+        }
+    }
+    
+
+
+    public function closeLowStockModal()
 {
+    $this->lowStockModalVisible = false;
+}
+
+
+    
+   public function addMedicine()
+    {
     try {
         $this->turn_over_to_supply = \Carbon\Carbon::parse($this->turn_over_to_supply)->format('Y-m-d');
 
@@ -55,17 +114,15 @@ class PharmacyTable extends Component
             'status' => $this->status,
         ]);
 
-        // Validate the data
         $validated = $this->validate([
             'name' => 'required|string|max:255',
             'brand_name' => 'required|string|max:255',
             'dosage' => 'required|string|max:100',
             'manufactured_date' => 'required|date',
             'expiry' => 'required|date|after:manufactured_date',
-            'turn_over_to_supply' => 'required|date', 
+            'turn_over_to_supply' => 'required|date',
             'stock_on_hand' => 'required|integer|min:0',
-            'dispensed' => 'required|integer|min:0',
-            'status' => 'required|string|max:100',
+           
         ]);
 
         Log::debug('Validated data: ', $validated);
@@ -78,7 +135,7 @@ class PharmacyTable extends Component
 
         $this->resetFormFields();
 
-   
+
     } catch (\Exception $e) {
         Log::error('Error adding medicine: ' . $e->getMessage());
 
@@ -88,7 +145,83 @@ class PharmacyTable extends Component
     }
 }
 
-    // Helper method to reset form fields
+public function dispenseMedicine()
+{
+    try {
+        $this->validate([
+            'patient_id' => 'required|exists:patients,patient_id',
+            'medicine_id' => 'required|exists:medicine_inventories,medicine_id',
+            'quantity_dispensed' => 'required|integer|min:1',
+            'given_date' => 'required|date',
+            'medicine_type' => 'required|string',
+        ]);
+
+        Log::debug('Dispensing medicine data: ', [
+            'patient_id' => $this->patient_id,
+            'medicine_id' => $this->medicine_id,
+            'quantity_dispensed' => $this->quantity_dispensed,
+            'given_date' => $this->given_date,
+            'medicine_type' => $this->medicine_type,
+        ]);
+
+        $medicine = MedicineInventory::where('medicine_id', $this->medicine_id)->first();
+        if (!$medicine) {
+            session()->flash('error', 'Medicine not found.');
+            return;
+        }
+
+        if ($medicine->stock_on_hand < $this->quantity_dispensed) {
+            session()->flash('error', 'Insufficient stock on hand.');
+            return;
+        }
+
+         $medicine->stock_on_hand -= $this->quantity_dispensed;
+        $medicine->dispensed += $this->quantity_dispensed;
+        $medicine->save();
+
+        dispenseMedicineRecords::create([
+            'patient_id' => $this->patient_id,
+            'medicine_id' => $this->medicine_id,
+            'quantity_dispensed' => $this->quantity_dispensed,
+            'given_date' => $this->given_date,
+            'medicine_type' => $this->medicine_type,
+            'expiration_date' => $medicine->expiry,
+        ]);
+
+        Log::info('Medicine dispensed successfully.');
+
+        session()->flash('message', 'Medicine dispensed successfully.');
+        $this->resetFormFields();
+
+    } catch (\Exception $e) {
+        Log::error('Error dispensing medicine: ' . $e->getMessage());
+        session()->flash('error', 'Failed to dispense medicine.');
+        throw $e;
+    }
+}
+
+
+
+
+    public function loadMedicineData($medicineId)
+    {
+        $medicine = MedicineInventory::find($medicineId);
+
+        if ($medicine) {
+            $this->medicine_id = $medicine->name;
+            $this->brand_name = $medicine->brand_name;
+            $this->dosage = $medicine->dosage;
+            $this->manufactured_date = $medicine->manufactured_date;
+            $this->expiry = $medicine->expiry;
+            $this->turn_over_to_supply = $medicine->turn_over_to_supply;
+            $this->stock_on_hand = $medicine->stock_on_hand;
+            $this->dispensed = $medicine->dispensed;
+            $this->status = $medicine->status;
+        } else {
+            session()->flash('error', 'Invalid Medicine ID.');
+        }
+    }
+
     public function resetFormFields()
     {
         $this->name = '';
@@ -101,7 +234,6 @@ class PharmacyTable extends Component
         $this->dispensed = '';
         $this->status = '';
         $this->render();
-
     }
 
     public function render()
@@ -112,8 +244,8 @@ class PharmacyTable extends Component
             ->orWhere('dosage', 'LIKE', "%{$this->search}%")
             ->orWhere('status', 'LIKE', "%{$this->search}%")
             ->paginate(10);
-    
+
         return view('livewire.pharmacy-table', ['datas' => $datas]);
     }
-    
+
 }

@@ -79,18 +79,91 @@ class PhysicalScreening extends Component
         Log::info('There is no data on the database  ');
     }
 }
+public function updated($propertyName)
+{
+    if (in_array($propertyName, ['height', 'weight'])) {
+        $this->calculateBMI();
+    }
+}
+public function calculateBMI()
+{
+    Log::info('Calculating BMI.', [
+        'height' => $this->height,
+        'weight' => $this->weight,
+    ]);
+
+    if ($this->height > 0 && $this->weight > 0) {
+        $heightInMeters = $this->height / 100;
+        $this->bmi = $this->weight / ($heightInMeters ** 2);
+
+        Log::info('BMI calculated.', [
+            'height_in_meters' => $heightInMeters,
+            'bmi' => $this->bmi,
+        ]);
+
+        if ($this->bmi < 18.5) {
+            $this->bmi_class = 'Underweight';
+            Log::info('BMI category assigned: Underweight.');
+        } elseif ($this->bmi >= 18.5 && $this->bmi <= 24.9) {
+            $this->bmi_class = 'Normal weight';
+            Log::info('BMI category assigned: Normal weight.');
+        } elseif ($this->bmi >= 25 && $this->bmi <= 29.9) {
+            $this->bmi_class = 'Overweight';
+            Log::info('BMI category assigned: Overweight.');
+        } else {
+            $this->bmi_class = 'Obesity';
+            Log::info('BMI category assigned: Obesity.');
+        }
+    } else {
+        Log::warning('Invalid height or weight provided for BMI calculation.', [
+            'height' => $this->height,
+            'weight' => $this->weight,
+        ]);
+
+        $this->bmi = null;
+        $this->bmi_class = null;
+    }
+
+    Log::info('BMI calculation complete.', [
+        'bmi' => $this->bmi,
+        'bmi_class' => $this->bmi_class,
+    ]);
+}
+
 
 
 public function saveToDatabase()
 {
     try {
+        // Calculate BMI
+        if ($this->height > 0 && $this->weight > 0) {
+            $heightInMeters = $this->height / 100;
+            $this->bmi = $this->weight / ($heightInMeters ** 2);
+
+            // Determine BMI category
+            if ($this->bmi < 18.5) {
+                $this->bmi_class = 'Underweight';
+            } elseif ($this->bmi >= 18.5 && $this->bmi <= 24.9) {
+                $this->bmi_class = 'Normal weight';
+            } elseif ($this->bmi >= 25 && $this->bmi <= 29.9) {
+                $this->bmi_class = 'Overweight';
+            } else {
+                $this->bmi_class = 'Obesity';
+            }
+        } else {
+            $this->bmi = null;
+            $this->bmi_class = 'Invalid data';
+        }
+
         Log::info('Saving Physical Screening Data', [
             'patient_id' => $this->patientID,
             'height' => $this->height,
             'weight' => $this->weight,
+            'bmi' => $this->bmi,
+            'bmi_class' => $this->bmi_class,
         ]);
 
-         $existingData = PhysicalScreeningModel::where('patient_id', $this->patientID)->first();
+       $existingData = PhysicalScreeningModel::where('patient_id', $this->patientID)->first();
 
         if ($existingData) {
             $existingData->update([
@@ -137,8 +210,6 @@ public function saveToDatabase()
 
         $this->saveToSession();
 
-        Log::info('Redirecting to the next tab.', ['next_tab' => 'physical-examination']);
-        $this->dispatch('switch-tab-form2', ['tabId' => 'physical-examination']);
     } catch (\Exception $e) {
         Log::error('Error saving Physical Screening Data', [
             'error_message' => $e->getMessage(),
@@ -148,6 +219,7 @@ public function saveToDatabase()
         session()->flash('error', 'There was an error saving the data. Please try again.');
     }
 }
+
 
 
     public function saveToSession()
@@ -171,7 +243,9 @@ public function saveToDatabase()
             'speech' => $this->speech,
         ];
         Session::put('patient_information', $patientInfo);
+        session()->flash('message', 'Saved Successfully!.');
     }
+
 
     public function render()
     {

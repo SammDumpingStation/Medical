@@ -1,7 +1,7 @@
 <div>
     <div>
-        
-    <input type="hidden" id="patient-id-field" wire:model="patientId" />
+
+        <input type="hidden" id="patient-id-field" wire:model="patientId" />
 
         <h4 class="text-xl mb-4 font-bold dark:text-white">Social History</h4>
         <div class="grid ml-6 gap-6 mb-6 md:grid-cols-2">
@@ -142,12 +142,17 @@
             </div>
         </div>
     </div>
-    <div class="flex items-center justify-between w-full">
-        <button id="social-prev" wire:click="switchToTab('profile')"
-            class="mt-5 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Previous</button>
-        <button id="social-next" wire:click="switchToTab('medical')"
-            class="mt-5 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Next</button>
-    </div>
+    <button type="button" wire:click="saveToSession"
+        class="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-700">
+        Save
+    </button>
+     <!-- Flash Messages -->
+     @if (session()->has('message'))
+     <div class="text-green-600 font-medium">{{ session('message') }}</div>
+ @endif
+ @if (session()->has('error'))
+     <div class="text-red-600 font-medium">{{ session('error') }}</div>
+ @endif
 </div>
 
 
@@ -157,7 +162,7 @@
         console.log("Social", patientId);
 
         if (patientId) {
-        
+
             // Find the hidden input and update it with the retrieved patientId
             document.getElementById('patient-id-field').value = patientId;
             // Trigger Livewire to update the property

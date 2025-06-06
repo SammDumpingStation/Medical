@@ -5,13 +5,14 @@ namespace App\Livewire;
 use App\Models\StudentClassificationModel;
 use Illuminate\Support\Facades\Session;
 use Livewire\Component;
+use Illuminate\Support\Facades\Log;
 
 class StudentClassification extends Component
 {
     public $type;
     public $default;
     public $patientID;
-    public $successMessage = null; 
+    public $successMessage = null;
 
     public function mount()
     {
@@ -28,8 +29,8 @@ class StudentClassification extends Component
     public function switchToTab($tabId)
     {
         $this->saveToSession();
-        $this->saveToDatabase(); 
-        $this->dispatch('switch-tab-form2', ['tabId' => $tabId]); 
+        $this->saveToDatabase();
+        $this->dispatch('switch-tab-form2', ['tabId' => $tabId]);
     }
 
     public function saveToSession()
@@ -42,11 +43,13 @@ class StudentClassification extends Component
 
     public function saveToDatabase()
     {
+        Log::info('saveToDatabase method started for patient ID: ' . $this->patientID);
+
         try {
             $data = [
                 'patient_id' => $this->patientID,
                 'alphabet' => $this->type,
-                'description' => $this->getDescriptionByType($this->type), 
+                'description' => $this->getDescriptionByType($this->type),
             ];
 
            $existingRecord = StudentClassificationModel::find($this->patientID);
@@ -60,6 +63,8 @@ class StudentClassification extends Component
         } catch (\Exception $e) {
             $this->successMessage = 'Error saving Student Classification.';
         }
+
+        session()->flash('message', 'Saved Successfully!.');
     }
 
     public function getDescriptionByType($type)

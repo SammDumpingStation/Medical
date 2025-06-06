@@ -1,76 +1,96 @@
-<form class="space-y-14">
-    <div>
-        <h4 class="text-xl mb-4 font-bold dark:text-white">Past Medical History</h4>
+<div class="p-4 bg-gray-50 dark:bg-gray-900 rounded-lg shadow-md">
+    <h4 class="text-xl mb-4 font-bold text-gray-800 dark:text-white">Present Medications</h4>
 
-        <div class="grid gap-6 ml-6 mb-6 md:grid-cols-2">
-            <div>
-                <livewire:toggle title="Allergy" />
-                <div class="hidden">
-                    <livewire:checkbox title="Food" />
-                    <livewire:checkbox title="Drug" />
-                </div>
+    <form wire:submit.prevent="submit">
 
-            </div>
-            <livewire:toggle title="Allergy" />
-            <livewire:toggle title="Asthma" />
-            <livewire:toggle title="Cancer" />
-            <livewire:toggle title="Coronary Artery Disease" />
-            <livewire:toggle title="Thyroid Disease" />
-            <livewire:toggle title="Peptic Ulcer" />
-            <livewire:toggle title="PCOS" />
-            <livewire:toggle title="Hypertension" />
-            <livewire:toggle title="Epilepsy" />
-            <livewire:toggle title="Skin Disorder" />
-            <livewire:toggle title="Tuberculosis" />
-            <livewire:toggle title="Hepatitis" />
-            <livewire:toggle title="Psychological Disorder" />
+        <!-- Medications Section -->
+        <div class="mb-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
+            <label
+                class="flex items-center text-gray-700 dark:text-gray-300 hover:text-indigo-600 cursor-pointer text-sm">
+                <input type="checkbox" wire:model="presentMedications.antibiotics"
+                    class="form-checkbox text-indigo-600 mr-2">
+                <i class="fas fa-capsules mr-1"></i> Antibiotics
+            </label>
+            <label
+                class="flex items-center text-gray-700 dark:text-gray-300 hover:text-indigo-600 cursor-pointer text-sm">
+                <input type="checkbox" wire:model="presentMedications.birthControlPill"
+                    class="form-checkbox text-indigo-600 mr-2">
+                <i class="fas fa-pills mr-1"></i> Birth Control Pill
+            </label>
+            <label
+                class="flex items-center text-gray-700 dark:text-gray-300 hover:text-indigo-600 cursor-pointer text-sm">
+                <input type="checkbox" wire:model="presentMedications.aspirin"
+                    class="form-checkbox text-indigo-600 mr-2">
+                <i class="fas fa-tablets mr-1"></i> Aspirin
+            </label>
+            <label
+                class="flex items-center text-gray-700 dark:text-gray-300 hover:text-indigo-600 cursor-pointer text-sm">
+                <input type="checkbox" wire:model="presentMedications.antiConvulsant"
+                    class="form-checkbox text-indigo-600 mr-2">
+                <i class="fas fa-syringe mr-1"></i> Anti-convulsant
+            </label>
         </div>
 
-    </div>
-    <div>
-        <h4 class="text-xl mb-4 font-bold dark:text-white">Family Medical Condition</h4>
-        <div class="grid gap-6 ml-6 mb-6 md:grid-cols-2">
-            <div>
-                <label for="mother-side" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Mother
-                    Side</label>
-                <div class="flex items-center justify-center gap-3">
-                    <input type="text" id="mother-side"
-                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                        placeholder="ex. Cancer" required />
-                    <button
-                        class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">+</button>
-                </div>
-            </div>
-            <div>
-                <label for="father-side" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Father
-                    Side</label>
-                <div class="flex items-center justify-center gap-3">
-                    <input type="text" id="father-side"
-                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                        placeholder="ex. Tuberculosis" required />
-                    <button
-                        class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">+</button>
-                </div>
+        <!-- Other Medications -->
+        <div class="mb-4">
+            <label class="block text-gray-700 dark:text-gray-300 mb-1 font-medium text-sm">Others:</label>
+            <input type="text" wire:model="presentMedications.others"
+                class="border border-gray-300 dark:border-gray-600 rounded-lg w-full p-2 bg-gray-50 dark:bg-gray-700 dark:text-gray-100 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                placeholder="Specify other medications" oninput="this.value=this.value.replace(/[^a-zA-Z\s]/g, '');"
+                title="Only letters and spaces are allowed">
+        </div>
+
+        <!-- Pregnancy Section -->
+        <div class="mb-4">
+            <label class="block text-gray-700 dark:text-gray-300 mb-1 font-medium text-sm">Are you Pregnant?</label>
+            <div class="flex items-center space-x-4">
+                <label
+                    class="flex items-center text-gray-700 dark:text-gray-300 hover:text-indigo-600 cursor-pointer text-sm">
+                    <input type="radio" wire:model="pregnant" value="yes" class="form-radio text-indigo-600 mr-1">
+                    Yes
+                </label>
+                <label
+                    class="flex items-center text-gray-700 dark:text-gray-300 hover:text-indigo-600 cursor-pointer text-sm">
+                    <input type="radio" wire:model="pregnant" value="no" class="form-radio text-indigo-600 mr-1">
+                    No
+                </label>
+                <label
+                    class="flex items-center text-gray-700 dark:text-gray-300 hover:text-indigo-600 cursor-pointer text-sm">
+                    <input type="radio" wire:model="pregnant" value="n/a" class="form-radio text-indigo-600 mr-1">
+                    N/A
+                </label>
             </div>
         </div>
-    </div>
-    <div>
-        <h4 class="text-xl mb-4 font-bold dark:text-white">Recent Hospital Admissions</h4>
 
-        <div class="grid grid-cols-2 ml-6 gap-6">
-            <div>
-                <label for="Diagnosis"
-                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Diagnosis</label>
-                <input type="text" id="Diagnosis"
-                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                    placeholder="Fever, Cough Etc." required />
-            </div>
-            <div>
-                <label for="datepicker"
-                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">When?</label>
-                <livewire:datepicker id="diagnosis-datepicker" />
-            </div>
-
+        <!-- Last Menstrual Period -->
+        <div class="mb-4">
+            <label class="block text-gray-700 dark:text-gray-300 mb-1 font-medium text-sm">Last Menstrual Period (LMP)
+                First day:</label>
+            <input type="date" wire:model="lmpDate"
+                class="border border-gray-300 dark:border-gray-600 rounded-lg w-full p-2 bg-gray-50 dark:bg-gray-700 dark:text-gray-100 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500">
         </div>
-    </div>
-</form>
+
+        <!-- Procedures/Operations -->
+        <div class="mb-4">
+            <label class="block text-gray-700 dark:text-gray-300 mb-1 font-medium text-sm">Procedures/Operations
+                undergone prior to the consultation:</label>
+            <textarea wire:model="proceduresOperations"
+                class="border border-gray-300 dark:border-gray-600 rounded-lg w-full p-2 bg-gray-50 dark:bg-gray-700 dark:text-gray-100 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                rows="3" placeholder="Describe procedures or operations"
+                oninput="this.value=this.value.replace(/[^a-zA-Z\s]/g, '');" title="Only letters and spaces are allowed"></textarea>
+        </div>
+
+        <!-- Date -->
+        <div class="mb-4">
+            <label class="block text-gray-700 dark:text-gray-300 mb-1 font-medium text-sm">Date:</label>
+            <input type="date" wire:model="recordDate"
+                class="border border-gray-300 dark:border-gray-600 rounded-lg w-full p-2 bg-gray-50 dark:bg-gray-700 dark:text-gray-100 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500">
+        </div>
+
+        <!-- Submit Button -->
+        <div class="mb-4">
+            <button type="submit"
+                class="px-4 py-2 bg-indigo-600 text-white rounded-lg shadow hover:bg-indigo-700 focus:outline-none">Submit</button>
+        </div>
+    </form>
+</div>

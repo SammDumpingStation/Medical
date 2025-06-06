@@ -1,78 +1,85 @@
 <x-layout>
-    <form method="POST" action="#" class="p-4 bg-white block dark:bg-gray-800">
-        <div class="mb-4">
-            <h1 class="text-xl font-semibold text-gray-900 sm:text-2xl dark:text-white">Vital Form For Registered
-                Students</h1>
+    <div class="p-4 bg-white block sm:flex items-center justify-between dark:bg-gray-800">
+        <div class="mb-4 lg:mb-0">
+            <h3 class="mb-2 text-xl font-bold text-gray-900 dark:text-white">Vital Check Creation </h3>
+            <span class="text-base font-normal text-gray-500 dark:text-gray-400">Fill in the details for checking the
+                vitals of registered student</span>
         </div>
-        <div class="items-center px-4 justify-between">
-            <div class="mb-4">
-                <h1 class="text-base font-semibold text-gray-900 dark:text-white">Name: <span class="font-normal">
-                        {{ $patient->full_name }}</span></h1>
-                <h1 class="text-base font-semibold text-gray-900 dark:text-white">Age: <span class="font-normal">
-                        {{ $patient->age }}</span></h1>
-                <h1 class="text-base font-semibold text-gray-900 dark:text-white">Sex: <span class="font-normal">
-                        {{ $patient->gender }}</span></h1>
-                <h1 class="text-base font-semibold text-gray-900 dark:text-white">Civil Status: <span
-                        class="font-normal">
-                        {{ $patient->civil_status }}</span></h1>
-                <h1 class="text-base font-semibold text-gray-900 dark:text-white">Phone Number: <span
-                        class="font-normal">
-                        {{ $patient->phone_number }}</span></h1>
-                <h1 class="text-base font-semibold text-gray-900 dark:text-white">Address: <span class="font-normal">
-                        {{ $patient->address }}</span></h1>
+    </div>
+    <section>
+        <div class="bg-white dark:bg-gray-800 p-4 rounded-lg ">
+            <div class="mb-4 border-b border-gray-200 dark:border-gray-700">
+                <ul class="flex flex-wrap -mb-px text-sm font-medium text-center" id="consultation-tab"
+                    data-tabs-toggle="#default-tab-content" role="tablist">
+                    <li class="me-2" role="presentation">
+                        <button class="inline-block p-4 border-b-2 rounded-t-lg" id="teaching-profile-tab"
+                            data-tabs-target="#teaching-profile" type="button" role="tab"
+                            aria-controls="teaching-profile" aria-selected="false">Personal Information</button>
+                    </li>
+                    <li class="me-2" role="presentation">
+                        <button
+                            class="inline-block p-4 border-b-2 rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300"
+                            id="vital-signs-tab" data-tabs-target="#vital-signs" type="button" role="tab"
+                            aria-controls="vital-signs" aria-selected="false">Vital Signs</button>
+                    </li>
+                    <li class="me-2" role="presentation">
+                        <button
+                            class="inline-block p-4 border-b-2 rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300"
+                            id="teaching-medical-history-tab" data-tabs-target="#teaching-medical-history"
+                            type="button" role="tab" aria-controls="teaching-medical-history"
+                            aria-selected="false">Medical
+                            History</button>
+                    </li>
+                    <li role="presentation">
+                        <button
+                            class="inline-block p-4 border-b-2 rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300"
+                            id="present-medication-tab" data-tabs-target="#present-medication" type="button"
+                            role="tab" aria-controls="present-medication" aria-selected="false">Present
+                            Medications</button>
+                    </li>
+                    <li role="presentation">
+                        <button
+                            class="inline-block p-4 border-b-2 rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300"
+                            id="additional-questions-tab" data-tabs-target="#additional-questions" type="button"
+                            role="tab" aria-controls="additional-questions" aria-selected="false">Additional
+                            Questions</button>
+                    </li>
+                    <li role="presentation">
+                        <button
+                            class="inline-block p-4 border-b-2 rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300"
+                            id="diagnosis-tab" data-tabs-target="#diagnosis" type="button" role="tab"
+                            aria-controls="diagnosis" aria-selected="false">Diagnosis</button>
+                    </li>
+                </ul>
             </div>
-
-        </div>
-        <div class="">
-            <h4 class="text-xl mb-4 font-bold dark:text-white">Consultation Details</h4>
-            <div id="main-content" class="relative w-full h-full bg-gray-50 dark:bg-gray-900">
-                <main>
-                    <div class="overflow-hidden shadow">
-                        <table class="min-w-full divide-y divide-gray-200 table-fixed dark:divide-gray-600">
-                            <thead class="bg-gray-100 dark:bg-gray-700">
-                                <tr>
-                                    <th scope="col"
-                                        class="p-4 text-center text-xs font-medium  text-gray-500 uppercase dark:text-gray-400">
-                                        Date, Time & Vital Signs (includes height and weight)
-                                    </th>
-                                    <th scope="col"
-                                        class="p-4 text-center  text-xs font-medium text-gray-500 uppercase dark:text-gray-400">
-                                        Chief Complaint(s)/Physical Examination Findings/Diagnosis/Medical
-                                        and/or Surgical Management/Plans
-                                    </th>
-                                </tr>
-                            </thead>
-                            <tbody class="bg-white divide-y divide-gray-200 dark:bg-gray-800 dark:divide-gray-700">
-                                <tr
-                                    class="hover:bg-gray-100 divide-x divide-gray-200 dark:bg-gray-800 dark:divide-gray-700 dark:hover:bg-gray-700">
-                                    <td class="flex items-center">
-                                        <textarea id="message" rows="4"
-                                            class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                            placeholder="Write your thoughts here..."></textarea>
-                                        {{-- <input type="text" name="findings" id="findings"
-                                            class="block px-4 w-full text-sm text-gray-900 bg-transparent border-0 focus:border dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-negativene focus:ring-0 focus:border-blue-600 peer"
-                                            placeholder=" " required /> --}}
-                                    </td>
-                                    <td
-                                        class="overflow-hidden text-base font-normal text-gray-500 truncate xl:max-w-xs dark:text-gray-400">
-                                        <textarea id="message" rows="4"
-                                            class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                            placeholder="Write your thoughts here..."></textarea>
-                                        {{-- <input type="text" name="findings" id="findings"
-                                            class="block px-4 w-full text-sm text-gray-900 bg-transparent border-0 focus:border dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-negativene focus:ring-0 focus:border-blue-600 peer"
-                                            placeholder=" " required /> --}}
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </main>
+            <div id="default-tab-content">
+                <div class="hidden p-4 rounded-lg bg-white dark:bg-gray-800" id="teaching-profile" role="tabpanel"
+                    aria-labelledby="teaching-profile-tab">
+                    <livewire:student-personal-info />
+                </div>
+                <div class="hidden p-4 rounded-lg bg-white dark:bg-gray-800" id="vital-signs" role="tabpanel"
+                    aria-labelledby="vital-signs-tab">
+                    <livewire:student-vital-signs />
+                </div>
+                <div class="hidden p-4 rounded-lg bg-white dark:bg-gray-800" id="teaching-medical-history"
+                    role="tabpanel" aria-labelledby="teaching-medical-history-tab">
+                    <livewire:student-medical-history />
+                </div>
+                <div class="hidden p-4 rounded-lg bg-white dark:bg-gray-800" id="present-medication" role="tabpanel"
+                    aria-labelledby="present-medication-tab">
+                    <livewire:student-present-medications />
+                </div>
+                <div class="hidden p-4 rounded-lg bg-white dark:bg-gray-800" id="additional-questions" role="tabpanel"
+                    aria-labelledby="additional-questions-tab">
+                    <livewire:student-additional-questions />
+                </div>
+                <div class="hidden p-4 rounded-lg bg-white dark:bg-gray-800" id="diagnosis" role="tabpanel"
+                    aria-labelledby="diagnosis-tab">
+                    <livewire:student-diagnosis />
+                </div>
             </div>
         </div>
-        <div class="w-full mt-4 flex">
-            <button type="submit"
-                class="w-full max-w-[500px] mx-auto hover:bg-blue-800 text-white bg-blue-700  focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Submit</button>
+    </section>
 
-        </div>
-    </form>
+
 </x-layout>

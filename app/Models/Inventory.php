@@ -8,5 +8,15 @@ use Illuminate\Database\Eloquent\Model;
 class Inventory extends Model
 {
     use HasFactory;
-    protected $guarded = [];
+
+    protected $fillable = [
+        'name',
+        'acquired_at',
+        'no_of_pieces',
+        'status',
+        'turn_over_to_supply',
+        'damaged',
+    ];
+
+  
 }

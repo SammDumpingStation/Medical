@@ -19,4 +19,10 @@ class AncillaryExaminationsModel extends Model
         'blood_type',
         'mmse_score'
     ];
+    
+    public function patient()
+{
+    return $this->belongsTo(Patient::class, 'patient_id');
+}
+
 }

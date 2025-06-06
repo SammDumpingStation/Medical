@@ -175,3 +175,7 @@
     height: calc(100vh - 4rem);
   }
 }
+
+.chartvis, #chartvis{
+    height: 300px;
+}
